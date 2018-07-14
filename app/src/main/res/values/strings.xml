@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Park Me</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Park Me</string>
+    <string name="nav_header_subtitle">parkme@ingsoft.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="login_btn_text">Iniciar Sesion</string>
+    <string name="login_reg_btn_text">Registrarse</string>
+    <string name="pass_hint">Contraseña</string>
+    <string name="email_hint">Correo electronico</string>
+    <string name="login_title">Ingresar al sistema</string>
+    <string name="reg_login_text">Ya tengo una cuenta</string>
+    <string name="reg_btn_text">Registrarse</string>
+    <string name="reg_confirm_pass_text">Repetir Contraseña</string>
+    <string name="reg_pass_text">Contraseña</string>
+    <string name="reg_title">Registrarse en el sistema</string>
+    <string name="log_out">Salir</string>
+    <string name="title_activity_parking">ParkingActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="advanced_payment">Pago Adelantado</string>
+    <string name="park_counter">Iniciar Contador</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
