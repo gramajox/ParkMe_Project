@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText reg_email_field;
@@ -83,27 +86,35 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) & !TextUtils.isEmpty(confirm_pass)){
                     if(pass.equals(confirm_pass)){
-                        reg_progress.setVisibility(View.VISIBLE);
-                        mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (isValidPassword(pass)) {
+                            /**ESTO VA EN LA CONFIRMACION DE MAIL*/
+                            reg_progress.setVisibility(View.VISIBLE);
+                            mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                if(task.isSuccessful()){
-                                    Toast.makeText(RegisterActivity.this, "Cuenta creada con exito.", Toast.LENGTH_LONG).show();
-                                    sendToMain();
-                                    finish();
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(RegisterActivity.this, "Cuenta creada con exito.", Toast.LENGTH_LONG).show();
+                                        sendToMain();
+                                        finish();
 
-                                } else {
-                                    String errorMessage = task.getException().getMessage();
-                                    Toast.makeText(RegisterActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
+                                    } else {
+                                        String errorMessage = task.getException().getMessage();
+                                        Toast.makeText(RegisterActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
 
+                                    }
+                                    reg_progress.setVisibility(View.INVISIBLE);
                                 }
-                                reg_progress.setVisibility(View.INVISIBLE);
-                            }
-                        });
+                            });
+                            /*************************************************/
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "La contraseña debe tener al menos un numero y una letra. Minimo 8 caracteres.", Toast.LENGTH_LONG).show();
+                        }
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Las contaseñas no coinciden.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden.", Toast.LENGTH_LONG).show();
                     }
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Complete todos los campos antes de continuar.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -114,4 +125,26 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(mainIntent);
         finish();
     }
+
+    private boolean isValidPassword(String password) {
+        Pattern pattern;
+        Matcher matcher;
+        /*
+        ^                 # start-of-string
+        (?=.*[0-9])       # a digit must occur at least once
+        (?=.*[a-z])       # a lower case letter must occur at least once
+        (?=.*[A-Z])       # an upper case letter must occur at least once
+        (?=.*[@#$%^&+=])  # a special character must occur at least once you can replace with your special characters
+        (?=\\S+$)          # no whitespace allowed in the entire string
+        .{4,}             # anything, at least six places though
+        $                 # end-of-string
+         */
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+    }
+
 }

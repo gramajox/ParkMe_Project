@@ -50,7 +50,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
+
         loginEmailText = findViewById(R.id.reg_email);
         loginPassText = findViewById(R.id.reg_confirm_pass);
         Button loginBtn = findViewById(R.id.login_btn);
@@ -175,6 +177,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public static void logOut() {
         mAuth.signOut();
-        mGoogleSignInClient.signOut();
+
+        if (mGoogleSignInClient != null) {
+            mGoogleSignInClient.signOut();
+        }
+
     }
 }
