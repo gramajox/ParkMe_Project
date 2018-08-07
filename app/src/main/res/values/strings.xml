@@ -27,4 +27,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pwd_mail">Ingrese su correo</string>
+    <string name="back_btn">Volver al login</string>
+    <string name="pwd_btn">Restablecer contraseña</string>
 </resources>

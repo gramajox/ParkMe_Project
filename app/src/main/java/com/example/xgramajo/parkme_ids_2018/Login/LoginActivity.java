@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.HomeActivity;
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginBtn = findViewById(R.id.login_btn);
         Button loginRegBtn = findViewById(R.id.login_reg_btn);
         loginProgress = findViewById(R.id.login_progress);
+        TextView pwdText = findViewById(R.id.pwd_txt);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -69,16 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-
-        loginRegBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent regIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(regIntent);
-
-            }
-        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,8 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if(task.isSuccessful()){
-
-                                sendToMain();
+                                checkEmailVerification();
+                                //sendToMain();
 
                             } else {
 
@@ -125,6 +117,37 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+
+        loginRegBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent regIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(regIntent);
+
+            }
+        });
+
+        pwdText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
+            }
+        });
+    }
+
+    private void checkEmailVerification() {
+
+        if(mAuth.getCurrentUser() != null) {
+            if(mAuth.getCurrentUser().isEmailVerified()) {
+                finish();
+                sendToMain();
+            } else {
+                Toast.makeText(LoginActivity.this, "Por favor, verifique el mail.", Toast.LENGTH_LONG).show();
+                mAuth.signOut();
+            }
+        }
     }
 
     private void signIn() {

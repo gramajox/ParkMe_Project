@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -87,16 +88,20 @@ public class RegisterActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) & !TextUtils.isEmpty(confirm_pass)){
                     if(pass.equals(confirm_pass)){
                         if (isValidPassword(pass)) {
-                            /**ESTO VA EN LA CONFIRMACION DE MAIL*/
+
                             reg_progress.setVisibility(View.VISIBLE);
                             mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if(task.isSuccessful()){
-                                        Toast.makeText(RegisterActivity.this, "Cuenta creada con exito.", Toast.LENGTH_LONG).show();
-                                        sendToMain();
+
+                                        sendEmailVerification();
+
+                                        mAuth.signOut();
+
                                         finish();
+                                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
 
                                     } else {
                                         String errorMessage = task.getException().getMessage();
@@ -106,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     reg_progress.setVisibility(View.INVISIBLE);
                                 }
                             });
-                            /*************************************************/
+
                         } else {
                             Toast.makeText(RegisterActivity.this, "La contraseña debe tener al menos un numero y una letra. Minimo 8 caracteres.", Toast.LENGTH_LONG).show();
                         }
@@ -118,6 +123,26 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void sendEmailVerification() {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if(firebaseUser!=null){
+            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(RegisterActivity.this, "Registración completa! Por favor verifique su mail.", Toast.LENGTH_SHORT).show();
+                        mAuth.signOut();
+                        finish();
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
+                    }else{
+                        Toast.makeText(RegisterActivity.this, "No pudo enviarse el mail de verificación.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
     private void sendToMain() {

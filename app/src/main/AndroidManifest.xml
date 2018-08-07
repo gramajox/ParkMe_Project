@@ -25,6 +25,7 @@
             android:name=".ParkingActivity"
             android:label="@string/title_activity_parking"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Login.PasswordActivity"></activity>
     </application>
 
 </manifest>
