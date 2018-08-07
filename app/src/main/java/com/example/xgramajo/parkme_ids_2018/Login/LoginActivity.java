@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
 
                             if(task.isSuccessful()){
                                 checkEmailVerification();
-                                //sendToMain();
 
                             } else {
 
