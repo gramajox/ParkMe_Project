@@ -47,7 +47,6 @@
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
-        android:entries="@array/array_calles"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_calles" />
@@ -71,7 +70,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
-        android:entries="@array/array_alturas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_alturas" />

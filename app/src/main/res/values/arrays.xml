@@ -8,48 +8,13 @@
         <item>AA 220 KS</item>
     </string-array>
 
-    <string-array name="array_calles">
-        <item>San Martin</item>
-        <item>Rocca</item>
-        <item>Mitre</item>
-        <item>Guemes</item>
-        <item>Becerra</item>
-        <item>Sarmiento</item>
-        <item>Salmini</item>
-        <item>Belgrano</item>
-    </string-array>
-
-    <string-array name="array_alturas">
-        <item>50</item>
-        <item>100</item>
-        <item>150</item>
-        <item>200</item>
-        <item>250</item>
-        <item>300</item>
-        <item>350</item>
-        <item>400</item>
-    </string-array>
-
     <string-array name="array_tiempo">
-        <item>0.25</item>
-        <item>0.5</item>
-        <item>1</item>
-        <item>2</item>
-        <item>4</item>
-        <item>8</item>
-        <item>12</item>
-        <item>24</item>
-    </string-array>
-
-    <string-array name="array_montos">
-        <item>30</item>
-        <item>60</item>
-        <item>120</item>
-        <item>240</item>
-        <item>480</item>
-        <item>960</item>
-        <item>1000</item>
-        <item>1500</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>1 hora 30 minutos</item>
+        <item>2 horas</item>
+        <item>2 horas 30 minutos</item>
+        <item>3 horas</item>
     </string-array>
 
 </resources>

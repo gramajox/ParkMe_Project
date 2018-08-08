@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.xgramajo.parkme_ids_2018.R;
 
 public class SetupFragment extends Fragment {
 
-    private Spinner spinnerDur, spinnerMon;
+    private Spinner spinnerDur;
+    private TextView montoCalculado;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -20,7 +22,7 @@ public class SetupFragment extends Fragment {
         View view = inflater.inflate(R.layout.tab_setup, container, false);
 
         spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
-        spinnerMon = (Spinner) view.findViewById(R.id.spinner_montos);
+        montoCalculado = (TextView) view.findViewById(R.id.txt_monto);
 
         return view;
     }
