@@ -3,8 +3,8 @@
     package="com.example.xgramajo.parkme_ids_2018">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <!-- Permisos para la localización -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="" /> <!-- Key de Maps -->
+            android:value="@string/map_key" /> <!-- Key de Maps -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
