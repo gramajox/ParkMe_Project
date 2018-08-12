@@ -37,4 +37,8 @@
     <string name="txt_monto_calc">Monto a abonar</string>
     <string name="btn_cont">Continuar</string>
     <string name="title_activity_maps_api">Map</string>
+    <string name="stop_txt">Detener contador</string>
+    <string name="pay_txt">Continuar con el pago</string>
+    <string name="patent_register">Registrar Matricula</string>
+    <string name="reg_patent">Registrar Matrícula</string>
 </resources>

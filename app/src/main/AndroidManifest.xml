@@ -3,8 +3,8 @@
     package="com.example.xgramajo.parkme_ids_2018">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Permisos para la localización -->
 
+    <!-- Permisos para la localización -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,6 +36,7 @@
             android:label="@string/title_activity_parking"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Login.PasswordActivity" />
+        <activity android:name=".InitCounterActivity"></activity>
     </application>
 
 </manifest>

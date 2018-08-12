@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.xgramajo.parkme_ids_2018.InitCounterActivity;
 import com.example.xgramajo.parkme_ids_2018.ParkingActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
@@ -31,6 +32,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        btnParkCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getActivity(), InitCounterActivity.class);
+                startActivity(myIntent);
+            }
+        });
 
         return view;
     }

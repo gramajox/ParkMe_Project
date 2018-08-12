@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.Adapters.SectionsPageAdapter;
 import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
@@ -18,19 +19,8 @@ import com.example.xgramajo.parkme_ids_2018.Parking_Fragments.SummaryFragment;
 
 public class ParkingActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPageAdapter mSectionsPageAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
@@ -67,7 +57,7 @@ public class ParkingActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_parking, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
@@ -78,10 +68,18 @@ public class ParkingActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.log_out) {
-            logOut();
-            return true;
+        switch (id) {
+            case R.id.action_patent:
+                HomeActivity.setActiveFragment("patentFragment");
+                Intent myIntent = new Intent(this, HomeActivity.class);
+                startActivity(myIntent);
+                return true;
+            case R.id.action_settings:
+                Toast.makeText(ParkingActivity.this, "Configuración.", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.log_out:
+                logOut();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

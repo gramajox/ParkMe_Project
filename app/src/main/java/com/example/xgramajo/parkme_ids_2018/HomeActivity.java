@@ -13,10 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.Home_Fragments.CounterFragment;
 import com.example.xgramajo.parkme_ids_2018.Home_Fragments.HomeFragment;
+import com.example.xgramajo.parkme_ids_2018.Home_Fragments.PatentFragment;
+import com.example.xgramajo.parkme_ids_2018.Home_Fragments.TimeLeftFragment;
 import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
-import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity
@@ -25,6 +28,7 @@ public class HomeActivity extends AppCompatActivity
     FirebaseAuth mAuth;
 
     FirebaseAuth.AuthStateListener mAuthListener;
+    private static String activatedFragment = "homeFragment";
 
     @Override
     protected void onStart() {
@@ -63,8 +67,25 @@ public class HomeActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        HomeFragment fragment = new HomeFragment();
-        fragmentTransaction.add(R.id.fragment_container, fragment);
+        HomeFragment homeFragment = new HomeFragment();
+        PatentFragment patentFragment = new PatentFragment();
+        CounterFragment counterFragment = new CounterFragment();
+        TimeLeftFragment timeLeftFragment = new TimeLeftFragment();
+
+        switch (activatedFragment) {
+            case "homeFragment":
+                fragmentTransaction.add(R.id.fragment_container, homeFragment);
+                break;
+            case "counterFragment":
+                fragmentTransaction.add(R.id.fragment_container, counterFragment);
+                break;
+            case "patentFragment":
+                fragmentTransaction.add(R.id.fragment_container, patentFragment);
+                break;
+            case "timeLeftFragment":
+                fragmentTransaction.add(R.id.fragment_container, timeLeftFragment);
+        }
+
         fragmentTransaction.commit();
 
     }
@@ -82,7 +103,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
@@ -93,10 +114,18 @@ public class HomeActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.log_out) {
-            logOut();
-            return true;
+        switch (id) {
+            case R.id.action_patent:
+                HomeActivity.setActiveFragment("patentFragment");
+                Intent myIntent = new Intent(this, HomeActivity.class);
+                startActivity(myIntent);
+                return true;
+            case R.id.action_settings:
+                Toast.makeText(HomeActivity.this, "Configuración.", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.log_out:
+                logOut();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -137,6 +166,10 @@ public class HomeActivity extends AppCompatActivity
         startActivity(loginIntent);
         finish();
 
+    }
+
+    public static void setActiveFragment(String value) {
+        activatedFragment = value;
     }
 
 }
