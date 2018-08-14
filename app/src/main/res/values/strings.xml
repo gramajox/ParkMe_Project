@@ -30,10 +30,7 @@
     <string name="pwd_mail">Ingrese su correo</string>
     <string name="back_btn">Volver al login</string>
     <string name="pwd_btn">Restablecer contraseña</string>
-    <string name="title_setup">Seleccione el tiempo deseado</string>
-    <string name="txt_patente">Patente:</string>
-    <string name="txt_duracion">Tiempo:</string>
-    <string name="txt_monto">Monto a abonar:</string>
+    <string name="txt_duracion">Tiempo de habilitación</string>
     <string name="txt_monto_calc">Monto a abonar</string>
     <string name="btn_cont">Continuar</string>
     <string name="title_activity_maps_api">Map</string>
@@ -41,4 +38,5 @@
     <string name="pay_txt">Continuar con el pago</string>
     <string name="patent_register">Registrar Matricula</string>
     <string name="reg_patent">Registrar Matrícula</string>
+    <string name="action_home">Inicio</string>
 </resources>

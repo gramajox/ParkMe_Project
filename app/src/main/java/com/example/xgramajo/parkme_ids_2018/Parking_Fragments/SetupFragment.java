@@ -27,11 +27,6 @@ public class SetupFragment extends Fragment {
     String numeroPatente;
     String montoAsociado;
 
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,8 +35,6 @@ public class SetupFragment extends Fragment {
         spinnerPatente = (Spinner) view.findViewById(R.id.spinner_patente);
         spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
         montoCalculado = (TextView) view.findViewById(R.id.txt_monto);
-
-
 
        //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
         spinnerDur.setOnItemSelectedListener(
@@ -59,6 +52,7 @@ public class SetupFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> spn) {
                     }
                 });
+
         spinnerPatente.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> spn2,
@@ -72,12 +66,6 @@ public class SetupFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> spn2) {
                     }
                 });
-
-
-
-
-
-
 
         return view;
     }

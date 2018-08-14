@@ -115,13 +115,13 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_patent:
-                HomeActivity.setActiveFragment("patentFragment");
-                Intent myIntent = new Intent(this, HomeActivity.class);
-                startActivity(myIntent);
+            case R.id.action_home:
+                HomeActivity.setHomeFragment();
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
-            case R.id.action_settings:
-                Toast.makeText(HomeActivity.this, "Configuración.", Toast.LENGTH_LONG).show();
+            case R.id.action_patent:
+                HomeActivity.setPatentFragment();
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
             case R.id.log_out:
                 logOut();
@@ -168,8 +168,17 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    public static void setActiveFragment(String value) {
-        activatedFragment = value;
+    public static void setHomeFragment() {
+        activatedFragment = "homeFragment";
+    }
+    public static void setCounterFragment() {
+        activatedFragment = "counterFragment";
+    }
+    public static void setPatentFragment() {
+        activatedFragment = "patentFragment";
+    }
+    public static void setTimeLeftFragment() {
+        activatedFragment = "timeLeftFragment";
     }
 
 }

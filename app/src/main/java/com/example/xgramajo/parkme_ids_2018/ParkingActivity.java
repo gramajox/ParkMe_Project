@@ -69,13 +69,13 @@ public class ParkingActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_patent:
-                HomeActivity.setActiveFragment("patentFragment");
-                Intent myIntent = new Intent(this, HomeActivity.class);
-                startActivity(myIntent);
+            case R.id.action_home:
+                //HomeActivity.setActiveFragment("homeFragment");
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
-            case R.id.action_settings:
-                Toast.makeText(ParkingActivity.this, "Configuración.", Toast.LENGTH_LONG).show();
+            case R.id.action_patent:
+                HomeActivity.setPatentFragment();
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
             case R.id.log_out:
                 logOut();

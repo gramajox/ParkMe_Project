@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 public class SummaryFragment extends Fragment {
@@ -34,7 +36,8 @@ public class SummaryFragment extends Fragment {
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.setActiveFragment("timeLeftFragment");
+                Toast.makeText(getContext(), "Mercado Pago -> DB Firebase", Toast.LENGTH_LONG).show();
+                HomeActivity.setTimeLeftFragment();
                 Intent myIntent = new Intent(getContext(), HomeActivity.class);
                 startActivity(myIntent);
             }

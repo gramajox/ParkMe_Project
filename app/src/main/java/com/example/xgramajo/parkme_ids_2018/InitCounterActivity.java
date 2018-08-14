@@ -25,7 +25,7 @@ public class InitCounterActivity extends AppCompatActivity {
         counterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.setActiveFragment("counterFragment");
+                HomeActivity.setCounterFragment();
                 Intent myIntent = new Intent(InitCounterActivity.this, HomeActivity.class);
                 startActivity(myIntent);
             }
@@ -47,13 +47,13 @@ public class InitCounterActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_patent:
-                HomeActivity.setActiveFragment("patentFragment");
-                Intent myIntent = new Intent(this, HomeActivity.class);
-                startActivity(myIntent);
+            case R.id.action_home:
+                HomeActivity.setHomeFragment();
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
-            case R.id.action_settings:
-                Toast.makeText(InitCounterActivity.this, "Configuración.", Toast.LENGTH_LONG).show();
+            case R.id.action_patent:
+                HomeActivity.setPatentFragment();
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
             case R.id.log_out:
                 logOut();

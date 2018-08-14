@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
@@ -31,7 +32,8 @@ public class TimeLeftFragment extends Fragment {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.setActiveFragment("homeFragment");
+                Toast.makeText(getContext(), "DB Firebase", Toast.LENGTH_LONG).show();
+                HomeActivity.setHomeFragment();
                 startActivity(new Intent(getContext(), HomeActivity.class));
             }
         });

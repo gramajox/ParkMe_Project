@@ -34,10 +34,11 @@ public class PatentFragment extends Fragment {
         registerPatent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "DB Firebase", Toast.LENGTH_LONG).show();
                 patentString = patentInput.getText().toString();
 
                 if (verifyPatent(patentString)) {
-                    HomeActivity.setActiveFragment("homeFragment");
+                    HomeActivity.setHomeFragment();
                     Intent myIntent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(myIntent);
                 } else {
