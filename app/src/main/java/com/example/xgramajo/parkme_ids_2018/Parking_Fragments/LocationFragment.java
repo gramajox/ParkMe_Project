@@ -1,28 +1,32 @@
 package com.example.xgramajo.parkme_ids_2018.Parking_Fragments;
 
+
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-
 import com.example.xgramajo.parkme_ids_2018.R;
 
-public class LocationFragment extends Fragment  {
+public class LocationFragment extends Fragment implements OnMapReadyCallback {
+
+
+    private EditText lat;
+    private EditText lon;
+    private EditText dir;
+    private String provider;
+
+    public LocationManager handle;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,4 +37,20 @@ public class LocationFragment extends Fragment  {
 
         return view;
     }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+    }
+
 }
