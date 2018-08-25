@@ -1,42 +1,42 @@
 package com.example.xgramajo.parkme_ids_2018;
 
 
-import android.annotation.SuppressLint;
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
+import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+public class InitCounterActivity extends AppCompatActivity implements OnMapReadyCallback{
 
-public class InitCounterActivity extends AppCompatActivity {
-
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final float DEFAULT_ZOOM = 15;
+    private boolean mLocationPermissionGranted;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private GoogleMap mMap; //hasta acá, es lo necesario para Maps.
 
     Button locationBtn, counterBtn;
-
-    private TextView lat;
-    private TextView lon;
-    private TextView dir;
-    private String provider;
-
-    public LocationManager handle;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class InitCounterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_init_counter);
 
         locationBtn = findViewById(R.id.location_btn);
-        counterBtn =  findViewById(R.id.btn_continue);
+        counterBtn = findViewById(R.id.btn_continue);
 
         counterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,12 +55,12 @@ public class InitCounterActivity extends AppCompatActivity {
             }
         });
 
-        lat = findViewById(R.id.lat);
-
-        lat.setText("test");
+        //Crear el mapa.
+        MapFragment mapFragment1 = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment1.getMapAsync(this);
 
     }
-
 
 
     @Override
@@ -103,66 +103,106 @@ public class InitCounterActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
         finish();
-
     }
 
 
+    /**
+     * Ubicación en el mapa.
+     * */
+    @Override
+    public void onMapReady(GoogleMap googleMap) { //Método que se ejecuta cuando el mapa está ready.
+        mMap = googleMap;
+        obtenerPermisos();
 
-
-
-
-
-
-
-    /**Intento obtener las coordenadas por GPS*/
-
-    @SuppressLint("MissingPermission")
-    public void IniciarServicio() {
-        handle = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria c = new Criteria();
-        c.setAccuracy(Criteria.ACCURACY_FINE);
-
-        provider = handle.getBestProvider(c, true);
-
-        handle.requestLocationUpdates(provider, 10000, 1, (LocationListener) this);
-        muestraPosicionActual();
-    }
-
-    public void muestraPosicionActual() {
-
-        @SuppressLint("MissingPermission") Location location = handle.getLastKnownLocation(provider);
-        if (location!=null){
-            lat.setText((int) location.getLatitude());
-            lon.setText((int) location.getLongitude());
-        } else {
-            lat.setText("Desconocido");
-            lon.setText("Desconocido");
-        }
-        setDirection(location);
-    }
-
-    public void setDirection(Location loc){
-        if (loc != null){
-            if(loc.getLatitude()!=0.0 && loc.getLongitude()!=0.0){
-                try{
-                    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                    List<Address> list = geocoder.getFromLocation(loc.getLatitude(),loc.getLongitude(),1);
-                    if(!list.isEmpty()){
-                        Address direccion = list.get(0);
-                        dir.setText(direccion.getAddressLine(0));
-                    }
-                } catch (IOException e){dir.setText(""+e);}
+        if (mLocationPermissionGranted) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                return; //Permisos necesarios.
             }
+            mMap.setMyLocationEnabled(true);
+            obtenerUbicacion();
+
         }
     }
 
-    public void detenerServicio(){
-        handle.removeUpdates((LocationListener) this);
-        lat.setText(null);
-        lon.setText(null);
-        dir.setText(null);
-        Toast.makeText(this,"Ubicación desactivada",Toast.LENGTH_SHORT).show();
+
+    private void obtenerUbicacion(){
+        Log.d("deviceLocation","Obteniendo Posición.");
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        try {
+            if (mLocationPermissionGranted) {
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Log.d("deviceLocation Task","Completada, Ubicación encontrada");
+                            Location currentLocation = (Location) task.getResult();
+
+                            ubicarCamara(new LatLng(
+                                    currentLocation.getLatitude(),
+                                    currentLocation.getLongitude()),
+                                    DEFAULT_ZOOM);
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e){
+            Log.d("Error","Error Posición"+e);
+            Toast.makeText(this,"No pudo obtenerse su ubicación",Toast.LENGTH_SHORT);
+        }
     }
 
-    /**Fin de mis intentos :)*/
+
+    private void ubicarCamara(LatLng latLng, float zoom){
+        Log.d("tag:","Ubicar cámara");
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+    }
+
+
+    /**
+     * Preguntar al usuario por Permisos
+     */
+    private void obtenerPermisos() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                                            android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                                            Manifest.permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED){
+                mLocationPermissionGranted = true;
+            } else {
+                ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    /**
+     * Manejo de Respuesta de los permisos.
+     * Sirve para avisar al usuario qué pasa si no nos da los permisos.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        //Code.
+    }
+
+    /**
+     * Fin Ubicación en el mapa.
+     * */
 }

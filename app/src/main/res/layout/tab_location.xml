@@ -36,12 +36,10 @@
 
     <!--Las primeras 3 lineas son para que funcione el mapa-->
     <fragment
-
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
-
-        android:name="com.google.android.gms.maps.MapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="346dp"
         android:layout_height="221dp"
         android:layout_marginEnd="8dp"
