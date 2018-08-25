@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

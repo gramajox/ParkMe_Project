@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Parking_Fragments.LocationFragment">
+    tools:context=".Parking.LocationFragment">
 
     <TextView
         android:id="@+id/txt_res_msj01"
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2"
-        tools:context="com.example.xgramajo.parkme_ids_2018.Parking_Fragments.LocationFragment" />
+        tools:context="com.example.xgramajo.parkme_ids_2018.Parking.LocationFragment" />
 
     <Button
         android:id="@+id/boton_pagar"

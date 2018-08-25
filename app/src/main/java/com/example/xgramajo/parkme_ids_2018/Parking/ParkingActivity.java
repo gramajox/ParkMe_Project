@@ -1,21 +1,21 @@
-package com.example.xgramajo.parkme_ids_2018;
+package com.example.xgramajo.parkme_ids_2018.Parking;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.Adapters.SectionsPageAdapter;
+import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
-import com.example.xgramajo.parkme_ids_2018.Parking_Fragments.LocationFragment;
-import com.example.xgramajo.parkme_ids_2018.Parking_Fragments.SetupFragment;
-import com.example.xgramajo.parkme_ids_2018.Parking_Fragments.SummaryFragment;
+import com.example.xgramajo.parkme_ids_2018.Parking.LocationFragment;
+import com.example.xgramajo.parkme_ids_2018.Parking.SetupFragment;
+import com.example.xgramajo.parkme_ids_2018.Parking.SummaryFragment;
+import com.example.xgramajo.parkme_ids_2018.R;
 
 public class ParkingActivity extends AppCompatActivity {
 

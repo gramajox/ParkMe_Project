@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Home_Fragments;
+package com.example.xgramajo.parkme_ids_2018.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.HomeActivity;
-import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PatentFragment extends Fragment {
 

@@ -23,7 +23,7 @@
             android:value="@integer/google_play_services_version" />
             <!--"@integer/google_play_services_version"-->
         <activity
-            android:name=".HomeActivity"
+            android:name=".Home.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -35,11 +35,12 @@
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Login.RegisterActivity" />
         <activity
-            android:name=".ParkingActivity"
+            android:name=".Parking.ParkingActivity"
             android:label="@string/title_activity_parking"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Login.PasswordActivity" />
-        <activity android:name=".InitCounterActivity"></activity>
+        <activity android:name=".Parking.InitCounterActivity" />
+        <activity android:name=".Parking.PaymentActivity"></activity>
     </application>
 
 </manifest>

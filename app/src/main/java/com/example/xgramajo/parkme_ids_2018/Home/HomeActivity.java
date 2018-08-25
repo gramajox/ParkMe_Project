@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018;
+package com.example.xgramajo.parkme_ids_2018.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.Home_Fragments.CounterFragment;
-import com.example.xgramajo.parkme_ids_2018.Home_Fragments.HomeFragment;
-import com.example.xgramajo.parkme_ids_2018.Home_Fragments.PatentFragment;
-import com.example.xgramajo.parkme_ids_2018.Home_Fragments.TimeLeftFragment;
 import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
+import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity

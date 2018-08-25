@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018;
+package com.example.xgramajo.parkme_ids_2018.Parking;
 
 
 import android.Manifest;
@@ -17,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
+import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

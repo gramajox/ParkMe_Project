@@ -1,21 +1,15 @@
-package com.example.xgramajo.parkme_ids_2018.Parking_Fragments;
+package com.example.xgramajo.parkme_ids_2018.Parking;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SetupFragment extends Fragment {
 

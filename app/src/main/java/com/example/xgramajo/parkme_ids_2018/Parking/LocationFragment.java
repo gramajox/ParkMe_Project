@@ -1,7 +1,7 @@
-package com.example.xgramajo.parkme_ids_2018.Parking_Fragments;
-
+package com.example.xgramajo.parkme_ids_2018.Parking;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -26,16 +26,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Objects;
+
 public class LocationFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final float DEFAULT_ZOOM = 15;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
     boolean mLocationPermissionGranted;
     private GoogleMap mMap;//Hasta acá necesario para Maps.
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_location, container, false);
 
@@ -59,7 +60,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
         obtenerPermisos();
 
         if (mLocationPermissionGranted) {
-            if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(this.getContext()), Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
                 return;
@@ -69,10 +70,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("ShowToast")
     private void obtenerUbicacion(){
         Log.d("deviceLocation","Obteniendo Posición.");
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
+        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(this.getContext()));
 
         try {
             if (mLocationPermissionGranted) {
@@ -82,12 +84,14 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Log.d("deviceLocation Task","Completada, Ubicación encontrada");
-                            Location currentLocation = (Location) task.getResult();
+                            if (task.getResult() != null) {
+                                Location currentLocation = (Location) task.getResult();
 
-                            ubicarCamara(new LatLng(
-                                            currentLocation.getLatitude(),
-                                            currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM);
+                                ubicarCamara(new LatLng(
+                                                currentLocation.getLatitude(),
+                                                currentLocation.getLongitude()),
+                                        DEFAULT_ZOOM);
+                            }
                         }
                     }
                 });
@@ -113,7 +117,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
          */
-        if (ContextCompat.checkSelfPermission(this.getContext(),
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(this.getContext()),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             if(ContextCompat.checkSelfPermission(this.getContext(),
@@ -121,12 +125,12 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
                     == PackageManager.PERMISSION_GRANTED){
                 mLocationPermissionGranted = true;
             } else {
-                ActivityCompat.requestPermissions(this.getActivity(),
+                ActivityCompat.requestPermissions(Objects.requireNonNull(this.getActivity()),
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             }
         } else {
-            ActivityCompat.requestPermissions(this.getActivity(),
+            ActivityCompat.requestPermissions(Objects.requireNonNull(this.getActivity()),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }

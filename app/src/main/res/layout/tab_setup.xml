@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Parking_Fragments.SetupFragment">
+    tools:context=".Parking.SetupFragment">
 
     <TextView
         android:id="@+id/txt_res_msj01"

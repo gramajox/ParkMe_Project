@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Home_Fragments;
+package com.example.xgramajo.parkme_ids_2018.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 public class CounterFragment extends Fragment {
