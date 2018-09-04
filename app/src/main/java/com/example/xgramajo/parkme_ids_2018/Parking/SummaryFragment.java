@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 public class SummaryFragment extends Fragment {
@@ -34,7 +35,9 @@ public class SummaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 /**HomeActivity.setTimeLeftFragment();*/
-                startActivity(new Intent(getContext(), PaymentActivity.class));
+                HomeActivity.setTimeLeftFragment();
+                startActivity(new Intent(getContext(), HomeActivity.class));
+                //startActivity(new Intent(getContext(), PaymentActivity.class));
             }
         });
 

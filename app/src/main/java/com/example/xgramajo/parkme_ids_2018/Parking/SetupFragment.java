@@ -1,5 +1,6 @@
 package com.example.xgramajo.parkme_ids_2018.Parking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 public class SetupFragment extends Fragment {
@@ -73,10 +75,30 @@ public class SetupFragment extends Fragment {
         return spinnerDur.getSelectedItem().toString();
     }
 
-
     public static String getMatricula (){
         return spinnerPatente.getSelectedItem().toString();
 
+    }
+
+    public static String getTime (){
+
+        String time = spinnerDur.getSelectedItem().toString();
+
+        switch (time) {
+            case "30 minutos":
+                return "30";
+            case "1 hora":
+                return "60";
+            case "1 hora 30 minutos":
+                return "90";
+            case "2 horas":
+                return "120";
+            case "2 horas 30 minutos":
+                return "150";
+            case "3 horas":
+                return "180";
+        }
+        return "0";
     }
 
 

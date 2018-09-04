@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
@@ -38,13 +40,18 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap; //hasta acá, es lo necesario para Maps.
 
+    private static Spinner spinnerPatent;
+    String currentPatent;
+
     Button locationBtn, counterBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_init_counter);
 
+        spinnerPatent = findViewById(R.id.spinner_patente);
         locationBtn = findViewById(R.id.location_btn);
         counterBtn = findViewById(R.id.btn_continue);
 
@@ -56,6 +63,24 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
                 startActivity(myIntent);
             }
         });
+
+        // Selecciona la patente actual
+        spinnerPatent.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> spn,
+                                               android.view.View v2,
+                                               int position,
+                                               long id2) {
+                        currentPatent = spn.getSelectedItem().toString();
+
+
+                    }
+                    public void onNothingSelected(AdapterView<?> spn) {
+                    }
+                });
+
+
+
 
         //Crear el mapa.
         MapFragment mapFragment1 = (MapFragment) getFragmentManager()
@@ -207,4 +232,10 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
     /**
      * Fin Ubicación en el mapa.
      * */
+
+    public static String getPatent (){
+        return spinnerPatent.getSelectedItem().toString();
+
+    }
+
 }

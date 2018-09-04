@@ -26,4 +26,13 @@
         <item>$30</item>
     </string-array>
 
+    <string-array name="array_milisegundos">
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>5400000</item>
+        <item>7200000</item>
+        <item>9000000</item>
+        <item>10800000</item>
+    </string-array>
+
 </resources>

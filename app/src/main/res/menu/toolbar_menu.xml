@@ -12,6 +12,11 @@
         android:orderInCategory="100"
         android:title="@string/reg_patent"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_timeleft"
+        android:orderInCategory="100"
+        android:title="Iniciar Countdown"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/log_out"
