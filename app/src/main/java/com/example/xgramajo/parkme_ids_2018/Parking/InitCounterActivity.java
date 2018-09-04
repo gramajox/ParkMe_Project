@@ -2,21 +2,24 @@ package com.example.xgramajo.parkme_ids_2018.Parking;
 
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
@@ -38,20 +41,17 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
     private static final float DEFAULT_ZOOM = 15;
     private boolean mLocationPermissionGranted;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private GoogleMap mMap; //hasta acá, es lo necesario para Maps.
+    private GoogleMap mMap;
+    private Location currentLocation;//hasta acá, es lo necesario para Maps.
 
-    private static Spinner spinnerPatent;
-    String currentPatent;
 
     Button locationBtn, counterBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_init_counter);
 
-        spinnerPatent = findViewById(R.id.spinner_patente);
         locationBtn = findViewById(R.id.location_btn);
         counterBtn = findViewById(R.id.btn_continue);
 
@@ -63,24 +63,6 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
                 startActivity(myIntent);
             }
         });
-
-        // Selecciona la patente actual
-        spinnerPatent.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    public void onItemSelected(AdapterView<?> spn,
-                                               android.view.View v2,
-                                               int position,
-                                               long id2) {
-                        currentPatent = spn.getSelectedItem().toString();
-
-
-                    }
-                    public void onNothingSelected(AdapterView<?> spn) {
-                    }
-                });
-
-
-
 
         //Crear el mapa.
         MapFragment mapFragment1 = (MapFragment) getFragmentManager()
@@ -139,8 +121,10 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) { //Método que se ejecuta cuando el mapa está ready.
         mMap = googleMap;
+        ubicarCamara(new LatLng(-40.7333,-64.9333),3);//Latitud y Longitud de Las Grutas
+                                                                    //Río Negro. Para Centrar el Mapa inicial.
+                                                                    //en Argentina.
         obtenerPermisos();
-
         if (mLocationPermissionGranted) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -149,10 +133,8 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
             }
             mMap.setMyLocationEnabled(true);
             obtenerUbicacion();
-
         }
     }
-
 
     private void obtenerUbicacion(){
         Log.d("deviceLocation","Obteniendo Posición.");
@@ -167,12 +149,16 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Log.d("deviceLocation Task","Completada, Ubicación encontrada");
-                            Location currentLocation = (Location) task.getResult();
+                            if (task.getResult() != null) {
+                                currentLocation = (Location) task.getResult();
 
-                            ubicarCamara(new LatLng(
-                                    currentLocation.getLatitude(),
-                                    currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM);
+                                ubicarCamara(new LatLng(
+                                                currentLocation.getLatitude(),
+                                                currentLocation.getLongitude()),
+                                        DEFAULT_ZOOM);
+                            } else {
+                                Log.d("deviceLocation Task:","task null");
+                            }
                         }
                     }
                 });
@@ -183,12 +169,11 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
-
+    //Este método ubica la vista del mapa mas cerca a las calles.
     private void ubicarCamara(LatLng latLng, float zoom){
         Log.d("tag:","Ubicar cámara");
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
     }
-
 
     /**
      * Preguntar al usuario por Permisos
@@ -233,9 +218,31 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
      * Fin Ubicación en el mapa.
      * */
 
-    public static String getPatent (){
-        return spinnerPatent.getSelectedItem().toString();
+    /***
+     * Chequeo del GPS ON/OFF, con AlertDialog
+     */
+    public void gpsact(View view){
+        Context context = this.getApplicationContext();
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Log.d("Tag:","GPS Activado");
+            obtenerUbicacion();
+        } else {
+            Log.d("Tag:","GPS Desactivado");
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Ups! GPS Desactivado :(");
+            builder.setMessage("Para poder utilizar esta función es necesario que actives el GPS");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
-
+    /**Fin Chequeo GPS ON/OFF*/
 }

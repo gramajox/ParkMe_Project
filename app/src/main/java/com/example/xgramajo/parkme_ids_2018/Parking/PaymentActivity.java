@@ -2,8 +2,8 @@ package com.example.xgramajo.parkme_ids_2018.Parking;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -45,7 +45,7 @@ public class PaymentActivity extends AppCompatActivity {
         preferenceMap.put("payer_email", "procrast.thor@gmail.com");
 
         LayoutUtil.showProgressLayout(activity);
-        CustomServer.createCheckoutPreference(activity, "https://us-central1-ingsoftproject-f89c2.cloudfunctions.net/paymentMercadoPago/", "/paymentMercadoPago", preferenceMap, new Callback<CheckoutPreference>() {
+        CustomServer.createCheckoutPreference(activity, "https://us-central1-ingsoftproject-f89c2.cloudfunctions.net", "/paymentMercadoPago/", preferenceMap, new Callback<CheckoutPreference>() {
             @Override
             public void success(CheckoutPreference checkoutPreference) {
                 startMercadoPagoCheckout(checkoutPreference);
@@ -63,6 +63,7 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void startMercadoPagoCheckout(CheckoutPreference checkoutPreference) {
         new MercadoPagoCheckout.Builder()
