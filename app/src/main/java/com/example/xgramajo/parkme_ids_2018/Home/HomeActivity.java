@@ -1,6 +1,5 @@
 package com.example.xgramajo.parkme_ids_2018.Home;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,15 +18,10 @@ import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseAuth mAuth;
-
-    android.support.v4.app.Fragment mContent;
-
-
 
     FirebaseAuth.AuthStateListener mAuthListener;
     private static String activatedFragment = "homeFragment";
@@ -41,13 +35,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //if (savedInstanceState != null) {
-            //Restore the fragment's instance
-            //mContent = getSupportFragmentManager().getFragment(savedInstanceState, "timeLeftFragment");
-        //}
-
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -124,29 +111,30 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+
             case R.id.action_home:
-                HomeActivity.setHomeFragment();
-                startActivity(new Intent(this, HomeActivity.class));
                 return true;
+
             case R.id.action_patent:
-                HomeActivity.setPatentFragment();
-                startActivity(new Intent(this, HomeActivity.class));
-                return true;
-            case R.id.action_timeleft:
-                HomeActivity.setTimeLeftFragment();
-                startActivity(new Intent(this, HomeActivity.class));
-                return true;
+                if (activatedFragment.equals("patentFragment")) {
+                    return true;
+                } else {
+                    HomeActivity.setPatentFragment();
+                    startActivity(new Intent(this, HomeActivity.class));
+                    finish();
+                    return true;
+                }
+
             case R.id.log_out:
                 logOut();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -172,6 +160,7 @@ public class HomeActivity extends AppCompatActivity
     private void logOut() {
         LoginActivity.logOut();
         sendToLogin();
+        finish();
     }
 
     private void sendToLogin() {
@@ -193,17 +182,5 @@ public class HomeActivity extends AppCompatActivity
     public static void setTimeLeftFragment() {
         activatedFragment = "timeLeftFragment";
     }
-
-    //@Override
-    //protected void onSaveInstanceState(Bundle outState) {
-        //super.onSaveInstanceState(outState);
-        //Save the fragment's instance
-        //getSupportFragmentManager().putFragment(outState, "timeLeftFragment", mContent);
-    //}
-
-
-
-
-
 
 }

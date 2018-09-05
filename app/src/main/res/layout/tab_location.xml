@@ -51,16 +51,41 @@
         tools:context="com.example.xgramajo.parkme_ids_2018.Parking.LocationFragment" />
 
     <Button
-        android:id="@+id/boton_pagar"
-        android:layout_width="0dp"
+        android:id="@+id/pay_btn"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="75dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/btn_cont"
-        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textColor="@color/mpsdk_white"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/park_counter"
+        android:textSize="18sp"
+        android:textColor="@color/mpsdk_white"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/back_txt"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:background="@color/mpsdk_transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

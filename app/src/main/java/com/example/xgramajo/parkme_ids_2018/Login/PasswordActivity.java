@@ -43,8 +43,8 @@ public class PasswordActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(PasswordActivity.this, "Se envió un mail para restablecer la contraseña.", Toast.LENGTH_SHORT).show();
-                                finish();
                                 startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
+                                finish();
                             }else{
                                 Toast.makeText(PasswordActivity.this, "Error al enviar el mail.", Toast.LENGTH_SHORT).show();
                             }
@@ -57,8 +57,8 @@ public class PasswordActivity extends AppCompatActivity {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
+                finish();
             }
         });
 

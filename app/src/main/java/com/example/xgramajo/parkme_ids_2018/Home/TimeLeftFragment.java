@@ -1,18 +1,14 @@
 package com.example.xgramajo.parkme_ids_2018.Home;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
-
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,35 +20,23 @@ import java.util.Locale;
 public class TimeLeftFragment extends Fragment {
 
     private TextView mTextViewCountDown;
-    private TextView mPatentCounter;
-
-
-    private CountDownTimer mCountDownTimer;
-
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
-    private long mEndTime;
 
     Button finishBtn;
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_time_left, container, false);
 
 
-        mPatentCounter = (TextView) view.findViewById(R.id.patent_counter);
+        TextView mPatentCounter = (TextView) view.findViewById(R.id.patent_counter);
 
         finishBtn = (Button) view.findViewById(R.id.finish_btn);
 
-
-
-
-
         // Inicialización de la vista para el contador
         mTextViewCountDown = (TextView) view.findViewById(R.id.text_view_countdown);
-
 
         mPatentCounter.setText(SetupFragment.getMatricula());
 
@@ -87,15 +71,14 @@ public class TimeLeftFragment extends Fragment {
         resetTimer();
     }
 
-
     private void startTimer(){
 
         // Tiempo final es igual al tiempo actual del sistema mas el tiempo restante
-        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+        long mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
 
         // inicia el temporizador
         // metodo disparado a intervalos regulares marcados en el intervalo del contador cada 1000 milisegundos (1 segundo)
-       mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
+        CountDownTimer mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
@@ -109,17 +92,14 @@ public class TimeLeftFragment extends Fragment {
                 // metodo disparado cuando se termina el tiempo
 
                 // Esto lo asignamos manualmente porque la clase CountDownTimer termina en 00:01
-                   mTimeLeftInMillis=0;
-                    // ver mas info en https://www.youtube.com/watch?v=MDuGwI6P-X8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd
-                    // Y en https://stackoverflow.com/questions/6810416/android-countdowntimer-shows-1-for-two-seconds
+                mTimeLeftInMillis = 0;
+                // ver mas info en https://www.youtube.com/watch?v=MDuGwI6P-X8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd
+                // Y en https://stackoverflow.com/questions/6810416/android-countdowntimer-shows-1-for-two-seconds
 
                 // actualiza el texto de la vista del contador
                 updateCountDownText();
-
-
-
             }
-        }.start(); // inicia el contador regresivo
+        }.start();
         //mTimerRunning = true; // activa el temporizador corriendo
     }
 
@@ -159,7 +139,5 @@ public class TimeLeftFragment extends Fragment {
         mTextViewCountDown.setText(timeLeftFormatted);
         //Pasa a la vista del contador el tiempo restante
     }
-
-
 
 }

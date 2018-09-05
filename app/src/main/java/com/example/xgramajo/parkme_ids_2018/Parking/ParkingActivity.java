@@ -19,9 +19,8 @@ import com.example.xgramajo.parkme_ids_2018.R;
 
 public class ParkingActivity extends AppCompatActivity {
 
+    public static boolean prePayment;
     private SectionsPageAdapter mSectionsPageAdapter;
-
-    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +29,13 @@ public class ParkingActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);/*
-        mViewPager.setAdapter(mSectionsPagerAdapter);*/
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
 
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -50,32 +46,29 @@ public class ParkingActivity extends AppCompatActivity {
 
         mSectionsPageAdapter.addFragment(new SetupFragment(), "Iniciar");
         mSectionsPageAdapter.addFragment(new LocationFragment(), "Lugar");
-        mSectionsPageAdapter.addFragment(new SummaryFragment(), "Resumen");
 
         viewPager.setAdapter(mSectionsPageAdapter);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
             case R.id.action_home:
-                //HomeActivity.setActiveFragment("homeFragment");
                 startActivity(new Intent(this, HomeActivity.class));
+                finish();
                 return true;
             case R.id.action_patent:
                 HomeActivity.setPatentFragment();
                 startActivity(new Intent(this, HomeActivity.class));
+                finish();
                 return true;
             case R.id.log_out:
                 logOut();
@@ -88,6 +81,7 @@ public class ParkingActivity extends AppCompatActivity {
     private void logOut() {
         LoginActivity.logOut();
         sendToLogin();
+        finish();
     }
 
     private void sendToLogin() {
@@ -95,6 +89,14 @@ public class ParkingActivity extends AppCompatActivity {
         startActivity(loginIntent);
         finish();
 
+    }
+
+    public static void setPrePaymentTrue() {
+        prePayment = true;
+    }
+
+    public static void setPrePaymentFalse() {
+        prePayment = false;
     }
 
 }

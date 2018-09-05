@@ -1,7 +1,7 @@
 package com.example.xgramajo.parkme_ids_2018.Parking;
 
-
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
@@ -40,10 +39,8 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final float DEFAULT_ZOOM = 15;
     private boolean mLocationPermissionGranted;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     private Location currentLocation;//hasta acá, es lo necesario para Maps.
-
 
     Button locationBtn, counterBtn;
 
@@ -61,6 +58,7 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
                 HomeActivity.setCounterFragment();
                 Intent myIntent = new Intent(InitCounterActivity.this, HomeActivity.class);
                 startActivity(myIntent);
+                finish();
             }
         });
 
@@ -90,10 +88,12 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
             case R.id.action_home:
                 HomeActivity.setHomeFragment();
                 startActivity(new Intent(this, HomeActivity.class));
+                finish();
                 return true;
             case R.id.action_patent:
                 HomeActivity.setPatentFragment();
                 startActivity(new Intent(this, HomeActivity.class));
+                finish();
                 return true;
             case R.id.log_out:
                 logOut();
@@ -106,6 +106,7 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
     private void logOut() {
         LoginActivity.logOut();
         sendToLogin();
+        finish();
     }
 
     private void sendToLogin() {
@@ -136,10 +137,11 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
+    @SuppressLint("ShowToast")
     private void obtenerUbicacion(){
         Log.d("deviceLocation","Obteniendo Posición.");
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try {
             if (mLocationPermissionGranted) {

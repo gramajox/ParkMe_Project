@@ -40,4 +40,15 @@
     <string name="reg_patent">Registrar Matrícula</string>
     <string name="action_home">Inicio</string>
     <string name="initialTimeCountdown">120</string>
+    <string name="back_txt">Atras</string>
+    <string name="prices_list_txt"><![CDATA[
+        LISTA DE PRECIOS\n
+        30min       —> $$$\n
+        1hr         —> $$$\n
+        1hr 30min   —> $$$\n
+        2hr         —> $$$\n
+        2hr 30min   —> $$$\n
+        3hr         —> $$$\n
+    ]]></string>
+    <string name="cancel_txt">Cancelar Operación</string>
 </resources>

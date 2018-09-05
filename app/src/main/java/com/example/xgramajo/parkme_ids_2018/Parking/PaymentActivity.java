@@ -1,11 +1,13 @@
 package com.example.xgramajo.parkme_ids_2018.Parking;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,11 +30,28 @@ import java.util.Map;
 public class PaymentActivity extends AppCompatActivity {
 
     final Activity activity = this;
+    Button cancelBtn;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        ((TextView) findViewById(R.id.mp_results)).setText(
+                "MATRÍCULA\n" + SetupFragment.getMatricula()+ "\n\n" +
+                "TIEMPO DE HABILITACIÓN\n" + SetupFragment.getSelectedTime() + "\n\n" +
+                "MONTO A ABONAR\n" + SetupFragment.getMount());
+
+        cancelBtn = (Button) findViewById(R.id.cancel_btn);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeActivity.setHomeFragment();
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            }
+        });
 
     }
 
@@ -40,12 +59,16 @@ public class PaymentActivity extends AppCompatActivity {
         // Create a map with payment’s details.
         Map<String, Object> preferenceMap = new HashMap<>();
         preferenceMap.put("item_id", "1");
-        preferenceMap.put("amount", new BigDecimal(10));
+        preferenceMap.put("amount", new BigDecimal(80));
         preferenceMap.put("currency_id", "ARS");
         preferenceMap.put("payer_email", "procrast.thor@gmail.com");
 
         LayoutUtil.showProgressLayout(activity);
-        CustomServer.createCheckoutPreference(activity, "https://us-central1-ingsoftproject-f89c2.cloudfunctions.net", "/paymentMercadoPago/", preferenceMap, new Callback<CheckoutPreference>() {
+        CustomServer.createCheckoutPreference(
+                activity,
+                "https://us-central1-ingsoftproject-f89c2.cloudfunctions.net",
+                "/paymentmercadopago",
+                preferenceMap, new Callback<CheckoutPreference>() {
             @Override
             public void success(CheckoutPreference checkoutPreference) {
                 startMercadoPagoCheckout(checkoutPreference);
@@ -64,7 +87,6 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
-
     private void startMercadoPagoCheckout(CheckoutPreference checkoutPreference) {
         new MercadoPagoCheckout.Builder()
                 .setActivity(activity)
@@ -72,6 +94,7 @@ public class PaymentActivity extends AppCompatActivity {
                 .startForPayment();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MercadoPagoCheckout.CHECKOUT_REQUEST_CODE) {
@@ -90,6 +113,4 @@ public class PaymentActivity extends AppCompatActivity {
             }
         }
     }
-
 }
-

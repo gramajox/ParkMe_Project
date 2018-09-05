@@ -2,6 +2,7 @@ package com.example.xgramajo.parkme_ids_2018.Parking;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -9,12 +10,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -35,22 +39,51 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
     boolean mLocationPermissionGranted;
     private GoogleMap mMap;//Hasta acá necesario para Maps.
 
+    Button startBtn, payBtn, backBtn;
+    ViewPager viewPager;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_location, container, false);
 
+        payBtn = (Button) view.findViewById(R.id.pay_btn);
+        backBtn = (Button) view.findViewById(R.id.back_btn);
+        startBtn = (Button) view.findViewById(R.id.btn_start);
+
+        viewPager = (ViewPager) Objects.requireNonNull(getActivity()).findViewById(R.id.container);
 
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getChildFragmentManager()
                         .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);//Crear el Mapa
 
-        return view;
-    }
+        setInfo(ParkingActivity.prePayment);
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeActivity.setCounterFragment();
+                Intent myIntent = new Intent(getContext(), HomeActivity.class);
+                startActivity(myIntent);
+                getActivity().finish();
+            }
+        });
+
+        payBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), PaymentActivity.class));
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0);
+            }
+        });
+
+        return view;
     }
 
     @Override
@@ -133,6 +166,18 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
             ActivityCompat.requestPermissions(Objects.requireNonNull(this.getActivity()),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    private void setInfo(boolean prePayment) {
+        if (prePayment) {
+
+            startBtn.setVisibility(View.GONE);
+
+        } else {
+
+            payBtn.setVisibility(View.GONE);
+
         }
     }
 
