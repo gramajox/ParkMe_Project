@@ -247,4 +247,5 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
         }
     }
     /**Fin Chequeo GPS ON/OFF*/
+    /**Chequeando Commit*/
 }
