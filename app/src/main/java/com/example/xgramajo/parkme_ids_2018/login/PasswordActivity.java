@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Login;
+package com.example.xgramajo.parkme_ids_2018.login;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;

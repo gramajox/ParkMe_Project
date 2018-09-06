@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Home;
+package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.content.Intent;
 import android.os.Bundle;

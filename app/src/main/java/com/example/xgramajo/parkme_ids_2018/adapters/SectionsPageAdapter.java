@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Adapters;
+package com.example.xgramajo.parkme_ids_2018.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

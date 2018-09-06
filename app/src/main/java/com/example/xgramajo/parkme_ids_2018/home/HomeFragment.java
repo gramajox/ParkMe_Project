@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Home;
+package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.example.xgramajo.parkme_ids_2018.Parking.ParkingActivity;
+import com.example.xgramajo.parkme_ids_2018.parking.ParkingActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 public class HomeFragment extends Fragment {

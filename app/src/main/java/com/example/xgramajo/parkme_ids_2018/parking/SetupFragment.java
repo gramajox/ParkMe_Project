@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Parking;
+package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 import java.util.Objects;

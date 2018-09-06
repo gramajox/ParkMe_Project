@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Parking.InitCounterActivity">
+    tools:context=".parking.InitCounterActivity">
 
     <TextView
         android:id="@+id/textView5"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_btn"
-        tools:context="com.example.xgramajo.parkme_ids_2018.Parking.InitCounterActivity" />
+        tools:context="com.example.xgramajo.parkme_ids_2018.parking.InitCounterActivity" />
 
     <Button
         android:id="@+id/btn_continue"

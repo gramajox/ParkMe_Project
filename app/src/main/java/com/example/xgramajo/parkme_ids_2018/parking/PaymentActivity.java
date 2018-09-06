@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Parking;
+package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.mercadopago.callbacks.Callback;
 import com.mercadopago.core.CustomServer;

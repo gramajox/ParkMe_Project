@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Login;
+package com.example.xgramajo.parkme_ids_2018.login;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

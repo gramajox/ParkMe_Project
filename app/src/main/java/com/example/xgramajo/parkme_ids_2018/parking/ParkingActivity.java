@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Parking;
+package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -9,12 +9,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.xgramajo.parkme_ids_2018.Adapters.SectionsPageAdapter;
-import com.example.xgramajo.parkme_ids_2018.Home.HomeActivity;
-import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
-import com.example.xgramajo.parkme_ids_2018.Parking.LocationFragment;
-import com.example.xgramajo.parkme_ids_2018.Parking.SetupFragment;
-import com.example.xgramajo.parkme_ids_2018.Parking.SummaryFragment;
+import com.example.xgramajo.parkme_ids_2018.adapters.SectionsPageAdapter;
+import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 public class ParkingActivity extends AppCompatActivity {

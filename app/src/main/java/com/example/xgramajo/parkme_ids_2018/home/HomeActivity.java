@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Home;
+package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.xgramajo.parkme_ids_2018.Login.LoginActivity;
+import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.firebase.auth.FirebaseAuth;
 

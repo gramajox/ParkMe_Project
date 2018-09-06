@@ -1,4 +1,4 @@
-package com.example.xgramajo.parkme_ids_2018.Home;
+package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.Parking.SetupFragment;
+import com.example.xgramajo.parkme_ids_2018.parking.SetupFragment;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 import java.util.Locale;
