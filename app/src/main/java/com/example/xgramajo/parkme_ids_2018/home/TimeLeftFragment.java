@@ -22,9 +22,7 @@ public class TimeLeftFragment extends Fragment {
     private TextView mTextViewCountDown;
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
-
     Button finishBtn;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
