@@ -113,6 +113,9 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
 
             case R.id.action_home:
+                HomeActivity.setHomeFragment();
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
                 return true;
 
             case R.id.action_patent:
