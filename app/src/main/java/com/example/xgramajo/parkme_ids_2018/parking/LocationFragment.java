@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.PaymentActivity;
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.android.gms.location.FusedLocationProviderClient;

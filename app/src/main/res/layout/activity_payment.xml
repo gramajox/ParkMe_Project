@@ -5,10 +5,10 @@
     android:layout_width='match_parent'
     android:layout_height='match_parent'
     android:orientation='vertical'
-    tools:context='.parking.PaymentActivity'>
-
+    tools:context='.PaymentActivity'>
+<!--
     <include layout="@layout/mpsdk_view_progress_bar"/>
-
+-->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/mpsdkRegularLayout"
         android:layout_width="match_parent"
@@ -42,16 +42,15 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:gravity='center'
-            android:onClick='submit'
             android:text="@string/pay_txt"
-            android:textColor="@color/mpsdk_white"
+            android:textColor="@color/white"
             android:background="@color/colorAccent"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/cancel_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
-
+        <!--android:onClick='submit'-->
         <Button
             android:id="@+id/cancel_btn"
             android:layout_width='match_parent'
@@ -59,7 +58,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:background="@color/mpsdk_transparent"
+            android:background="@color/transparent"
             android:gravity='center'
             android:text="@string/cancel_txt"
             app:layout_constraintBottom_toBottomOf="parent"

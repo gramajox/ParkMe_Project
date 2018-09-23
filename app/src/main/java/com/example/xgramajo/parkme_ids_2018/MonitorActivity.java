@@ -1,53 +1,26 @@
-package com.example.xgramajo.parkme_ids_2018.home;
+package com.example.xgramajo.parkme_ids_2018;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import com.example.xgramajo.parkme_ids_2018.EnableActivity;
-import com.example.xgramajo.parkme_ids_2018.MonitorActivity;
-import com.example.xgramajo.parkme_ids_2018.PatentActivity;
+
+import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
-import com.example.xgramajo.parkme_ids_2018.R;
-import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    FirebaseAuth mAuth;
-
-    FirebaseAuth.AuthStateListener mAuthListener;
-    private static String activatedFragment = "homeFragment";
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
+public class MonitorActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null) {
-                    sendToLogin();
-                }
-            }
-        };
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_monitor);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,27 +33,6 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        HomeFragment homeFragment = new HomeFragment();
-        CounterFragment counterFragment = new CounterFragment();
-        TimeLeftFragment timeLeftFragment = new TimeLeftFragment();
-
-        switch (activatedFragment) {
-            case "homeFragment":
-                fragmentTransaction.add(R.id.fragment_container, homeFragment);
-                break;
-            case "counterFragment":
-                fragmentTransaction.add(R.id.fragment_container, counterFragment);
-                break;
-            case "timeLeftFragment":
-                fragmentTransaction.add(R.id.fragment_container, timeLeftFragment);
-                break;
-        }
-
-        fragmentTransaction.commit();
 
     }
 
@@ -101,13 +53,15 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            
+
             startActivity(new Intent(this, HomeActivity.class));
+            finish();
             return true;
 
         } else if (id == R.id.nav_patent) {
 
             startActivity(new Intent(this, PatentActivity.class));
+            finish();
             return true;
 
         } else if (id == R.id.nav_location) {
@@ -120,11 +74,13 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_monitor) {
 
             startActivity(new Intent(this, MonitorActivity.class));
+            finish();
             return true;
 
         } else if (id == R.id.nav_enable) {
 
             startActivity(new Intent(this, EnableActivity.class));
+            finish();
             return true;
 
         }
@@ -145,15 +101,5 @@ public class HomeActivity extends AppCompatActivity
         startActivity(loginIntent);
         finish();
 
-    }
-
-    public static void setHomeFragment() {
-        activatedFragment = "homeFragment";
-    }
-    public static void setCounterFragment() {
-        activatedFragment = "counterFragment";
-    }
-    public static void setTimeLeftFragment() {
-        activatedFragment = "timeLeftFragment";
     }
 }

@@ -1,18 +1,14 @@
 package com.example.xgramajo.parkme_ids_2018.parking;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import com.example.xgramajo.parkme_ids_2018.adapters.SectionsPageAdapter;
-import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
-import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
+
+import java.util.Objects;
 
 public class ParkingActivity extends AppCompatActivity {
 
@@ -26,6 +22,8 @@ public class ParkingActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
@@ -48,44 +46,9 @@ public class ParkingActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_home:
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
-                return true;
-            case R.id.action_patent:
-                HomeActivity.setPatentFragment();
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
-                return true;
-            case R.id.log_out:
-                logOut();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logOut() {
-        LoginActivity.logOut();
-        sendToLogin();
-        finish();
-    }
-
-    private void sendToLogin() {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-
     }
 
     public static void setPrePaymentTrue() {

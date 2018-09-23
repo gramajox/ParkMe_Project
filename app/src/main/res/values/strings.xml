@@ -51,4 +51,5 @@
         3hr         —> $$$\n
     ]]></string>
     <string name="cancel_txt">Cancelar Operación</string>
+    <string name="title_activity_patent">PatentActivity</string>
 </resources>

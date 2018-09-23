@@ -58,7 +58,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/btn_cont"
         android:textSize="18sp"
-        android:textColor="@color/mpsdk_white"
+        android:textColor="@color/white"
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -71,7 +71,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/park_counter"
         android:textSize="18sp"
-        android:textColor="@color/mpsdk_white"
+        android:textColor="@color/white"
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -85,7 +85,7 @@
         android:text="@string/back_txt"
         android:textAllCaps="false"
         android:textSize="18sp"
-        android:background="@color/mpsdk_transparent"
+        android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
