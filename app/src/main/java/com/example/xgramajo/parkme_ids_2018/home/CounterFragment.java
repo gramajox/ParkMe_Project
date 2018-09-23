@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.R;
+import com.example.xgramajo.parkme_ids_2018.parking.SetupFragment;
 
 public class CounterFragment extends Fragment {
 
@@ -30,7 +31,11 @@ public class CounterFragment extends Fragment {
         stopBtn =       (Button) view.findViewById(R.id.stop_btn);
         payBtn =        (Button) view.findViewById(R.id.pay_btn);
 
+        patentCounter.setText(TimeLeftFragment.getMatricula());
+
         chronometer.start();
+
+
 
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +52,8 @@ public class CounterFragment extends Fragment {
                 startActivity(new Intent(getContext(), HomeActivity.class));
             }
         });
+
+
 
         return view;
     }

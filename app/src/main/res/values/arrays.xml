@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="array_patentes">
+        <item>Seleccione una patente</item>
         <item>MBU 641</item>
         <item>BPX 504</item>
         <item>AB 221 KW</item>
@@ -9,6 +10,7 @@
     </string-array>
 
     <string-array name="array_tiempo">
+        <item>Seleccione un tiempo</item>
         <item>30 minutos</item>
         <item>1 hora</item>
         <item>1 hora 30 minutos</item>

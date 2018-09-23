@@ -1,6 +1,7 @@
 package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -8,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +23,18 @@ import java.util.Locale;
 public class TimeLeftFragment extends Fragment {
 
     private TextView mTextViewCountDown;
+    private TextView mTextViewMontoAbonar;
+    private static Spinner spinnerPatent;
+
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
     Button finishBtn;
+
+    String numeroPatente;
+    int indexSpinnerPatente;
+    Boolean patenteIsSelected;
+    TextView itemZero;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,6 +47,10 @@ public class TimeLeftFragment extends Fragment {
 
         // Inicialización de la vista para el contador
         mTextViewCountDown = (TextView) view.findViewById(R.id.text_view_countdown);
+
+        spinnerPatent = (Spinner) view.findViewById(R.id.spinner_patente);
+        //mTextViewMontoAbonar = (TextView) view.findViewById(R.id.text_view_montoAbonar);
+
 
         mPatentCounter.setText(SetupFragment.getMatricula());
 
@@ -58,6 +74,32 @@ public class TimeLeftFragment extends Fragment {
                 startActivity(new Intent(getContext(), HomeActivity.class));
             }
         });
+
+        spinnerPatent.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> spn2,
+                                               android.view.View v2,
+                                               int position,
+                                               long id2) {
+                        indexSpinnerPatente = spn2.getSelectedItemPosition();
+                        if  (indexSpinnerPatente == 0) {
+                            itemZero = (TextView) spn2.getSelectedView();
+                            itemZero.setTextColor(Color.GRAY);
+                            patenteIsSelected = false;
+                        }
+                        else
+                        {
+                            numeroPatente = spn2.getSelectedItem().toString();
+                            patenteIsSelected = true;
+                        }
+
+
+
+
+                    }
+                    public void onNothingSelected(AdapterView<?> spn2) {
+                    }
+                });
 
         return view;
     }
@@ -136,6 +178,10 @@ public class TimeLeftFragment extends Fragment {
 
         mTextViewCountDown.setText(timeLeftFormatted);
         //Pasa a la vista del contador el tiempo restante
+    }
+
+    public static String getMatricula (){
+        return spinnerPatent.getSelectedItem().toString();
     }
 
 }

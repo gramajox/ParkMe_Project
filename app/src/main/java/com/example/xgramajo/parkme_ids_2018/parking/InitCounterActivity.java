@@ -52,9 +52,11 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
         locationBtn = findViewById(R.id.location_btn);
         counterBtn = findViewById(R.id.btn_continue);
 
+
         counterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 HomeActivity.setCounterFragment();
                 Intent myIntent = new Intent(InitCounterActivity.this, HomeActivity.class);
                 startActivity(myIntent);
@@ -248,4 +250,6 @@ public class InitCounterActivity extends AppCompatActivity implements OnMapReady
     }
     /**Fin Chequeo GPS ON/OFF*/
     /**Chequeando Commit*/
+
+
 }
