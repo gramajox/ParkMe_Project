@@ -31,24 +31,20 @@ import java.util.ArrayList;
 public class MonitorActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    FirebaseAuth mAuth;
-    Button registerPatent;
-    EditText patentInput;
-    String patentString;
     ListView userPatents;
-
     ArrayList<String> lista = new ArrayList<>();
     ArrayAdapter<String> adapter;
 
     FirebaseUser currentUser;
-    String userId;
-
     DatabaseReference mRootReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor);
+
+        mRootReference = FirebaseDatabase.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,31 +58,18 @@ public class MonitorActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //inicio la referencia en el nodo principal
-        mRootReference = FirebaseDatabase.getInstance().getReference();
-
-        //PARA CARGAR MATRÍCULAS
-
-        //obtengo información del perfil del usuario
-        currentUser = mAuth.getInstance().getCurrentUser();
-        //obtengo ID del perfil del usuario
-        userId = currentUser.getUid();
-        //en el xml es el id del botón
-        registerPatent = findViewById(R.id.patent_btn);
-        //en el xml es el id del texto ingresado
-        patentInput = findViewById(R.id.input_patente);
-
         //PARA LEER LISTA DE PATENTES
 
         userPatents = findViewById(R.id.list_patent);
-        userPatents.setAdapter(adapter);
+
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
-        mRootReference.child("Usuarios").child(userId).child("Matrículas").addChildEventListener(new ChildEventListener() {
+        userPatents.setAdapter(adapter);
+
+        mRootReference.child("Usuarios").child(currentUser.getUid()).child("Matriculas").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 String string = dataSnapshot.getValue(String.class);
-                lista.add(string);
-                adapter.notifyDataSetChanged();
+                adapter.add(string);
             }
 
             @Override
@@ -97,8 +80,7 @@ public class MonitorActivity extends AppCompatActivity
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 String string = dataSnapshot.getValue(String.class);
-                lista.remove(string);
-                adapter.notifyDataSetChanged();
+                adapter.remove(string);
             }
 
             @Override
