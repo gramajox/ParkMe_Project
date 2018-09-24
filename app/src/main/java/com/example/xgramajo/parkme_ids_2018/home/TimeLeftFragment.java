@@ -180,8 +180,4 @@ public class TimeLeftFragment extends Fragment {
         //Pasa a la vista del contador el tiempo restante
     }
 
-    public static String getMatricula (){
-        return spinnerPatent.getSelectedItem().toString();
-    }
-
 }

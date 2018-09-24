@@ -2,6 +2,7 @@ package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
@@ -31,10 +33,14 @@ public class SetupFragment extends Fragment {
     String tiempoSeleccionado;
     String numeroPatente;
     String montoAsociado;
-    Button contBtn, backBtn;
+    Button contBtn;
     ViewPager viewPager;
     LinearLayout setupLayout;
     TextView priceList;
+    Boolean timeIsSelected;
+    Boolean carLicenseIsSelected;
+    TextView tv, tv2;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,6 +48,7 @@ public class SetupFragment extends Fragment {
         View view = inflater.inflate(R.layout.tab_setup, container, false);
 
         contBtn = (Button) view.findViewById(R.id.btn_continue);
+
         viewPager = (ViewPager) Objects.requireNonNull(getActivity()).findViewById(R.id.container);
         spinnerPatente = (Spinner) view.findViewById(R.id.spinner_patente);
         spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
@@ -59,8 +66,22 @@ public class SetupFragment extends Fragment {
                                                android.view.View v,
                                                int posicion,
                                                long id) {
+
+
+
                         tiempoSeleccionado = spn.getSelectedItem().toString();
                         posicion = spn.getSelectedItemPosition();
+
+                            if (posicion == 0){
+
+                                ((TextView) v).setTextColor(Color.GRAY);
+                                timeIsSelected = false;
+                            }
+                            else {
+                                ((TextView) v).setTextColor(Color.BLACK);
+                                timeIsSelected = true;
+                            }
+
                         arrayMontos = getResources().getStringArray(R.array.array_montos);
                         montoAsociado = arrayMontos[posicion];
                         montoCalculado.setText(montoAsociado);
@@ -73,10 +94,21 @@ public class SetupFragment extends Fragment {
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> spn2,
                                                android.view.View v2,
-                                               int position,
+                                               int posicion2,
                                                long id2) {
-                     numeroPatente = spn2.getSelectedItem().toString();
 
+
+                        numeroPatente = spn2.getSelectedItem().toString();
+                        posicion2 = spn2.getSelectedItemPosition();
+                        if (posicion2 == 0){
+
+                            ((TextView) v2).setTextColor(Color.GRAY);
+                            carLicenseIsSelected = false;
+                        }
+                        else {
+                            ((TextView) v2).setTextColor(Color.BLACK);
+                            carLicenseIsSelected = true;
+                        }
 
                     }
                     public void onNothingSelected(AdapterView<?> spn2) {
@@ -86,9 +118,27 @@ public class SetupFragment extends Fragment {
         contBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(1);
+                if (carLicenseIsSelected == false) {
+                    Toast.makeText(getActivity(), "Seleccione su patente", Toast.LENGTH_LONG).show();
+                } else {
+                    if (timeIsSelected == null) {
+                        HomeActivity.setCounterFragment();
+                        startActivity(new Intent(getContext(), HomeActivity.class));
+                    } else {
+                        if (timeIsSelected == false){
+                            Toast.makeText(getActivity(), "Seleccione su tiempo", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            viewPager.setCurrentItem(1);
+                        }
+
+
+                    }
+                }
             }
         });
+
+
 
         return view;
     }

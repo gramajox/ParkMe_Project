@@ -20,6 +20,7 @@ public class CounterFragment extends Fragment {
     TextView priceCounter, patentCounter;
     Button stopBtn, payBtn;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class CounterFragment extends Fragment {
         stopBtn =       (Button) view.findViewById(R.id.stop_btn);
         payBtn =        (Button) view.findViewById(R.id.pay_btn);
 
-        patentCounter.setText(TimeLeftFragment.getMatricula());
+        //patentCounter.setText(TimeLeftFragment.getMatricula());
 
         chronometer.start();
 
