@@ -10,12 +10,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.support.annotation.Nullable;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 
+import java.util.ArrayList;
+
 public class MonitorActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
+
+    FirebaseAuth mAuth;
+    Button registerPatent;
+    EditText patentInput;
+    String patentString;
+    ListView userPatents;
+
+    ArrayList<String> lista = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+
+    FirebaseUser currentUser;
+    String userId;
+
+    DatabaseReference mRootReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +61,56 @@ public class MonitorActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //inicio la referencia en el nodo principal
+        mRootReference = FirebaseDatabase.getInstance().getReference();
+
+        //PARA CARGAR MATRÍCULAS
+
+        //obtengo información del perfil del usuario
+        currentUser = mAuth.getInstance().getCurrentUser();
+        //obtengo ID del perfil del usuario
+        userId = currentUser.getUid();
+        //en el xml es el id del botón
+        registerPatent = findViewById(R.id.patent_btn);
+        //en el xml es el id del texto ingresado
+        patentInput = findViewById(R.id.input_patente);
+
+        //PARA LEER LISTA DE PATENTES
+
+        userPatents = findViewById(R.id.list_patent);
+        userPatents.setAdapter(adapter);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
+        mRootReference.child("Usuarios").child(userId).child("Matrículas").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String string = dataSnapshot.getValue(String.class);
+                lista.add(string);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                String string = dataSnapshot.getValue(String.class);
+                lista.remove(string);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
