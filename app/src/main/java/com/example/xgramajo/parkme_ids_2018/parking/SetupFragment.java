@@ -118,22 +118,20 @@ public class SetupFragment extends Fragment {
         contBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (carLicenseIsSelected == false) {
+                if (!carLicenseIsSelected) {
                     Toast.makeText(getActivity(), "Seleccione su patente", Toast.LENGTH_LONG).show();
                 } else {
                     if (timeIsSelected == null) {
-                        HomeActivity.setCounterFragment();
-                        startActivity(new Intent(getContext(), HomeActivity.class));
+                        viewPager.setCurrentItem(1);
                     } else {
-                        if (timeIsSelected == false){
+                        if (!timeIsSelected){
                             Toast.makeText(getActivity(), "Seleccione su tiempo", Toast.LENGTH_LONG).show();
                         }
                         else {
                             viewPager.setCurrentItem(1);
                         }
-
-
                     }
+
                 }
             }
         });

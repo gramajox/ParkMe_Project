@@ -2,6 +2,7 @@ package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ public class CounterFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
 
@@ -35,8 +36,6 @@ public class CounterFragment extends Fragment {
         //patentCounter.setText(TimeLeftFragment.getMatricula());
 
         chronometer.start();
-
-
 
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,9 +53,6 @@ public class CounterFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
-
 }
