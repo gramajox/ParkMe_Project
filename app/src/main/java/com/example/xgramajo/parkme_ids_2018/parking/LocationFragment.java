@@ -2,9 +2,13 @@ package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -33,23 +37,28 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
 
-public class LocationFragment extends Fragment implements OnMapReadyCallback {
+public class LocationFragment extends Fragment implements OnMapReadyCallback,
+        GoogleMap.OnMyLocationClickListener,
+        GoogleMap.OnMyLocationButtonClickListener {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final float DEFAULT_ZOOM = 15;
     boolean mLocationPermissionGranted;
-    private GoogleMap mMap;//Hasta acá necesario para Maps.
+    private GoogleMap mMap;
+    private Location currentLocation;//Hasta acá necesario para Maps.
 
     Button startBtn, payBtn, backBtn;
     ViewPager viewPager;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_location, container, false);
 
-        payBtn = (Button) view.findViewById(R.id.pay_btn);
-        backBtn = (Button) view.findViewById(R.id.back_btn);
-        startBtn = (Button) view.findViewById(R.id.btn_start);
+        payBtn = view.findViewById(R.id.pay_btn);
+        backBtn = view.findViewById(R.id.back_btn);
+        startBtn = view.findViewById(R.id.btn_start);
+
 
         viewPager = (ViewPager) Objects.requireNonNull(getActivity()).findViewById(R.id.container);
 
@@ -88,7 +97,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {//Método que se ejecuta al estar el mapa Ready.
+    public void onMapReady(GoogleMap googleMap) {/**Método que se ejecuta al estar el mapa Ready.*/
         mMap = googleMap;
 
         obtenerPermisos();
@@ -99,16 +108,21 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
                     != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            mMap.setMyLocationEnabled(true);
+            mMap.setMyLocationEnabled(true); //Este metodo activa el boton GPS dentro del Mapa
+            mMap.setOnMyLocationButtonClickListener(this); //Función cuando se presiona
+            mMap.setOnMyLocationClickListener(this); //Aún no lo c.
             obtenerUbicacion();
         }
     }
 
+
+    /**Función para obtener ubicación cuando tocamos Localizar :)*/
     @SuppressLint("ShowToast")
     private void obtenerUbicacion(){
         Log.d("deviceLocation","Obteniendo Posición.");
 
-        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(this.getContext()));
+        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices
+                .getFusedLocationProviderClient(Objects.requireNonNull(this.getContext()));
 
         try {
             if (mLocationPermissionGranted) {
@@ -117,14 +131,18 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
-                            Log.d("deviceLocation Task","Completada, Ubicación encontrada");
+                            Log.d("deviceLocation Task","Completada, analiza si dió null");
                             if (task.getResult() != null) {
-                                Location currentLocation = (Location) task.getResult();
+                                currentLocation = (Location) task.getResult();
+                                Log.d("deviceLocation Task", String.valueOf(currentLocation.getLatitude()));
 
                                 ubicarCamara(new LatLng(
                                                 currentLocation.getLatitude(),
                                                 currentLocation.getLongitude()),
                                         DEFAULT_ZOOM);
+
+                            } else {
+                                Log.d("deviceLocation Task: ","Dió null");
                             }
                         }
                     }
@@ -170,6 +188,44 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+
+    /***
+     * Chequeo del GPS ON/OFF, con AlertDialog
+     */
+    public void gpsact(View view){
+        Context context = this.getContext();
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Log.d("Tag:","GPS Activado");
+            obtenerUbicacion();
+        } else {
+            Log.d("Tag:","GPS Desactivado");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setTitle("Ups! GPS Desactivado :(");
+            builder.setMessage("Para poder utilizar esta función es necesario que actives el GPS");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+    /**Fin Chequeo GPS ON/OFF*/
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {} //Por ahora no la usamos
+
+    @Override /**Función del boton de localizar que está sobre el mapa*/
+    public boolean onMyLocationButtonClick() {
+        Log.d("Boton Localizar GPS: ", "clickeado");
+        gpsact(getView());
+        return false;
+    }
+
+
     private void setInfo(boolean prePayment) {
         if (prePayment) {
 
@@ -181,5 +237,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
 
         }
     }
+
 
 }
