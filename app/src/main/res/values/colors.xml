@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--COLORES MERCADO PAGO-->
+    <color name="black">#000000</color>
+    <color name="button">#00B2EB</color>
+    <color name="button_pressed">#0277BD</color>
+    <color name="button_disabled">#CCCCCC</color>
+    <color name="examples_green">#5bcc55</color>
 </resources>

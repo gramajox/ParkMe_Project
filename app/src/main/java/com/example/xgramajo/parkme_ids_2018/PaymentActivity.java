@@ -9,18 +9,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.mercadopago.utils.OneTapSamples;
 import com.example.xgramajo.parkme_ids_2018.parking.SetupFragment;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
+
 import java.util.Objects;
 
 public class PaymentActivity extends AppCompatActivity {
 
     Button cancelBtn, sumitBtn;
 
-    final int PAYMENT_REQUEST_CODE = 1;
-
-    final MercadoPagoCheckout checkout = new MercadoPagoCheckout.Builder("4183467068208481", "VGPmDSBjKK2XKwgOpjl1W0ggTRVORn9c")
-            .build();
+    private static final int REQ_CODE_CHECKOUT = 1;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -36,8 +35,10 @@ public class PaymentActivity extends AppCompatActivity {
 
         sumitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                checkout.startPayment(v.getContext(), PAYMENT_REQUEST_CODE);
+            public void onClick(View v) {/**
+                //startActivity(new Intent(getApplicationContext(), SelectCheckoutActivity.class));*/
+                MercadoPagoCheckout.Builder mercadoCheckout = OneTapSamples.getMercadoPagoCheckoutBuilder();
+                mercadoCheckout.build().startPayment(PaymentActivity.this, REQ_CODE_CHECKOUT);
             }
         });
 
