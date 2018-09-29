@@ -23,9 +23,16 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseAuth mAuth;
-
     FirebaseAuth.AuthStateListener mAuthListener;
+
     private static String activatedFragment = "homeFragment";
+
+    FragmentManager     fragmentManager     = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+    HomeFragment        homeFragment        = new HomeFragment();
+    CounterFragment     counterFragment     = new CounterFragment();
+    TimeLeftFragment    timeLeftFragment    = new TimeLeftFragment();
 
     @Override
     protected void onStart() {
@@ -61,13 +68,6 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        HomeFragment homeFragment = new HomeFragment();
-        CounterFragment counterFragment = new CounterFragment();
-        TimeLeftFragment timeLeftFragment = new TimeLeftFragment();
-
         switch (activatedFragment) {
             case "homeFragment":
                 fragmentTransaction.add(R.id.fragment_container, homeFragment);
@@ -81,6 +81,11 @@ public class HomeActivity extends AppCompatActivity
         }
 
         fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 

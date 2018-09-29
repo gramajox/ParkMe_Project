@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.PaymentActivity;
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
@@ -67,14 +68,16 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                         .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);//Crear el Mapa
 
-        setInfo(ParkingActivity.prePayment);
+        setInfo(ParkingClass.isPrepayment());
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*cargar a ParkClass la ubicación*/
+                ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
+
                 HomeActivity.setCounterFragment();
-                Intent myIntent = new Intent(getContext(), HomeActivity.class);
-                startActivity(myIntent);
+                startActivity(new Intent(getContext(), HomeActivity.class));
                 getActivity().finish();
             }
         });
@@ -82,6 +85,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*cargar a ParkClass la ubicación*/
+                //ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
+
+                /*Seteo PRE_PAYMENT true para que al terminar mercadopago vaya al timeLeft y no al home*/
+                PaymentActivity.setPRE_PAYMENT(true);
                 startActivity(new Intent(getContext(), PaymentActivity.class));
             }
         });

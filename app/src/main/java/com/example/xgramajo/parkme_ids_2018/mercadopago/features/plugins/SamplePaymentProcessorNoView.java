@@ -12,8 +12,6 @@ import com.mercadopago.android.px.model.BusinessPayment;
 import com.mercadopago.android.px.model.GenericPayment;
 import com.mercadopago.android.px.model.IPayment;
 
-import static com.example.xgramajo.parkme_ids_2018.mercadopago.utils.PaymentUtils.getBusinessPaymentApproved;
-
 public class SamplePaymentProcessorNoView implements PaymentProcessor {
 
     private static final int CONSTANT_DELAY_MILLIS = 20000;
@@ -23,10 +21,6 @@ public class SamplePaymentProcessorNoView implements PaymentProcessor {
 
     public SamplePaymentProcessorNoView(final IPayment iPayment) {
         this.iPayment = iPayment;
-    }
-
-    public SamplePaymentProcessorNoView() {
-        iPayment = getBusinessPaymentApproved();
     }
 
     @Override

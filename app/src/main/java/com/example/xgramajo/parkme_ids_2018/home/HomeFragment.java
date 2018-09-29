@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.parking.ParkingActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
@@ -26,7 +28,8 @@ public class HomeFragment extends Fragment {
         btnAdPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParkingActivity.setPrePaymentTrue();
+                ParkingClass.setPrepayment(true);
+                ParkingClass.setAlreadyPaid(false);
                 Intent myIntent = new Intent(getActivity(), ParkingActivity.class);
                 startActivity(myIntent);
             }
@@ -35,7 +38,8 @@ public class HomeFragment extends Fragment {
         btnParkCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParkingActivity.setPrePaymentFalse();
+                ParkingClass.setPrepayment(false);
+                ParkingClass.setAlreadyPaid(false);
                 Intent myIntent = new Intent(getActivity(), ParkingActivity.class);
                 startActivity(myIntent);
             }

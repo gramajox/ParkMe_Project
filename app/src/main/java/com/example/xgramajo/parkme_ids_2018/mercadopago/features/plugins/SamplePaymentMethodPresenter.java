@@ -5,23 +5,24 @@ import android.support.annotation.Nullable;
 
 import com.mercadopago.android.px.internal.util.TextUtil;
 
-public class SamplePaymentMethodPresenter {
+class SamplePaymentMethodPresenter {
 
     private static final String PASSWORD = "123";
     private static final int DELAY_MILLIS = 2000;
     /* default */ @Nullable
+    private
     SamplePaymentMethodPluginFragment samplePaymentMethodPluginFragment;
-    /* default */ final SampleResources resources;
+    /* default */ private final SampleResources resources;
     /* default */ SampleState state;
 
-    public SamplePaymentMethodPresenter(
-        @NonNull final SampleResources resources) {
+    SamplePaymentMethodPresenter(
+            @NonNull final SampleResources resources) {
         this.resources = resources;
         state = new SamplePaymentMethodPresenter.SampleState(false, "", "");
 
     }
 
-    public void authenticate(final String password) {
+    void authenticate(final String password) {
 
         if (TextUtil.isEmpty(password)) {
             state = new SampleState(false,
@@ -57,24 +58,25 @@ public class SamplePaymentMethodPresenter {
         }
     }
 
-    /* default */ void update() {
+    /* default */
+    private void update() {
         if (samplePaymentMethodPluginFragment != null) {
             samplePaymentMethodPluginFragment.update(state);
         }
     }
 
-    public void init(final SamplePaymentMethodPluginFragment samplePaymentMethodPluginFragment) {
+    void init(final SamplePaymentMethodPluginFragment samplePaymentMethodPluginFragment) {
         this.samplePaymentMethodPluginFragment = samplePaymentMethodPluginFragment;
         this.samplePaymentMethodPluginFragment.update(state);
     }
 
     public static class SampleState {
 
-        public final boolean authenticating;
+        final boolean authenticating;
         public final String password;
-        public final String errorMessage;
+        final String errorMessage;
 
-        public SampleState(final boolean authenticating, final String errorMessage, final String password) {
+        SampleState(final boolean authenticating, final String errorMessage, final String password) {
             this.authenticating = authenticating;
             this.errorMessage = errorMessage;
             this.password = password;

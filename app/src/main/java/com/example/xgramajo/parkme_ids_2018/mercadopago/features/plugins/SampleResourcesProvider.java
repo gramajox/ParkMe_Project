@@ -9,7 +9,7 @@ public class SampleResourcesProvider implements SampleResources {
 
     private final Context context;
 
-    public SampleResourcesProvider(final Context context) {
+    SampleResourcesProvider(final Context context) {
         this.context = context;
     }
 

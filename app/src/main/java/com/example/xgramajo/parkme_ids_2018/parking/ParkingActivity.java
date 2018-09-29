@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class ParkingActivity extends AppCompatActivity {
 
-    public static boolean prePayment;
+    //public static boolean prePayment;
     private SectionsPageAdapter mSectionsPageAdapter;
 
     @Override
@@ -50,13 +50,13 @@ public class ParkingActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
+/*
     public static void setPrePaymentTrue() {
         prePayment = true;
     }
 
     public static void setPrePaymentFalse() {
         prePayment = false;
-    }
+    }*/
 
 }

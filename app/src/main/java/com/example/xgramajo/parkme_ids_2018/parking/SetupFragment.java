@@ -1,7 +1,6 @@
 package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,13 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 import java.util.Objects;
@@ -25,39 +23,33 @@ import java.util.Objects;
 public class SetupFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
-    private static Spinner spinnerDur, spinnerPatente;
-    @SuppressLint("StaticFieldLeak")
     private static TextView montoCalculado;
     String[] arrayMontos;
 
     String tiempoSeleccionado;
     String numeroPatente;
-    String montoAsociado;
-    Button contBtn;
+    int montoAsociado;
     ViewPager viewPager;
     LinearLayout setupLayout;
     TextView priceList;
     Boolean timeIsSelected;
     Boolean carLicenseIsSelected;
-    TextView tv, tv2;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_setup, container, false);
 
-        contBtn = (Button) view.findViewById(R.id.btn_continue);
-
         viewPager = (ViewPager) Objects.requireNonNull(getActivity()).findViewById(R.id.container);
-        spinnerPatente = (Spinner) view.findViewById(R.id.spinner_patente);
-        spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
+
+        Spinner spinnerPatente = (Spinner) view.findViewById(R.id.spinner_patente);
+        Spinner spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
         montoCalculado = (TextView) view.findViewById(R.id.txt_monto);
 
         setupLayout = (LinearLayout) view.findViewById(R.id.layout_setup);
         priceList = (TextView) view.findViewById(R.id.prices_list);
 
-        setInfo(ParkingActivity.prePayment);
+        setInfo(ParkingClass.isPrepayment());
 
        //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
         spinnerDur.setOnItemSelectedListener(
@@ -83,8 +75,12 @@ public class SetupFragment extends Fragment {
                             }
 
                         arrayMontos = getResources().getStringArray(R.array.array_montos);
-                        montoAsociado = arrayMontos[posicion];
-                        montoCalculado.setText(montoAsociado);
+                        montoCalculado.setText(arrayMontos[posicion]);
+
+                        /*Porque el primer elemento es un string $$$ y no puedo pasarlo a INT*/
+                        if (posicion != 0) {
+                            montoAsociado = Integer.parseInt(arrayMontos[posicion]);
+                        }
                         }
                     public void onNothingSelected(AdapterView<?> spn) {
                     }
@@ -115,19 +111,26 @@ public class SetupFragment extends Fragment {
                     }
                 });
 
-        contBtn.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!carLicenseIsSelected) {
                     Toast.makeText(getActivity(), "Seleccione su patente", Toast.LENGTH_LONG).show();
                 } else {
                     if (timeIsSelected == null) {
+
+                        ParkingClass.setPatent(numeroPatente);
+
                         viewPager.setCurrentItem(1);
                     } else {
                         if (!timeIsSelected){
                             Toast.makeText(getActivity(), "Seleccione su tiempo", Toast.LENGTH_LONG).show();
                         }
                         else {
+                            ParkingClass.setPatent(numeroPatente);
+                            ParkingClass.setPrice(montoAsociado);
+                            ParkingClass.setTime(tiempoSeleccionado);
+
                             viewPager.setCurrentItem(1);
                         }
                     }
@@ -139,35 +142,6 @@ public class SetupFragment extends Fragment {
 
 
         return view;
-    }
-
-    public static String getMount(){
-        return montoCalculado.getText().toString();
-    }
-    public static String getSelectedTime (){
-        return spinnerDur.getSelectedItem().toString();
-    }
-    public static String getMatricula (){
-        return spinnerPatente.getSelectedItem().toString();
-    }
-
-    public static String getTime (){
-        String time = spinnerDur.getSelectedItem().toString();
-        switch (time) {
-            case "30 minutos":
-                return "30";
-            case "1 hora":
-                return "60";
-            case "1 hora 30 minutos":
-                return "90";
-            case "2 horas":
-                return "120";
-            case "2 horas 30 minutos":
-                return "150";
-            case "3 horas":
-                return "180";
-        }
-        return "0";
     }
 
     private void setInfo(boolean prePayment) {
