@@ -1,5 +1,7 @@
 package com.example.xgramajo.parkme_ids_2018;
 
+import com.example.xgramajo.parkme_ids_2018.home.CounterFragment;
+
 public class ParkingClass {
     private static boolean prepayment;     //tipo de estacionamiento (true - pago adelantado / false - pago diferido)
     private static String patent;          //numero de matricula
