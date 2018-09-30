@@ -74,7 +74,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onClick(View v) {
                 /*cargar a ParkClass la ubicación*/
-                ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
+                //ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
 
                 HomeActivity.setCounterFragment();
                 startActivity(new Intent(getContext(), HomeActivity.class));

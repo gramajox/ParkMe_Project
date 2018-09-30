@@ -3,30 +3,26 @@ package com.example.xgramajo.parkme_ids_2018.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.PaymentActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
-import com.example.xgramajo.parkme_ids_2018.parking.SetupFragment;
 
 import java.util.Locale;
 
 public class CounterFragment extends Fragment {
 
-    CountDownTimer chronometerCDT;
     TextView chronometerCounter, priceCounter, patentCounter;
     long baseTime, activityTime, elapsedTime, freeTime;
-    String elapsedTimeFormatted, chargedPriceFormatted, mountToPayStr, mountToShowStr;
+    String elapsedTimeFormatted, chargedPriceFormatted;
     long basePrice, chargedPrice, priceHour, mountToPay;
     int toPay;
 
@@ -65,8 +61,9 @@ public class CounterFragment extends Fragment {
                 // actualiza el texto de la vista del cronometro
                 updateChronometerCounter();
                 // actualiza el texto de la vista del monto a abonar
-                updatePriceCounter();
-
+                if (elapsedTime > freeTime) {
+                    updatePriceCounter();
+                }
             }
 
             @Override
@@ -74,9 +71,7 @@ public class CounterFragment extends Fragment {
             // nothing to do
             }
         }.start();
-
-
-
+/*
         view.findViewById(R.id.stop_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,30 +92,27 @@ public class CounterFragment extends Fragment {
                 }
             }
         });
-
+*/
         view.findViewById(R.id.pay_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getElapsedTime();
                 if (elapsedTime > freeTime){
                     mountToPay = chargedPrice;
-                    mountToPayStr = String.valueOf(mountToPay);
-                    mountToShowStr = "Debe pagar: " + mountToPayStr;
 
-                    Toast.makeText(getContext(), mountToShowStr, Toast.LENGTH_LONG).show();
+                    /*seteo el precio del estacionamiento*/
+                    toPay = (int) mountToPay;
+                    ParkingClass.setPrice(toPay);
+                    /*Seteo PRE_PAYMENT false para que al terminar mercadopago vaya al home y no al timeLeft*/
+                    PaymentActivity.setPRE_PAYMENT(false);
+                    startActivity(new Intent(getContext(), PaymentActivity.class));
                 }
                 else {
-                    mountToPay = 0;
-                    mountToPayStr = String.valueOf(mountToPay);
-                    mountToShowStr = "No debe pagar nada: " + mountToPayStr;
-                    Toast.makeText(getContext(), mountToShowStr, Toast.LENGTH_LONG).show();
+                    //mountToPay = 0;
+                    HomeActivity.setHomeFragment();
+                    startActivity(new Intent(getContext(), HomeActivity.class));
                 }
-                /*seteo el precio del estacionamiento*/
-                toPay = (int) mountToPay;
-                ParkingClass.setPrice(toPay);
-                /*Seteo PRE_PAYMENT false para que al terminar mercadopago vaya al home y no al timeLeft*/
-                PaymentActivity.setPRE_PAYMENT(false);
-                startActivity(new Intent(getContext(), PaymentActivity.class));
+
             }
         });
 
@@ -161,7 +153,6 @@ public class CounterFragment extends Fragment {
     private void updatePriceCounter(){
         chargedPrice = chargedPrice + basePrice;
         // calcula el precio del monto a Abonar
-        //chargedPrice = chargedPrice + basePrice;
 
         // Pasa a un string el precio calculado.
         chargedPriceFormatted = String.valueOf(chargedPrice);

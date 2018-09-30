@@ -45,31 +45,16 @@
         <activity
             android:name=".PatentActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MonitorActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EnableActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <!--
-        ACTIVITY MERCADO PAGO
-        <activity
-            android:name=".mercadopago.CheckoutExampleActivity"
-            android:label="@string/title_activity_checkout_example"/>
-        <activity
-            android:name=".mercadopago.JsonSetupActivity"
-            android:label="@string/title_activity_checkout_example"/>
-
-        <activity
-            android:name=".mercadopago.SelectCheckoutActivity"
-            android:label="@string/title_activity_checkout_example"/>
-        -->
-
-        <activity android:name=".parking.ChronometerActivity"></activity>
     </application>
 
 </manifest>
