@@ -20,7 +20,7 @@
     </string-array>
 
     <string-array name="array_montos">
-        <item>$$$</item>
+        <item>0</item>
         <item>5</item>
         <item>10</item>
         <item>15</item>

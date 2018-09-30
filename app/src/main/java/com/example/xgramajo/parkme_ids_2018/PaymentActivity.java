@@ -12,6 +12,7 @@ import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.mercadopago.utils.OneTapSamples;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
 
+import static android.view.View.GONE;
 import static com.example.xgramajo.parkme_ids_2018.mercadopago.utils.ExamplesUtils.resolveCheckoutResult;
 
 import java.util.Objects;
@@ -50,6 +51,9 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
+        if(!PRE_PAYMENT) {
+            cancelBtn.setVisibility(GONE);
+        }
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

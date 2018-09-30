@@ -105,6 +105,7 @@ public class CounterFragment extends Fragment {
                     ParkingClass.setPrice(toPay);
                     /*Seteo PRE_PAYMENT false para que al terminar mercadopago vaya al home y no al timeLeft*/
                     PaymentActivity.setPRE_PAYMENT(false);
+                    ParkingClass.setTime(elapsedTimeFormatted);
                     startActivity(new Intent(getContext(), PaymentActivity.class));
                 }
                 else {

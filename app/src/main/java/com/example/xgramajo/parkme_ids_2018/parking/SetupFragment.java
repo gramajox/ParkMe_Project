@@ -54,6 +54,7 @@ public class SetupFragment extends Fragment {
        //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
         spinnerDur.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
+                    @SuppressLint("SetTextI18n")
                     public void onItemSelected(AdapterView<?> spn,
                                                android.view.View v,
                                                int posicion,
@@ -75,7 +76,7 @@ public class SetupFragment extends Fragment {
                             }
 
                         arrayMontos = getResources().getStringArray(R.array.array_montos);
-                        montoCalculado.setText(arrayMontos[posicion]);
+                        montoCalculado.setText("$ " + arrayMontos[posicion]);
 
                         /*Porque el primer elemento es un string $$$ y no puedo pasarlo a INT*/
                         if (posicion != 0) {
