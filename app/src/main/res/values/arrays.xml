@@ -2,7 +2,6 @@
 <resources>
 
     <string-array name="array_patentes">
-        <item>Seleccione una patente</item>
         <item>MBU 641</item>
         <item>BPX 504</item>
         <item>AB 221 KW</item>

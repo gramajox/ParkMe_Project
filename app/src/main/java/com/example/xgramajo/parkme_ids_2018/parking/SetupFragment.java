@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,14 +27,13 @@ public class SetupFragment extends Fragment {
     private static TextView montoCalculado;
     String[] arrayMontos;
 
-    String tiempoSeleccionado;
-    String numeroPatente;
+    String tiempoSeleccionado, numeroPatente;
     int montoAsociado;
     ViewPager viewPager;
     LinearLayout setupLayout;
     TextView priceList;
     Boolean timeIsSelected;
-    Boolean carLicenseIsSelected;
+    Button contBtn;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -49,6 +49,8 @@ public class SetupFragment extends Fragment {
         setupLayout = (LinearLayout) view.findViewById(R.id.layout_setup);
         priceList = (TextView) view.findViewById(R.id.prices_list);
 
+        contBtn = (Button) view.findViewById(R.id.btn_continue);
+
         setInfo(ParkingClass.isPrepayment());
 
        //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
@@ -60,18 +62,23 @@ public class SetupFragment extends Fragment {
                                                int posicion,
                                                long id) {
 
-
+                        ((TextView) v).setTextSize(20);
 
                         tiempoSeleccionado = spn.getSelectedItem().toString();
                         posicion = spn.getSelectedItemPosition();
 
                             if (posicion == 0){
 
-                                ((TextView) v).setTextColor(Color.GRAY);
+                                ((TextView) v).setTextColor(getResources().getColor(R.color.colorAccent));
+
+                                contBtn.setBackgroundColor(Color.GRAY);
+
                                 timeIsSelected = false;
                             }
                             else {
                                 ((TextView) v).setTextColor(Color.BLACK);
+                                contBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
                                 timeIsSelected = true;
                             }
 
@@ -94,50 +101,38 @@ public class SetupFragment extends Fragment {
                                                int posicion2,
                                                long id2) {
 
+                        ((TextView) v2).setTextSize(20);
 
                         numeroPatente = spn2.getSelectedItem().toString();
-                        posicion2 = spn2.getSelectedItemPosition();
-                        if (posicion2 == 0){
-
-                            ((TextView) v2).setTextColor(Color.GRAY);
-                            carLicenseIsSelected = false;
-                        }
-                        else {
-                            ((TextView) v2).setTextColor(Color.BLACK);
-                            carLicenseIsSelected = true;
-                        }
 
                     }
                     public void onNothingSelected(AdapterView<?> spn2) {
                     }
                 });
 
-        view.findViewById(R.id.btn_continue).setOnClickListener(new View.OnClickListener() {
+        contBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!carLicenseIsSelected) {
-                    Toast.makeText(getActivity(), "Seleccione su patente", Toast.LENGTH_LONG).show();
-                } else {
-                    if (timeIsSelected == null) {
+                if (timeIsSelected == null) {
 
+                    ParkingClass.setPatent(numeroPatente);
+
+                    viewPager.setCurrentItem(1);
+                } else {
+                    if (!timeIsSelected){
+                        Toast.makeText(getActivity(), "Seleccione su tiempo", Toast.LENGTH_LONG).show();
+                    }
+                    else {
                         ParkingClass.setPatent(numeroPatente);
+                        ParkingClass.setPrice(montoAsociado);
+                        ParkingClass.setTime(tiempoSeleccionado);
 
                         viewPager.setCurrentItem(1);
-                    } else {
-                        if (!timeIsSelected){
-                            Toast.makeText(getActivity(), "Seleccione su tiempo", Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            ParkingClass.setPatent(numeroPatente);
-                            ParkingClass.setPrice(montoAsociado);
-                            ParkingClass.setTime(tiempoSeleccionado);
-
-                            viewPager.setCurrentItem(1);
-                        }
                     }
-
                 }
             }
+
+
         });
 
 
