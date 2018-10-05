@@ -106,15 +106,19 @@
 -->
     <Button
         android:id="@+id/pay_btn"
+        android:text="Finalizar estacionamiento"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="44dp"
+
         android:backgroundTint="@color/colorAccent"
-        android:text="Finalizar estacionamiento"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

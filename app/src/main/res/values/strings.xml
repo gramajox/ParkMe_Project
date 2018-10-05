@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">ParkMe</string>
+    <string name="title_activity_home">Mi Estacionamiento</string>
+    <string name="title_activity_parking">Inicio de Estacionamiento</string>
+    <string name="title_activity_enable">Habilitar Matrícula</string>
+    <string name="title_activity_patent">Mis Matrículas</string>
+    <string name="title_activity_monitor">Monitor de Matrículas</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Park Me</string>
@@ -17,7 +22,6 @@
     <string name="reg_pass_text">Contraseña</string>
     <string name="reg_title">Registrarse en el sistema</string>
     <string name="log_out">Salir</string>
-    <string name="title_activity_parking">ParkingActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
@@ -51,7 +55,6 @@
         3hr         —> $\n
     ]]></string>
     <string name="cancel_txt">Cancelar Operación</string>
-    <string name="title_activity_patent">PatentActivity</string>
 
     <!--MERCADO PAGO STRINGS-->
     <string name="json_config_button_text">I have a JSON</string>
@@ -66,5 +69,6 @@
     <!-- Second factor messages -->
     <string name="auth_error_password">Incorrect password.</string>
     <string name="auth_error_password_required">Password is required.</string>
+    <string name="title_activity_payment">Resumen</string>
 
 </resources>

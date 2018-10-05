@@ -57,7 +57,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         View view = inflater.inflate(R.layout.tab_location, container, false);
 
         payBtn = view.findViewById(R.id.pay_btn);
-        backBtn = view.findViewById(R.id.back_btn);
+        //backBtn = view.findViewById(R.id.back_btn);
         startBtn = view.findViewById(R.id.btn_start);
 
 
@@ -93,14 +93,14 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                 startActivity(new Intent(getContext(), PaymentActivity.class));
             }
         });
-
+/*
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(0);
             }
         });
-
+*/
         return view;
     }
 
