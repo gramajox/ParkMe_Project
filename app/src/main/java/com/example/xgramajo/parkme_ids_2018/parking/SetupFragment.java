@@ -53,7 +53,7 @@ public class SetupFragment extends Fragment {
 
         setInfo(ParkingClass.isPrepayment());
 
-       //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
+        //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
         spinnerDur.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @SuppressLint("SetTextI18n")

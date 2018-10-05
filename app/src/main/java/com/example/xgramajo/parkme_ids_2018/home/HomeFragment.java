@@ -13,6 +13,7 @@ import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.parking.ParkingActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
+
 public class HomeFragment extends Fragment {
 
     Button btnAdPay;
@@ -47,5 +48,4 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
 }

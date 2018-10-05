@@ -1,11 +1,15 @@
 package com.example.xgramajo.parkme_ids_2018.home;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +22,8 @@ import com.example.xgramajo.parkme_ids_2018.PatentActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +39,8 @@ public class HomeActivity extends AppCompatActivity
     HomeFragment        homeFragment        = new HomeFragment();
     CounterFragment     counterFragment     = new CounterFragment();
     TimeLeftFragment    timeLeftFragment    = new TimeLeftFragment();
+
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     @Override
     protected void onStart() {
@@ -79,6 +87,8 @@ public class HomeActivity extends AppCompatActivity
                 fragmentTransaction.add(R.id.fragment_container, timeLeftFragment);
                 break;
         }
+
+        obtenerPermisos();
 
         fragmentTransaction.commit();
     }
@@ -160,5 +170,32 @@ public class HomeActivity extends AppCompatActivity
     }
     public static void setTimeLeftFragment() {
         activatedFragment = "timeLeftFragment";
+    }
+
+    /*
+      Preguntar al usuario por Permisos de Ubicación.
+     */
+    public void obtenerPermisos() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(this),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            if(ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED){
+            } else {
+                ActivityCompat.requestPermissions(Objects.requireNonNull(this),
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
+        } else {
+            ActivityCompat.requestPermissions(Objects.requireNonNull(this),
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
     }
 }

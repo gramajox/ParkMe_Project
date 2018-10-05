@@ -1,7 +1,6 @@
 package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -76,10 +75,12 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
 
         viewPager = Objects.requireNonNull(getActivity()).findViewById(R.id.container);
 
+        obtenerPermisos();
+
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getChildFragmentManager()
                         .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);//Crear el Mapa
+        mapFragment.getMapAsync(this);   //Crear el Mapa
 
         setInfo(ParkingClass.isPrepayment());
 
@@ -106,89 +107,23 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                 startActivity(new Intent(getContext(), PaymentActivity.class));
             }
         });
-/*
+
+        /*
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(0);
             }
         });
-*/
+        */
+
         return view;
-    }
-
-    //Método que se ejecuta al estar el mapa Ready.
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        ubicarCamara(new LatLng(-37.0000000,-64.0000000),3); //Ubica el primer inicio de maps en Argentina.
-
-        mMap.setOnMyLocationButtonClickListener(this); //Función cuando se presiona
-        mMap.setOnMyLocationClickListener(this); //Aún no lo c.
-
-        obtenerPermisos();
-
-        if (mLocationPermissionGranted) {
-            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(this.getContext()), Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            mMap.setMyLocationEnabled(true); //Este metodo activa el boton GPS dentro del Mapa
-            obtenerUbicacion();
-        }
-    }
-
-
-    //Función para obtener ubicación cuando tocamos Localizar :)
-    @SuppressLint("ShowToast")
-    private void obtenerUbicacion(){
-        Log.d("deviceLocation","Obteniendo Posición.");
-
-        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices
-                .getFusedLocationProviderClient(Objects.requireNonNull(this.getContext()));
-
-        try {
-            if (mLocationPermissionGranted) {
-                Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
-                            Log.d("deviceLocation Task","Completada, analiza si dió null");
-                            if (task.getResult() != null) {
-                                currentLocation = (Location) task.getResult();
-                                Log.d("deviceLocation Task", String.valueOf(currentLocation.getLatitude()));
-
-                                ubicarCamara(new LatLng(
-                                                currentLocation.getLatitude(),
-                                                currentLocation.getLongitude()),
-                                        DEFAULT_ZOOM);
-
-                            } else {
-                                Log.d("deviceLocation Task: ","Aún no obtuvo ubicación");
-                            }
-                        }
-                    }
-                });
-            }
-        } catch (SecurityException e){
-            Log.d("Error","Error Posición"+e);
-            Toast.makeText(this.getContext(),"No pudo obtenerse su ubicación",Toast.LENGTH_SHORT);
-        }
-    }
-
-
-    private void ubicarCamara(LatLng latLng, float zoom){
-        Log.d("tag:","Ubicar cámara");
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
     }
 
     /*
       Preguntar al usuario por Permisos
      */
-    private void obtenerPermisos() {
+    public void obtenerPermisos() {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
@@ -213,16 +148,129 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         }
     }
 
+    private void ubicarCamara(LatLng latLng, float zoom){
+        Log.d("tag:","Ubicar cámara");
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+    }
+
+    //Método que se ejecuta al estar el mapa Ready.
+    @Override
+    public void onMapReady(GoogleMap mapa) {
+        mMap = mapa;
+
+        ubicarCamara(new LatLng(-37.0000000,-64.0000000),3); //Ubica el primer inicio de maps en Argentina.
+
+        mMap.setOnMyLocationButtonClickListener(this); //Función cuando se presiona
+        mMap.setOnMyLocationClickListener(this); //Aún no lo c.
+
+        if (mLocationPermissionGranted) {
+            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(this.getContext()), Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+            }
+            mMap.setMyLocationEnabled(true); //Este metodo muestra el boton GPS dentro del Mapa
+            return;
+        }
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {} //Por ahora no la usamos
+
+    //Función del boton de localizar que está sobre el mapa
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Log.d("Boton Localizar GPS: ", "clickeado");
+        gpsact(getView());
+        return false;
+    }
+
+    /*AsyncTask para obtener ubicación.
+        info: duración máxima 13 segundos
+     */
+    private class posicionMaps extends AsyncTask<Void, Void, Boolean>{
+
+        protected void onPreExecute(){
+            load.setVisibility(View.VISIBLE);
+            Toast.makeText(getContext(),"Buscando Posición",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            final boolean[] resultado = {false};
+            final int[] cont = {0};
+
+            while (!resultado[0] && cont[0] <13) {
+                Log.d("deviceLocation", "Obteniendo Posición.");
+
+                FusedLocationProviderClient mFusedLocationProviderClient = LocationServices
+                        .getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
+
+                try {
+                    if (mLocationPermissionGranted) {
+                        Task location = mFusedLocationProviderClient.getLastLocation();
+                        location.addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("deviceLocation Task", "Completada, analiza si dió null");
+                                    if (task.getResult() != null) {
+                                        resultado[0] = true;
+                                        currentLocation = (Location) task.getResult();
+                                        Log.d("deviceLocation Task", String.valueOf(currentLocation.getLatitude()));
+
+                                        ubicarCamara(new LatLng(
+                                                        currentLocation.getLatitude(),
+                                                        currentLocation.getLongitude()),
+                                                DEFAULT_ZOOM);
+                                    } else {
+                                        Log.d("deviceLocation Task: ", "Aún no obtuvo ubicación");
+                                        cont[0]++;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                } catch (SecurityException e) {
+                    Log.d("deviceLocation Task", "Error Posición" + e);
+                    //Toast.makeText(getContext(), "No pudo obtenerse su ubicación", Toast.LENGTH_SHORT);
+                }
+                try {
+                    sleep(1000);
+                    Log.d("deviceLocation Task", String.valueOf(cont[0]));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            load.setVisibility(View.INVISIBLE);
+            if(!resultado[0]){
+                return resultado[0];
+            } else {
+                return resultado[0];
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(!aBoolean){
+                Log.d("deviceLocation Task: ", "NO se obtuvo ubicación");
+                Toast.makeText(getContext(),"Ubicación no encontrada :(",Toast.LENGTH_LONG).show();
+            } else {
+                Log.d("deviceLocation Task: ", "Ubicación encontrada!");
+                //Toast.makeText(getContext(),"Yay!",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
     /*
-      Chequeo del GPS ON/OFF
-      Solicitud de Activar el gps desde la app
-      AsyncTask para Obtener ubicación.
+      -Chequeo del GPS ON/OFF
+      -Solicitud de Activar el gps desde la app
+      -AsyncTask para Obtener ubicación.
 
-
-      Falta: Si el GPS no se activa, la AsyncTask no termina :(
-            Hay un método para obtener la respuesta del "cancelar" del usuario
-                al solicitarle que active el gps, con eso evitamos el asynctask infinity war.
+      Falta: Si el GPS no se activa, la AsyncTask termina después de 13 segundos.
+                pero hay un método (onActivityResult()) para obtener la respuesta "cancelar" y ya determinar
+                que el usuario no activó el gps y con eso intentar frenar la asynctask.
+                        Estoy intentando entender ese método aún.
      */
     public void gpsact(View view){
         Context context = this.getContext();
@@ -230,7 +278,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             Log.d("Tag:","GPS Activado");
-            new posicionMaps().execute(currentLocation);
+            new posicionMaps().execute();
         } else {
             LocationRequest locationRequest = LocationRequest.create();
             locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -264,7 +312,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                                     resolvable.startResolutionForResult(
                                             getActivity(),
                                             555);
-                                    new posicionMaps().execute(currentLocation);
+                                    new posicionMaps().execute();
                                 } catch (IntentSender.SendIntentException e) {
                                     // Ignore the error.
                                 } catch (ClassCastException e) {
@@ -284,41 +332,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
     //Fin Chequeo GPS ON/OFF
 
 
-    /*
-        Diálogo de alerta anterior:----------------------------------------------------
-
-            Log.d("Tag:","GPS Desactivado");
-            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-            builder.setTitle("Ups! GPS Desactivado :(");
-            builder.setMessage("Para poder utilizar esta función es necesario que actives el GPS");
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                   //dialog.cancel();
-                    //Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    //startActivity(myIntent);
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            --------------------------------------------------------------------------------
-     */
-
-
-
-    @Override
-    public void onMyLocationClick(@NonNull Location location) {} //Por ahora no la usamos
-
-    //Función del boton de localizar que está sobre el mapa
-    @Override
-    public boolean onMyLocationButtonClick() {
-        Log.d("Boton Localizar GPS: ", "clickeado");
-        gpsact(getView());
-
-        return false;
-    }
-
-
     private void setInfo(boolean prePayment) {
         if (prePayment) {
 
@@ -328,67 +341,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
 
             payBtn.setVisibility(View.GONE);
 
-        }
-    }
-
-    private class posicionMaps extends AsyncTask<Location, Void, Location>{
-
-        protected void onPreExecute(){
-            load.setVisibility(View.VISIBLE);
-            Toast.makeText(getContext(),"Buscando Posición",Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected Location doInBackground(Location... locations) {
-            final boolean[] resultado = {false};
-            final int[] cont = {0};
-
-            while (!resultado[0] && cont[0] <10) {
-                Log.d("deviceLocation", "Obteniendo Posición.");
-
-                FusedLocationProviderClient mFusedLocationProviderClient = LocationServices
-                        .getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
-
-                try {
-                    if (mLocationPermissionGranted) {
-                        Task location = mFusedLocationProviderClient.getLastLocation();
-                        location.addOnCompleteListener(new OnCompleteListener() {
-                            @Override
-                            public void onComplete(@NonNull Task task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("deviceLocation Task", "Completada, analiza si dió null");
-                                    if (task.getResult() != null) {
-                                        resultado[0] = true;
-                                        currentLocation = (Location) task.getResult();
-                                        Log.d("deviceLocation Task", String.valueOf(currentLocation.getLatitude()));
-
-                                        ubicarCamara(new LatLng(
-                                                        currentLocation.getLatitude(),
-                                                        currentLocation.getLongitude()),
-                                                DEFAULT_ZOOM);
-                                    } else {
-                                        Log.d("deviceLocation Task: ", "Aún no obtuvo ubicación");
-                                        cont[0]++;
-                                    }
-                                }
-                            }
-                        });
-                    }
-                } catch (SecurityException e) {
-                    Log.d("Error", "Error Posición" + e);
-                    //Toast.makeText(getContext(), "No pudo obtenerse su ubicación", Toast.LENGTH_SHORT);
-                }
-                try {
-                    sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            load.setVisibility(View.INVISIBLE);
-            if(!resultado[0]){
-                Toast.makeText(getContext(),"Ubicación no encontrada :(",Toast.LENGTH_LONG).show();
-            }
-            return currentLocation;
         }
     }
 }
