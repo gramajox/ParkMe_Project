@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class PatentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,31 +79,36 @@ public class PatentActivity extends AppCompatActivity
             }
         });
     }
-    /**ACA HAY QUE CORREGIR EL PATRON PARA LA VERIFICACION DEL FORMATO DE MATRICULA*/
+
+    /** Verifica el formato de una patente. Los formatos válidos son: ABC-123 y AB-123-CD
+     *  Se considera que el input no contiene ni espacios ni guiones. Por ej: "ABC123" y "AB123CD" son válidas */
     private boolean verifyPatent(String input) {
-        /**
-         if (input.length() == 6 || input.length() == 8) {
-         Pattern pattern;
-         Matcher matcher;
 
-         ^                 # start-of-string
-         (?=.*[0-9])       # a digit must occur at least once
-         (?=.*[a-z])       # a lower case letter must occur at least once
-         (?=.*[A-Z])       # an upper case letter must occur at least once
-         (?=.*[@#$%^&+=])  # a special character must occur at least once you can replace with your special characters
-         (?=\\S+$)          # no whitespace allowed in the entire string
-         .{4,}             # anything, at least four places though
-         $                 # end-of-string
+        Pattern pattern;
+        Matcher matcher;
+        String PATENT_PATTERN;
 
-         final String PATENT_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=\\S+$)$";
-         pattern = Pattern.compile(PATENT_PATTERN);
+        switch (input.length()) {
+            case 6: // Estilo de patente ABC-123
+                PATENT_PATTERN = "^[A-Z]{3}[0-9]{3}$";
+                break;
+            case 7: // Estilo de patente AA-123-BB
+                PATENT_PATTERN = "^[A-Z]{2}[0-9]{3}[A-Z]{2}$";
+                break;
+            default: // Longitud de patente incorrecta
+                PATENT_PATTERN = "";
+                break;
+        }
 
-         matcher = pattern.matcher(input);
-
-         return matcher.matches();
-
-         } else return false;*/
-        return true;
+        if (!PATENT_PATTERN.equals("")) { // La longitud de la patente coincide con una de las válidas y el patrón fue establecido
+            pattern = Pattern.compile(PATENT_PATTERN);
+            // Comparar la patente con el pattern
+            matcher = pattern.matcher(input);
+            return matcher.matches();
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
