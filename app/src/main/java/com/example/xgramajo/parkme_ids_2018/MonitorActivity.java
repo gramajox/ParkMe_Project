@@ -109,17 +109,18 @@ public class MonitorActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
-            startActivity(new Intent(this, HomeActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
             finish();
+            onBackPressed();
             return true;
 
         } else if (id == R.id.nav_patent) {
-
+            drawer.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, PatentActivity.class));
             finish();
             return true;
@@ -127,26 +128,22 @@ public class MonitorActivity extends AppCompatActivity
         } else if (id == R.id.nav_location) {
 
         } else if (id == R.id.nav_exit) {
-
+            drawer.closeDrawer(GravityCompat.START);
             logOut();
             return true;
 
         } else if (id == R.id.nav_monitor) {
-
-            startActivity(new Intent(this, MonitorActivity.class));
-            finish();
+            drawer.closeDrawer(GravityCompat.START);
             return true;
 
         } else if (id == R.id.nav_enable) {
-
+            drawer.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, EnableActivity.class));
             finish();
             return true;
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

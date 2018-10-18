@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +18,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.example.xgramajo.parkme_ids_2018.EnableActivity;
 import com.example.xgramajo.parkme_ids_2018.MonitorActivity;
 import com.example.xgramajo.parkme_ids_2018.PatentActivity;
@@ -104,53 +107,73 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    private Boolean exit = false;
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (exit) {
+                moveTaskToBack(true);
+            } else {
+                Toast.makeText(this, "Presione nuevamente para cerrar",
+                        Toast.LENGTH_SHORT).show();
+                exit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        exit = false;
+                    }
+                }, 3 * 1000);
+
+            }
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            
-            startActivity(new Intent(this, HomeActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
             return true;
 
         } else if (id == R.id.nav_patent) {
-
+            drawer.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, PatentActivity.class));
             return true;
 
         } else if (id == R.id.nav_location) {
 
         } else if (id == R.id.nav_exit) {
+            if (activatedFragment.equals("homeFragment")) {
+                logOut();
+            } else {
+                Toast.makeText(this, "Tiene un estacionamiento activo",
+                        Toast.LENGTH_SHORT).show();
+            }
 
-            logOut();
             return true;
 
         } else if (id == R.id.nav_monitor) {
-
+            drawer.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, MonitorActivity.class));
             return true;
 
         } else if (id == R.id.nav_enable) {
-
+            drawer.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, EnableActivity.class));
             return true;
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

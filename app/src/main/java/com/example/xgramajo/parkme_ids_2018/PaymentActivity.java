@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.mercadopago.utils.OneTapSamples;
@@ -98,7 +99,13 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (!PRE_PAYMENT) {
+            Toast.makeText(this, "Debe abonar antes de salir",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
+
     }
 
     public static void setPRE_PAYMENT(Boolean b) {

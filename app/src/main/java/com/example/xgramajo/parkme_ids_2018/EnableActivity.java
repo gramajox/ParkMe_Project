@@ -50,17 +50,18 @@ public class EnableActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
-            startActivity(new Intent(this, HomeActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
             finish();
+            onBackPressed();
             return true;
 
         } else if (id == R.id.nav_patent) {
-
+            drawer.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, PatentActivity.class));
             finish();
             return true;
@@ -68,26 +69,22 @@ public class EnableActivity extends AppCompatActivity
         } else if (id == R.id.nav_location) {
 
         } else if (id == R.id.nav_exit) {
-
+            drawer.closeDrawer(GravityCompat.START);
             logOut();
             return true;
 
         } else if (id == R.id.nav_monitor) {
-
+            drawer.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, MonitorActivity.class));
             finish();
             return true;
 
         } else if (id == R.id.nav_enable) {
-
-            startActivity(new Intent(this, EnableActivity.class));
-            finish();
+            drawer.closeDrawer(GravityCompat.START);
             return true;
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
