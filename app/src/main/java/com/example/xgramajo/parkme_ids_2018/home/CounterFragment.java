@@ -17,6 +17,7 @@ import com.example.xgramajo.parkme_ids_2018.PaymentActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class CounterFragment extends Fragment {
 
@@ -71,28 +72,7 @@ public class CounterFragment extends Fragment {
             // nothing to do
             }
         }.start();
-/*
-        view.findViewById(R.id.stop_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myCountDownTimer.cancel();
-                getElapsedTime();
-                if (elapsedTime > freeTime){
-                    mountToPay = chargedPrice;
-                    mountToPayStr = String.valueOf(mountToPay);
-                    mountToShowStr = "Debe pagar: " + mountToPayStr;
 
-                    Toast.makeText(getContext(), mountToShowStr, Toast.LENGTH_LONG).show();
-                }
-                else {
-                    mountToPay = 0;
-                    mountToPayStr = String.valueOf(mountToPay);
-                    mountToShowStr = "No debe pagar nada: " + mountToPayStr;
-                    Toast.makeText(getContext(), mountToShowStr, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-*/
         view.findViewById(R.id.pay_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,11 +87,13 @@ public class CounterFragment extends Fragment {
                     PaymentActivity.setPRE_PAYMENT(false);
                     ParkingClass.setTime(elapsedTimeFormatted);
                     startActivity(new Intent(getContext(), PaymentActivity.class));
+                    Objects.requireNonNull(getActivity()).finish();
                 }
                 else {
                     //mountToPay = 0;
                     HomeActivity.setHomeFragment();
                     startActivity(new Intent(getContext(), HomeActivity.class));
+                    Objects.requireNonNull(getActivity()).finish();
                 }
 
             }

@@ -15,6 +15,7 @@ import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class TimeLeftFragment extends Fragment {
 
@@ -55,6 +56,7 @@ public class TimeLeftFragment extends Fragment {
                 Toast.makeText(getContext(), "DB Firebase", Toast.LENGTH_LONG).show();
                 HomeActivity.setHomeFragment();
                 startActivity(new Intent(getContext(), HomeActivity.class));
+                Objects.requireNonNull(getActivity()).finish();
             }
         });
 

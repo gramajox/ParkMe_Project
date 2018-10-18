@@ -27,35 +27,44 @@
         <activity
             android:name=".home.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity" />
-        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".login.RegisterActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".parking.ParkingActivity"
             android:label="@string/title_activity_parking"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".login.PasswordActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
+        <activity android:name=".login.PasswordActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PaymentActivity"
-            android:label="@string/title_activity_payment"/>
+            android:label="@string/title_activity_payment"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PatentActivity"
             android:label="@string/title_activity_patent"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MonitorActivity"
             android:label="@string/title_activity_monitor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".EnableActivity"
             android:label="@string/title_activity_enable"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
 
     </application>
 

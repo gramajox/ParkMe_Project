@@ -1,5 +1,7 @@
 package com.example.xgramajo.parkme_ids_2018.parking;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,10 +19,15 @@ public class ParkingActivity extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
     ViewPager mViewPager;
 
+    @SuppressLint("StaticFieldLeak")
+    public static Activity parkAct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking);
+
+        parkAct = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

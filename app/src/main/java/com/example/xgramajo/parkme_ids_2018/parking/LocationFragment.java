@@ -89,7 +89,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
             public void onClick(View v) {
                 /*cargar a ParkClass la ubicación*/
                 //ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
-
+                HomeActivity.homeAct.finish();
                 HomeActivity.setCounterFragment();
                 startActivity(new Intent(getContext(), HomeActivity.class));
                 getActivity().finish();
@@ -241,7 +241,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                     e.printStackTrace();
                 }
             }
-            load.setVisibility(View.INVISIBLE);
+
             if(!resultado[0]){
                 return resultado[0];
             } else {
@@ -252,6 +252,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            load.setVisibility(View.INVISIBLE);
             if(!aBoolean){
                 Log.d("deviceLocation Task: ", "NO se obtuvo ubicación");
                 Toast.makeText(getContext(),"Ubicación no encontrada :(",Toast.LENGTH_LONG).show();

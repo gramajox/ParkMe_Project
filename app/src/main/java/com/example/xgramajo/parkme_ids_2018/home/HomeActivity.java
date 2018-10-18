@@ -1,6 +1,7 @@
 package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static Activity homeAct;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -63,6 +66,8 @@ public class HomeActivity extends AppCompatActivity
             }
         };
         setContentView(R.layout.activity_home);
+
+        homeAct = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

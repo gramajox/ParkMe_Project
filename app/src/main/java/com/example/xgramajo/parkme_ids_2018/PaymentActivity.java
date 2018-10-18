@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.mercadopago.utils.OneTapSamples;
+import com.example.xgramajo.parkme_ids_2018.parking.ParkingActivity;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
 
 import static android.view.View.GONE;
@@ -18,8 +19,6 @@ import static com.example.xgramajo.parkme_ids_2018.mercadopago.utils.ExamplesUti
 import java.util.Objects;
 
 public class PaymentActivity extends AppCompatActivity {
-
-    Boolean backPressed;
 
     Button cancelBtn, sumitBtn;
 
@@ -35,8 +34,6 @@ public class PaymentActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        backPressed = false;
 
         cancelBtn = (Button) findViewById(R.id.cancel_btn);
         sumitBtn = (Button) findViewById(R.id.sumit_btn);
@@ -57,8 +54,9 @@ public class PaymentActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.setHomeFragment();
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                ParkingActivity.parkAct.finish();
+                finish();
+                onBackPressed();
             }
         });
 
@@ -70,17 +68,23 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        if (!backPressed) {
-            ParkingClass.setAlreadyPaid(true);
 
-            if (PRE_PAYMENT) {
-                HomeActivity.setTimeLeftFragment();
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            } else {
-                HomeActivity.setHomeFragment();
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            }
+        ParkingClass.setAlreadyPaid(true);
+
+        if (PRE_PAYMENT) {
+            HomeActivity.homeAct.finish();
+            HomeActivity.setTimeLeftFragment();
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            ParkingActivity.parkAct.finish();
+            finish();
+        } else {
+            HomeActivity.homeAct.finish();
+            HomeActivity.setHomeFragment();
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            ParkingActivity.parkAct.finish();
+            finish();
         }
+
         resolveCheckoutResult(this, requestCode, resultCode, data, REQ_CODE_CHECKOUT);
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -94,7 +98,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        backPressed = true;
         super.onBackPressed();
     }
 
