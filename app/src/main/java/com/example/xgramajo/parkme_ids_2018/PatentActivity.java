@@ -82,7 +82,7 @@ public class PatentActivity extends AppCompatActivity
 
     /** Verifica el formato de una patente. Los formatos válidos son: ABC-123 y AB-123-CD
      *  Se considera que el input no contiene ni espacios ni guiones. Por ej: "ABC123" y "AB123CD" son válidas */
-    private boolean verifyPatent(String input) {
+    public static boolean verifyPatent(String input) {
 
         Pattern pattern;
         Matcher matcher;
