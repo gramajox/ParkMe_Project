@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
@@ -42,8 +45,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
+import static android.support.constraint.Constraints.TAG;
 import static java.lang.Thread.sleep;
 
 public class LocationFragment extends Fragment implements OnMapReadyCallback,
@@ -54,12 +62,15 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
     private static final float DEFAULT_ZOOM = 15;
     boolean mLocationPermissionGranted;
     private GoogleMap mMap;
-    private Location currentLocation;//Hasta acá necesario para Maps.
+    private Location currentLocation;
+    private String direc;
+    //Hasta acá necesario para Maps.
 
 
     ProgressBar load;
     Button startBtn, payBtn, backBtn;
     ViewPager viewPager;
+    TextView dir;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -69,6 +80,9 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         payBtn = view.findViewById(R.id.pay_btn);
         //backBtn = view.findViewById(R.id.back_btn);
         startBtn = view.findViewById(R.id.btn_start);
+
+        dir = view.findViewById(R.id.dir);
+        dir.setText("");
 
         load = view.findViewById(R.id.load);
         load.setVisibility(View.INVISIBLE);
@@ -257,6 +271,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                 Toast.makeText(getContext(),"Ubicación no encontrada :(",Toast.LENGTH_LONG).show();
             } else {
                 Log.d("deviceLocation Task: ", "Ubicación encontrada!");
+                new direccionMaps().execute(); //Ejecuto una AsyncTask para obtener la Ubicación.
                 //Toast.makeText(getContext(),"Yay!",Toast.LENGTH_LONG).show();
             }
         }
@@ -330,6 +345,107 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         }
     }
     //Fin Chequeo GPS ON/OFF
+
+    //AsyncTask para obtener la Calle, Altura y mucho mas de una dirección.
+    //Máximo 13 segundos de búsqueda.
+    private class direccionMaps extends AsyncTask<Void,Void,Boolean>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(getContext(),"Buscando Dirección",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            final boolean[] resultado = {false};
+            final int[] cont = {0};
+            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+            List<Address> addresses = null;
+            String errorMessage = "";
+
+
+            while (!resultado[0] && cont[0] <13) {
+
+                try {
+                    addresses = geocoder.getFromLocation(
+                            currentLocation.getLatitude(),
+                            currentLocation.getLongitude(),
+                            // In this sample, get just a single address.
+                            1);
+                } catch (IOException ioException) {
+                    // Catch network or other I/O problems.
+                    errorMessage = getString(R.string.service_not_available);
+                    Log.e(TAG, errorMessage, ioException);
+                } catch (IllegalArgumentException illegalArgumentException) {
+                    // Catch invalid latitude or longitude values.
+                    errorMessage = getString(R.string.invalid_lat_long_used);
+                    Log.e(TAG, errorMessage + ". " +
+                            "Latitude = " + currentLocation.getLatitude() +
+                            ", Longitude = " +
+                            currentLocation.getLongitude(), illegalArgumentException);
+                }
+
+                // Handle case where no address was found.
+                if (addresses == null || addresses.size()  == 0) {
+                    if (errorMessage.isEmpty()) {
+                        errorMessage = getString(R.string.no_address_found);
+                        Log.e(TAG, errorMessage);
+                    }
+                } else {
+
+                    //Si encuentra una dirección entra por acá.
+                    Address address = addresses.get(0);
+                    ArrayList<String> addressFragments = new ArrayList<>();
+
+                    // Fetch the address lines using getAddressLine.
+                    for(int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                        addressFragments.add(address.getAddressLine(i));
+                    }
+                    Log.i(TAG, getString(R.string.address_found));
+                    direc = addressFragments.get(0);
+                    resultado[0]=true;
+                }
+                cont[0]++;
+                try{
+                    sleep(1000);
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+            if (!resultado[0]){
+                return resultado[0];
+            } else {
+                return resultado[0];
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(!aBoolean){
+                dir.setText("no se encontró una Dirección");
+            } else {
+                Log.d("direccion",direc);
+                parsearDireccion();
+            }
+        }
+    }
+
+
+    private void parsearDireccion(){
+        String aux="";
+
+        for (int i=0;i<direc.length();i++){
+            if (direc.charAt(i) != 44){ //44 en ascii es la coma => ,
+                aux = aux.concat(String.valueOf(direc.charAt(i)));
+            } else {
+                direc = aux;
+                dir.setText(direc);
+                break;
+            }
+        }
+    }
 
 
     private void setInfo(boolean prePayment) {
