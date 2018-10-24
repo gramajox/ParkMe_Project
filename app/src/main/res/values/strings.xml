@@ -71,4 +71,10 @@
     <string name="auth_error_password_required">Password is required.</string>
     <string name="title_activity_payment">Resumen</string>
 
+    <!-- Fetch Address Intent Service -->
+    <string name="service_not_available">service not available</string>
+    <string name="invalid_lat_long_used">invalid lat long used</string>
+    <string name="no_address_found">no address found</string>
+    <string name="address_found">address found</string>
+
 </resources>

@@ -89,7 +89,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
             public void onClick(View v) {
                 /*cargar a ParkClass la ubicación*/
                 //ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
-                HomeActivity.homeAct.finish();
+
                 HomeActivity.setCounterFragment();
                 startActivity(new Intent(getContext(), HomeActivity.class));
                 getActivity().finish();
@@ -241,7 +241,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                     e.printStackTrace();
                 }
             }
-
             if(!resultado[0]){
                 return resultado[0];
             } else {
