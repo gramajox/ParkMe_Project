@@ -271,6 +271,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                 Toast.makeText(getContext(),"Ubicación no encontrada :(",Toast.LENGTH_LONG).show();
             } else {
                 Log.d("deviceLocation Task: ", "Ubicación encontrada!");
+                ParkingClass.setLatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                 new direccionMaps().execute(); //Ejecuto una AsyncTask para obtener la Ubicación.
                 //Toast.makeText(getContext(),"Yay!",Toast.LENGTH_LONG).show();
             }
@@ -441,6 +442,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                 aux = aux.concat(String.valueOf(direc.charAt(i)));
             } else {
                 direc = aux;
+                ParkingClass.setDireccion(direc);
                 dir.setText(direc);
                 break;
             }
