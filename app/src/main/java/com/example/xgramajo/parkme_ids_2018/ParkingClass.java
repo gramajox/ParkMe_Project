@@ -4,7 +4,8 @@ public class ParkingClass {
     private static boolean prepayment;     //tipo de estacionamiento (true - pago adelantado / false - pago diferido)
     private static String patent;          //numero de matricula
     private static int price;              //Precio calculado en Setup / en CounterFragment
-    private static String location;        //Ubicación del estacionamiento: latitud + longitud + calle + altura
+    private static String direccion;        //Ubicación del estacionamiento: calle + altura
+    private static double lat, lng;         //Ubicación del estacionamiento: Latitud + Longitud
     private static boolean alreadyPaid;    //Estado del estacionamiento (true - Pagado / false - No pagado)
     private static String time;            //tiempo de estacionamiento pago adelantado
 
@@ -32,12 +33,25 @@ public class ParkingClass {
         ParkingClass.price = price;
     }
 
-    public static String getLocation() {
-        return location;
+    public static void setDireccion(String d) {
+        ParkingClass.direccion = d;
     }
 
-    public static void setLocation(String location) {
-        ParkingClass.location = location;
+    public static String getDireccion() {
+        return direccion;
+    }
+
+    public static void setLatLng(Double la, Double lo){
+        ParkingClass.lat = la;
+        ParkingClass.lng = lo;
+    }
+
+    public static Double getLat(){
+        return lat;
+    }
+
+    public static Double getLng(){
+        return lng;
     }
 
     public static boolean isAlreadyPaid() {
