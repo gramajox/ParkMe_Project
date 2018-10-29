@@ -40,18 +40,20 @@ public class SetupFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_setup, container, false);
 
-        viewPager = (ViewPager) Objects.requireNonNull(getActivity()).findViewById(R.id.container);
+        viewPager = Objects.requireNonNull(getActivity()).findViewById(R.id.container);
 
-        Spinner spinnerPatente = (Spinner) view.findViewById(R.id.spinner_patente);
-        Spinner spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
-        montoCalculado = (TextView) view.findViewById(R.id.txt_monto);
+        Spinner spinnerPatente = view.findViewById(R.id.spinner_patente);
+        Spinner spinnerDur = view.findViewById(R.id.spinner_duracion);
+        montoCalculado = view.findViewById(R.id.txt_monto);
 
-        setupLayout = (LinearLayout) view.findViewById(R.id.layout_setup);
-        priceList = (TextView) view.findViewById(R.id.prices_list);
+        setupLayout = view.findViewById(R.id.layout_setup);
+        priceList = view.findViewById(R.id.prices_list);
 
-        contBtn = (Button) view.findViewById(R.id.btn_continue);
+        contBtn = view.findViewById(R.id.btn_continue);
 
         setInfo(ParkingClass.isPrepayment());
+
+        ParkingClass.setupFalse();
 
         //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
         spinnerDur.setOnItemSelectedListener(
@@ -116,6 +118,7 @@ public class SetupFragment extends Fragment {
                 if (timeIsSelected == null) {
 
                     ParkingClass.setPatent(numeroPatente);
+                    ParkingClass.setupTrue();
 
                     viewPager.setCurrentItem(1);
                 } else {
@@ -126,6 +129,7 @@ public class SetupFragment extends Fragment {
                         ParkingClass.setPatent(numeroPatente);
                         ParkingClass.setPrice(montoAsociado);
                         ParkingClass.setTime(tiempoSeleccionado);
+                        ParkingClass.setupTrue();
 
                         viewPager.setCurrentItem(1);
                     }
@@ -139,6 +143,7 @@ public class SetupFragment extends Fragment {
 
         return view;
     }
+
 
     private void setInfo(boolean prePayment) {
         if (prePayment) {

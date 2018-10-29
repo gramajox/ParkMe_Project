@@ -2,7 +2,6 @@ package com.example.xgramajo.parkme_ids_2018.parking;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
@@ -15,6 +14,7 @@ import com.example.xgramajo.parkme_ids_2018.R;
 import java.util.Objects;
 
 public class ParkingActivity extends AppCompatActivity {
+
 
     private SectionsPageAdapter mSectionsPageAdapter;
     ViewPager mViewPager;

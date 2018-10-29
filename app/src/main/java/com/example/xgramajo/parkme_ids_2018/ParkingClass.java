@@ -8,6 +8,7 @@ public class ParkingClass {
     private static double lat, lng;         //Ubicación del estacionamiento: Latitud + Longitud
     private static boolean alreadyPaid;    //Estado del estacionamiento (true - Pagado / false - No pagado)
     private static String time;            //tiempo de estacionamiento pago adelantado
+    private static boolean setup=false;
 
     public static boolean isPrepayment() {
         return prepayment;
@@ -89,4 +90,10 @@ public class ParkingClass {
             return "0";
 
     }
+
+    public static Boolean getSetup(){return setup;}
+
+    public static void setupTrue(){setup = true;}
+
+    public static void setupFalse(){setup = false;}
 }

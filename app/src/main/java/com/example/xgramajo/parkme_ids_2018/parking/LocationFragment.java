@@ -72,6 +72,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
     ViewPager viewPager;
     TextView dir;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -121,6 +122,8 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                 startActivity(new Intent(getContext(), PaymentActivity.class));
             }
         });
+
+        new consultarSetup().execute();
 
         /*
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +199,39 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         Log.d("Boton Localizar GPS: ", "clickeado");
         gpsact(getView());
         return false;
+    }
+
+    private class consultarSetup extends AsyncTask<Void, Void, Boolean>{
+        int[] cont = {0};
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            cont[0]=0;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            while (cont[0]<16){
+                cont[0]++;
+                if (ParkingClass.getSetup()){
+                    break;
+                } else {
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            gpsact(getView());
+        }
     }
 
     /*AsyncTask para obtener ubicación.
@@ -448,7 +484,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
             }
         }
     }
-
 
     private void setInfo(boolean prePayment) {
         if (prePayment) {
