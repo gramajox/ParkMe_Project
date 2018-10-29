@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -31,8 +30,8 @@ public class SetupFragment extends Fragment {
     String tiempoSeleccionado, numeroPatente;
     int montoAsociado;
     ViewPager viewPager;
-    ConstraintLayout setupLayout;
-    TextView priceList,priceList2, priceList3;
+    LinearLayout setupLayout;
+    TextView priceList;
     Boolean timeIsSelected;
     Button contBtn;
 
@@ -47,10 +46,8 @@ public class SetupFragment extends Fragment {
         Spinner spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
         montoCalculado = (TextView) view.findViewById(R.id.txt_monto);
 
-        setupLayout = (ConstraintLayout) view.findViewById(R.id.layout_setup);
-        priceList = (TextView) view.findViewById(R.id.prices_list1);
-        priceList2 = (TextView) view.findViewById(R.id.prices_list2);
-        priceList3 = (TextView) view.findViewById(R.id.prices_list3);
+        setupLayout = (LinearLayout) view.findViewById(R.id.layout_setup);
+        priceList = (TextView) view.findViewById(R.id.prices_list);
 
         contBtn = (Button) view.findViewById(R.id.btn_continue);
 
@@ -147,9 +144,6 @@ public class SetupFragment extends Fragment {
         if (prePayment) {
 
             priceList.setVisibility(View.GONE);
-            priceList2.setVisibility(View.GONE);
-            priceList3.setVisibility(View.GONE);
-
 
         } else {
 
