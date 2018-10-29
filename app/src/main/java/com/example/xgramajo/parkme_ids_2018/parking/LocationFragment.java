@@ -201,6 +201,9 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         return false;
     }
 
+    //Método para activar la ubicación 8 segundos después de seleccionar
+    // el modo de estacionamiento O
+    // cuando el usuario toca el botón continuar.
     private class consultarSetup extends AsyncTask<Void, Void, Boolean>{
         int[] cont = {0};
 
