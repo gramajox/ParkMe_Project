@@ -46,6 +46,7 @@
     <string name="initialTimeCountdown">120</string>
     <string name="back_txt">Atras</string>
     <string name="prices_list_txt"><![CDATA[
+         \n
         $ 5\n
         $ 10\n
         $ 15\n
@@ -54,6 +55,7 @@
         $ 30\n
     ]]></string>
     <string name="times_list_txt"><![CDATA[
+        \n
         30 minutos\n
         1 hora\n
         1 hora 30 minutos\n
