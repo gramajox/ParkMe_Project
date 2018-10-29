@@ -49,6 +49,7 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
+
         if(!PRE_PAYMENT) {
             cancelBtn.setVisibility(GONE);
         }

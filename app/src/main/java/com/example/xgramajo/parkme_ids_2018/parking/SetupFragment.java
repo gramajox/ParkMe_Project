@@ -47,7 +47,7 @@ public class SetupFragment extends Fragment {
         montoCalculado = (TextView) view.findViewById(R.id.txt_monto);
 
         setupLayout = (LinearLayout) view.findViewById(R.id.layout_setup);
-        priceList = (TextView) view.findViewById(R.id.prices_list);
+        //priceList = (TextView) view.findViewById(R.id.prices_list);
 
         contBtn = (Button) view.findViewById(R.id.btn_continue);
 

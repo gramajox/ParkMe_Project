@@ -71,6 +71,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chronometer_counter" />
 
+
     <TextView
         android:id="@+id/patent_counter"
         android:layout_width="wrap_content"

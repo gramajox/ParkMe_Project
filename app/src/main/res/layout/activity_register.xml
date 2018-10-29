@@ -8,6 +8,7 @@
     android:background="@color/colorPrimary"
     tools:context=".login.RegisterActivity">
 
+
     <ProgressBar
         android:id="@+id/reg_progress"
         style="?android:attr/progressBarStyleHorizontal"
