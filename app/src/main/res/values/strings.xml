@@ -34,8 +34,8 @@
     <string name="pwd_mail">Ingrese su correo</string>
     <string name="back_btn">Volver al login</string>
     <string name="pwd_btn">Restablecer contraseña</string>
-    <string name="txt_duracion">Tiempo de habilitación</string>
-    <string name="txt_monto_calc">Monto a abonar</string>
+    <string name="txt_duracion">Tiempo</string>
+    <string name="txt_monto_calc">Monto</string>
     <string name="btn_cont">Continuar</string>
     <string name="title_activity_maps_api">Map</string>
     <string name="stop_txt">Detener contador</string>
@@ -46,13 +46,20 @@
     <string name="initialTimeCountdown">120</string>
     <string name="back_txt">Atras</string>
     <string name="prices_list_txt"><![CDATA[
-        PRECIOS\n
-        30min       —> $\n
-        1hr         —> $\n
-        1hr 30min   —> $\n
-        2hr         —> $\n
-        2hr 30min   —> $\n
-        3hr         —> $\n
+        $ 5\n
+        $ 10\n
+        $ 15\n
+        $ 20\n
+        $ 25\n
+        $ 30\n
+    ]]></string>
+    <string name="times_list_txt"><![CDATA[
+        30 minutos\n
+        1 hora\n
+        1 hora 30 minutos\n
+        2 horas\n
+        2 horas 30 minutos\n
+        3 horas\n
     ]]></string>
     <string name="cancel_txt">Cancelar Operación</string>
 

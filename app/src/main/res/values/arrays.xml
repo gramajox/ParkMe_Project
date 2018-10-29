@@ -18,6 +18,8 @@
         <item>3 horas</item>
     </string-array>
 
+
+
     <string-array name="array_montos">
         <item>0</item>
         <item>5</item>
@@ -27,6 +29,7 @@
         <item>25</item>
         <item>30</item>
     </string-array>
+
 
     <string-array name="array_milisegundos">
         <item>1800000</item>

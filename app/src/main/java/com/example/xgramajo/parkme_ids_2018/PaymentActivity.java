@@ -61,10 +61,10 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
-        ((TextView) findViewById(R.id.mp_results)).setText(
-                        "MATRÍCULA\n" + ParkingClass.getPatent()+ "\n\n" +
-                        "TIEMPO DE HABILITACIÓN\n" + ParkingClass.getTime() + "\n\n" +
-                        "MONTO A ABONAR\n" + "$ " + Integer.toString(ParkingClass.getPrice()));
+        //((TextView) findViewById(R.id.mp_results)).setText(
+        //                "MATRÍCULA\n" + ParkingClass.getPatent()+ "\n\n" +
+        //               "TIEMPO DE HABILITACIÓN\n" + ParkingClass.getTime() + "\n\n" +
+        //                "MONTO A ABONAR\n" + "$ " + Integer.toString(ParkingClass.getPrice()));
     }
 
     @Override
