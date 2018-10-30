@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -30,8 +32,8 @@ public class SetupFragment extends Fragment {
     String tiempoSeleccionado, numeroPatente;
     int montoAsociado;
     ViewPager viewPager;
-    LinearLayout setupLayout;
-    TextView priceList;
+    ConstraintLayout setupLayout;
+    TextView priceList1,priceList2,priceList3;
     Boolean timeIsSelected;
     Button contBtn;
 
@@ -44,16 +46,22 @@ public class SetupFragment extends Fragment {
 
         Spinner spinnerPatente = (Spinner) view.findViewById(R.id.spinner_patente);
         Spinner spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_patente);
+        //ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_duracion);
+
         montoCalculado = (TextView) view.findViewById(R.id.txt_monto);
 
-        setupLayout = (LinearLayout) view.findViewById(R.id.layout_setup);
-        //priceList = (TextView) view.findViewById(R.id.prices_list);
+        setupLayout = (ConstraintLayout) view.findViewById(R.id.layout_setup);
+        priceList1 = (TextView) view.findViewById(R.id.prices_list1);
+        priceList2 = (TextView) view.findViewById(R.id.prices_list2);
+        priceList3 = (TextView) view.findViewById(R.id.prices_list3);
 
         contBtn = (Button) view.findViewById(R.id.btn_continue);
 
         setInfo(ParkingClass.isPrepayment());
 
         //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
+
         spinnerDur.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @SuppressLint("SetTextI18n")
@@ -62,7 +70,7 @@ public class SetupFragment extends Fragment {
                                                int posicion,
                                                long id) {
 
-                        ((TextView) v).setTextSize(20);
+                        ((TextView) v).setTextSize(15);
 
                         tiempoSeleccionado = spn.getSelectedItem().toString();
                         posicion = spn.getSelectedItemPosition();
@@ -101,7 +109,7 @@ public class SetupFragment extends Fragment {
                                                int posicion2,
                                                long id2) {
 
-                        ((TextView) v2).setTextSize(20);
+                        ((TextView) v2).setTextSize(15);
 
                         numeroPatente = spn2.getSelectedItem().toString();
 
@@ -143,7 +151,9 @@ public class SetupFragment extends Fragment {
     private void setInfo(boolean prePayment) {
         if (prePayment) {
 
-            priceList.setVisibility(View.GONE);
+            priceList1.setVisibility(View.GONE);
+            priceList2.setVisibility(View.GONE);
+            priceList3.setVisibility(View.GONE);
 
         } else {
 
