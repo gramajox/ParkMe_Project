@@ -33,7 +33,7 @@ public class SetupFragment extends Fragment {
     int montoAsociado;
     ViewPager viewPager;
     ConstraintLayout setupLayout;
-    TextView priceList1,priceList2,priceList3;
+    TextView priceList1,priceList2,priceList3, txtPasos;
     Boolean timeIsSelected;
     Button contBtn;
 
@@ -43,6 +43,14 @@ public class SetupFragment extends Fragment {
         View view = inflater.inflate(R.layout.tab_setup, container, false);
 
         viewPager = (ViewPager) Objects.requireNonNull(getActivity()).findViewById(R.id.container);
+
+        txtPasos = (TextView) view.findViewById(R.id.id_pasos);
+
+        if (ParkingClass.isPrepayment()) {
+            txtPasos.setText("Paso 1 de 3");
+        } else {
+            txtPasos.setText("Paso 1 de 2");
+        }
 
         Spinner spinnerPatente = (Spinner) view.findViewById(R.id.spinner_patente);
         Spinner spinnerDur = (Spinner) view.findViewById(R.id.spinner_duracion);
@@ -124,7 +132,7 @@ public class SetupFragment extends Fragment {
                 if (timeIsSelected == null) {
 
                     ParkingClass.setPatent(numeroPatente);
-
+                    ParkingClass.setupTrue();
                     viewPager.setCurrentItem(1);
                 } else {
                     if (!timeIsSelected){
@@ -134,7 +142,7 @@ public class SetupFragment extends Fragment {
                         ParkingClass.setPatent(numeroPatente);
                         ParkingClass.setPrice(montoAsociado);
                         ParkingClass.setTime(tiempoSeleccionado);
-
+                        ParkingClass.setupTrue();
                         viewPager.setCurrentItem(1);
                     }
                 }

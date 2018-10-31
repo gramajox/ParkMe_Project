@@ -21,6 +21,7 @@ import java.util.Objects;
 
 public class PaymentActivity extends AppCompatActivity {
 
+    TextView txtMonto, txtPatente, txtTiempo, txtPasos;
     Button cancelBtn, sumitBtn;
 
     private static final int REQ_CODE_CHECKOUT = 1;
@@ -36,8 +37,22 @@ public class PaymentActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        txtMonto = (TextView) findViewById(R.id.txt_monto);
+        txtTiempo = (TextView) findViewById(R.id.txt_tiempo);
+        txtPatente = (TextView) findViewById(R.id.txt_patente);
+
+        txtPasos = (TextView) findViewById(R.id.id_pasos);
+
+        if (ParkingClass.isPrepayment()) {
+            txtPasos.setText("Paso 3 de 3");
+        }
+
         cancelBtn = (Button) findViewById(R.id.cancel_btn);
         sumitBtn = (Button) findViewById(R.id.sumit_btn);
+
+        txtMonto.setText(Integer.toString(ParkingClass.getPrice()));
+        txtPatente.setText(ParkingClass.getPatent());
+        txtTiempo.setText(ParkingClass.getTime());
 
         sumitBtn.setOnClickListener(new View.OnClickListener() {
             @Override

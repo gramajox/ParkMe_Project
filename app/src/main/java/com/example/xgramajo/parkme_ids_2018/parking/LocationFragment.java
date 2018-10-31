@@ -70,7 +70,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
     ProgressBar load;
     Button startBtn, payBtn, backBtn;
     ViewPager viewPager;
-    TextView dir;
+    TextView dir, txtPasos;
 
 
     @Override
@@ -81,6 +81,12 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         payBtn = view.findViewById(R.id.pay_btn);
         //backBtn = view.findViewById(R.id.back_btn);
         startBtn = view.findViewById(R.id.btn_start);
+        txtPasos = (TextView) view.findViewById(R.id.id_pasos);
+        if (ParkingClass.isPrepayment()) {
+            txtPasos.setText("Paso 2 de 3");
+        } else {
+            txtPasos.setText("Paso 2 de 2");
+        }
 
         dir = view.findViewById(R.id.dir);
         dir.setText("");
