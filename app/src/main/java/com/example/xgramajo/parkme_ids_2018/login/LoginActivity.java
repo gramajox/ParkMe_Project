@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText loginEmailText;
@@ -91,12 +93,15 @@ public class LoginActivity extends AppCompatActivity {
 
                             } else {
 
-                                String errorMessage = task.getException().getMessage();
-                                Toast.makeText(LoginActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
+                                //String errorMessage = Objects.requireNonNull(task.getException()).getMessage();
+                                Toast.makeText(LoginActivity.this, "Los datos son incorrectos, por favor verifique.", Toast.LENGTH_LONG).show();
                             }
                             loginProgress.setVisibility(View.INVISIBLE);
                         }
                     });
+                } else {
+                    Toast.makeText(LoginActivity.this, "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -143,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
                 sendToMain();
             } else {
-                Toast.makeText(LoginActivity.this, "Por favor, verifique el mail.", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Por favor, verifique su mail.", Toast.LENGTH_LONG).show();
                 mAuth.signOut();
             }
         }

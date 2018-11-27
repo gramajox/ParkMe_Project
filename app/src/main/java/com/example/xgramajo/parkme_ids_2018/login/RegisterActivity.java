@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     } else {
                                         String errorMessage = task.getException().getMessage();
-                                        Toast.makeText(RegisterActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(RegisterActivity.this, "El correo electrónico debe ser de la forma nombre@dominio", Toast.LENGTH_LONG).show();
 
                                     }
                                     reg_progress.setVisibility(View.INVISIBLE);
