@@ -77,6 +77,7 @@ public class TimeLeftFragment extends Fragment {
 
         // inicia el temporizador
         // metodo disparado a intervalos regulares marcados en el intervalo del contador cada 1000 milisegundos (1 segundo)
+
         CountDownTimer mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {

@@ -143,6 +143,7 @@ public class SetupFragment extends Fragment {
                         ParkingClass.setPrice(montoAsociado);
                         ParkingClass.setTime(tiempoSeleccionado);
                         ParkingClass.setupTrue();
+                        Toast.makeText(getActivity(), ParkingClass.getStartTime() + " - " + ParkingClass.getEndTime(),Toast.LENGTH_LONG).show();
                         viewPager.setCurrentItem(1);
                     }
                 }

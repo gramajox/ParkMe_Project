@@ -23,9 +23,10 @@ public class CounterFragment extends Fragment {
 
     TextView chronometerCounter, priceCounter, patentCounter;
     long baseTime, activityTime, elapsedTime, freeTime;
-    String elapsedTimeFormatted, chargedPriceFormatted;
-    long basePrice, chargedPrice, priceHour, mountToPay;
-    int toPay;
+    String price, elapsedTimeFormatted;
+    long   chargedPrice, priceHour, mountToPay;
+    int mount, toPay;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,10 +45,11 @@ public class CounterFragment extends Fragment {
         patentCounter = (TextView) view.findViewById(R.id.patent_counter);
 
         patentCounter.setText(ParkingClass.getPatent());
-        priceHour = 50;
         chargedPrice= 0; // inicializacion de la variable
-        basePrice = 2; // precio por segundo
-        freeTime = 30000; // tiempo libre en milisegundos que no se cobra
+        mount = 0; // inicializacion de la variable
+        freeTime = 3000; // 120000 segundos es el tiempo libre en milisegundos que no se cobra
+        // para actualizar el freeTime hay que actualizar esta variable, el if (secs < 3) del getPrice() y case 3: del addMount()
+
 
         baseTime = System.currentTimeMillis();
         activityTime = System.currentTimeMillis();
@@ -133,21 +135,63 @@ public class CounterFragment extends Fragment {
         //Pasa a la vista del contador el tiempo restante
     }
 
-    private void updatePriceCounter(){
-        chargedPrice = chargedPrice + basePrice;
-        // calcula el precio del monto a Abonar
-
-        // Pasa a un string el precio calculado.
-        chargedPriceFormatted = String.valueOf(chargedPrice);
-
-        //Pasa a la vista del monto a Abonar el precio cargado
-        priceCounter.setText(chargedPriceFormatted);
-
-    }
-
     public void getElapsedTime(){
         elapsedTime = System.currentTimeMillis() - baseTime;
     }
 
 
+    private void updatePriceCounter(){
+       //Pasa a la vista del monto a Abonar el precio cargado
+
+        price = getPrice();
+        priceCounter.setText("$ " + price);
+        chargedPrice = Long.valueOf(price);
+
+    }
+
+    public String getPrice(){
+
+        elapsedTime = System.currentTimeMillis() - baseTime;
+        int secs = (int) (elapsedTime / 1000);
+
+        if (secs < 3){
+            // es el tiempo libre que el contador no actualiza el monto
+            mount =0;
+        }else
+        {
+            if (addMount(secs) == 0) {
+                mount = mount + addMount(secs);
+            }
+            else {
+                mount = addMount(secs);
+            }
+        }
+
+
+
+        String priceB = String.valueOf(mount);
+        return priceB;
+    }
+
+    public int addMount(int secs){
+        switch (secs) {
+            case 3: //tiempo libre 2 minutos x 60 segundos = 120 segundos
+                return 5;
+            case 10: //30 minutos x 60 segundos = 1800 segundos
+                return 5;
+            case 15: //60 minutos x 60 segundos = 3600 segundos
+                return 10;
+            case 20: //90 minutos x 60 segundos = 5400 segundos
+                return 15;
+            case 25: //120 minutos x 60 segundos = 7200 segundos
+                return 20;
+            case 30: //150 minutos x 60 segundos = 9000 segundos
+                return 25;
+            case 35: // 180 minutos x 60 segundos = 10800 segundos
+                return 30;
+        }
+    return 0;
+    }
+
 }
+
