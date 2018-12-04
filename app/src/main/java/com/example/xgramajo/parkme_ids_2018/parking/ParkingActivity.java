@@ -43,6 +43,9 @@ public class ParkingActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
+
+        ParkingClass.setupFalse();
+
 /*
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 

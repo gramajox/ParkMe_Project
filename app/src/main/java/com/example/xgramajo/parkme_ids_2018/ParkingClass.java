@@ -26,16 +26,14 @@ public class ParkingClass {
         ParkingClass.patent = patent;
     }
 
-    static int getPrice() {
-        return price;
-    }
+    static int getPrice() {return price;}
 
     public static void setPrice(int price) {
         ParkingClass.price = price;
     }
 
     public static void setDireccion(String d) {
-        ParkingClass.direccion = d;
+        direccion = d;
     }
 
     public static String getDireccion() {
