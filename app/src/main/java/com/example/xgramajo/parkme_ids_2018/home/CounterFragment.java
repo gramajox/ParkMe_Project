@@ -160,9 +160,11 @@ public class CounterFragment extends Fragment {
         }else
         {
             if (addMount(secs) == 0) {
+                // actualiza el monto con valor cero
                 mount = mount + addMount(secs);
             }
             else {
+                // actualiza el monto con el valor del caso
                 mount = addMount(secs);
             }
         }
@@ -176,7 +178,7 @@ public class CounterFragment extends Fragment {
     public int addMount(int secs){
         switch (secs) {
             case 3: //tiempo libre 2 minutos x 60 segundos = 120 segundos
-                return 5;
+                return 5; // como utilizamos un case, pra que no muestre 0 despues del tiempo libre y antes del primer caso que se cumple
             case 10: //30 minutos x 60 segundos = 1800 segundos
                 return 5;
             case 15: //60 minutos x 60 segundos = 3600 segundos
