@@ -23,6 +23,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     TextView txtMonto, txtPatente, txtTiempo, txtPasos;
     Button cancelBtn, sumitBtn;
+    TextView matricula,duracion,monto,direc;
 
     private static final int REQ_CODE_CHECKOUT = 1;
 
@@ -77,6 +78,16 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
+        matricula = findViewById(R.id.txt_patente);
+
+        duracion = findViewById(R.id.txt_tiempo);
+
+        monto = findViewById(R.id.txt_monto);
+
+        //direc = findViewById(R.id.direccion);
+
+        cargarDatos();
+
         //((TextView) findViewById(R.id.mp_results)).setText(
         //                "MATRÍCULA\n" + ParkingClass.getPatent()+ "\n\n" +
         //               "TIEMPO DE HABILITACIÓN\n" + ParkingClass.getTime() + "\n\n" +
@@ -126,5 +137,12 @@ public class PaymentActivity extends AppCompatActivity {
 
     public static void setPRE_PAYMENT(Boolean b) {
         PRE_PAYMENT = b;
+    }
+
+    private void cargarDatos(){ //Muestro los valores de ParkingClass antes de iniciar el pago
+        matricula.setText(ParkingClass.getPatent());
+        duracion.setText(ParkingClass.getTime());
+        monto.setText(String.valueOf(ParkingClass.getPrice()));
+        //direc.setText(ParkingClass.getDireccion());
     }
 }
