@@ -10,18 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.FirebaseController;
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
-import com.example.xgramajo.parkme_ids_2018.PaymentActivity;
+import com.example.xgramajo.parkme_ids_2018.PaymentAdvancedActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 import java.util.Locale;
 import java.util.Objects;
 
-public class CounterFragment extends Fragment {
+import static java.lang.String.valueOf;
 
-    TextView chronometerCounter, priceCounter, patentCounter;
+public class ChronometerFragment extends Fragment {
+
+    TextView chronometerCounter, priceCounter, patentCounter, txtDir;
     long baseTime, activityTime, elapsedTime, freeTime;
     String price, elapsedTimeFormatted;
     long   chargedPrice, priceHour, mountToPay;
@@ -40,9 +42,12 @@ public class CounterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
 
         // Inicialización de la vista para el cronometro
-        chronometerCounter =   (TextView) view.findViewById(R.id.chronometer_counter);
-        priceCounter =  (TextView) view.findViewById(R.id.price_counter);
-        patentCounter = (TextView) view.findViewById(R.id.patent_counter);
+        chronometerCounter = view.findViewById(R.id.chronometer_counter);
+        priceCounter =  view.findViewById(R.id.price_counter);
+        patentCounter = view.findViewById(R.id.patent_counter);
+        txtDir = view.findViewById(R.id.txt_direction);
+
+        txtDir.setText(ParkingClass.getDireccion());
 
         patentCounter.setText(ParkingClass.getPatent());
         chargedPrice= 0; // inicializacion de la variable
@@ -78,17 +83,18 @@ public class CounterFragment extends Fragment {
         view.findViewById(R.id.pay_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseController.removeAvaliablePatent(ParkingClass.getPatent());
+
                 getElapsedTime();
                 if (elapsedTime > freeTime){
                     mountToPay = chargedPrice;
 
-                    /*seteo el precio del estacionamiento*/
                     toPay = (int) mountToPay;
                     ParkingClass.setPrice(toPay);
-                    /*Seteo PRE_PAYMENT false para que al terminar mercadopago vaya al home y no al timeLeft*/
-                    PaymentActivity.setPRE_PAYMENT(false);
                     ParkingClass.setTime(elapsedTimeFormatted);
-                    startActivity(new Intent(getContext(), PaymentActivity.class));
+
+                    startActivity(new Intent(getContext(), PaymentAdvancedActivity.class));
                     Objects.requireNonNull(getActivity()).finish();
                 }
                 else {
@@ -170,9 +176,7 @@ public class CounterFragment extends Fragment {
         }
 
 
-
-        String priceB = String.valueOf(mount);
-        return priceB;
+        return valueOf(mount);
     }
 
     public int addMount(int secs){

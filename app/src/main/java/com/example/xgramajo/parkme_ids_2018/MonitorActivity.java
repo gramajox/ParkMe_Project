@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
@@ -31,9 +32,12 @@ import java.util.ArrayList;
 public class MonitorActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    ListView userPatents;
-    ArrayList<String> lista = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    ListView listPatents, listDirections, listTimes;
+    ArrayList<String> patentesArray = new ArrayList<>();
+    ArrayList<String> directionsArray = new ArrayList<>();
+    ArrayList<String> timesArray = new ArrayList<>();
+
+    ArrayAdapter<String> adapterPatente, adapterDirection, adapterTime;
 
     FirebaseUser currentUser;
     DatabaseReference mRootReference;
@@ -58,18 +62,26 @@ public class MonitorActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //PARA LEER LISTA DE PATENTES
+        listPatents = findViewById(R.id.list_patent);
+        listPatents.setAdapter(adapterPatente);
+        listDirections = findViewById(R.id.list_direction);
+        listDirections.setAdapter(adapterDirection);
+        listTimes = findViewById(R.id.list_time);
+        listTimes.setAdapter(adapterTime);
 
-        userPatents = findViewById(R.id.list_patent);
+        adapterPatente = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, patentesArray);
+        adapterDirection = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, directionsArray);
+        adapterTime = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, timesArray);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
-        userPatents.setAdapter(adapter);
 
-        mRootReference.child("Usuarios").child(currentUser.getUid()).child("Matriculas").addChildEventListener(new ChildEventListener() {
+        mRootReference.child("Habilitados").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String string = dataSnapshot.getValue(String.class);
-                adapter.add(string);
+                adapterPatente.add(dataSnapshot.child("Matrícula").getValue(String.class));
+                adapterDirection.add(dataSnapshot.child("Localización").getValue(String.class));
+                adapterTime.add(dataSnapshot.child("HoraFin").getValue(String.class));
+
+                Log.d("MONITOR DE MATRICULASS", dataSnapshot.child("Matrícula").getValue(String.class));
             }
 
             @Override
@@ -79,8 +91,9 @@ public class MonitorActivity extends AppCompatActivity
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                String string = dataSnapshot.getValue(String.class);
-                adapter.remove(string);
+                adapterPatente.remove(dataSnapshot.child("Matrícula").getValue(String.class));
+                adapterDirection.remove(dataSnapshot.child("Localización").getValue(String.class));
+                adapterTime.remove(dataSnapshot.child("HoraFin").getValue(String.class));
             }
 
             @Override

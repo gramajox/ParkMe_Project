@@ -17,15 +17,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.EnableActivity;
 import com.example.xgramajo.parkme_ids_2018.MonitorActivity;
+import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.PatentActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -43,7 +46,7 @@ public class HomeActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
     HomeFragment        homeFragment        = new HomeFragment();
-    CounterFragment     counterFragment     = new CounterFragment();
+    ChronometerFragment counterFragment     = new ChronometerFragment();
     TimeLeftFragment    timeLeftFragment    = new TimeLeftFragment();
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -65,6 +68,11 @@ public class HomeActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() == null) {
                     sendToLogin();
+                } else {
+                    if (Objects.requireNonNull(firebaseAuth.getCurrentUser().getEmail()).equals("xaviergramajo@gmail.com")) {
+                        Log.d("HOMEACTI", firebaseAuth.getCurrentUser().getEmail());
+                        ParkingClass.setAlreadyPaid(true);
+                    }
                 }
             }
         };
@@ -82,6 +90,11 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+/*
+        if (ParkingClass.isAlreadyPaid()) {
+            navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+        }
+*/
         navigationView.setNavigationItemSelectedListener(this);
 
         switch (activatedFragment) {
@@ -127,10 +140,8 @@ public class HomeActivity extends AppCompatActivity
                         exit = false;
                     }
                 }, 3 * 1000);
-
             }
         }
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

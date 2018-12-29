@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">ParkMe</string>
-    <string name="title_activity_home">Mi Estacionamiento</string>
+    <string name="title_activity_home">ParkMe</string>
     <string name="title_activity_parking">Inicio de Estacionamiento</string>
     <string name="title_activity_enable">Habilitar Matrícula</string>
     <string name="title_activity_patent">Mis Matrículas</string>
     <string name="title_activity_monitor">Monitor de Matrículas</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Park Me</string>
+    <string name="nav_header_title">ParkMe</string>
     <string name="nav_header_subtitle">parkme@ingsoft.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configuracion</string>
@@ -85,6 +85,9 @@
     <string name="invalid_lat_long_used">invalid lat long used</string>
     <string name="no_address_found">no address found</string>
     <string name="address_found">address found</string>
+    <string name="txt_direction">UBICACIÓN</string>
+    <string name="txt_counter">INICIAR CONTADOR</string>
+    <string name="txt_enable_patent">HABILITAR MATRÍCULA</string>
 
 
 </resources>

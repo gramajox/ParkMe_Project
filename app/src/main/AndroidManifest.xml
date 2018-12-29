@@ -39,17 +39,32 @@
             android:screenOrientation="portrait" />
         <activity android:name=".login.RegisterActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".parking.ParkingActivity"
+            android:name=".ParkingAdvancedActivity"
             android:label="@string/title_activity_parking"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ParkingChronometerActivity"
+            android:label="@string/title_activity_parking"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
+
         <activity android:name=".login.PasswordActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".PaymentActivity"
+            android:name=".PaymentAdvancedActivity"
             android:label="@string/title_activity_payment"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".PaymentChronometerActivity"
+            android:label="@string/title_activity_payment"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".PatentActivity"
             android:label="@string/title_activity_patent"

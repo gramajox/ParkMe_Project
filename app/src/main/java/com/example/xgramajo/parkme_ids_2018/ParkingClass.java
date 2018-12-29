@@ -1,6 +1,6 @@
 package com.example.xgramajo.parkme_ids_2018;
 
-import android.widget.Toast;
+import android.annotation.SuppressLint;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -10,16 +10,14 @@ import java.util.Date;
 public class ParkingClass {
     private static boolean prepayment;     //tipo de estacionamiento (true - pago adelantado / false - pago diferido)
     private static String patent;          //numero de matricula
-    private static int price;              //Precio calculado en Setup / en CounterFragment
+    private static int price;              //Precio calculado en Setup / en ChronometerFragment
     private static String direccion;        //Ubicación del estacionamiento: calle + altura
     private static double lat, lng;         //Ubicación del estacionamiento: Latitud + Longitud
     private static boolean alreadyPaid;    //Estado del estacionamiento (true - Pagado / false - No pagado)
     private static String time;            //tiempo de estacionamiento pago adelantado
     private static boolean setup=false;
-    private static String startTime;          // Tiempo de inicio del estacionamiento
-    private static String endTime;            // Tiempo de fin del estacionamiento
 
-    public static boolean isPrepayment() {
+    static boolean isPrepayment() {
         return prepayment;
     }
 
@@ -31,7 +29,7 @@ public class ParkingClass {
         return patent;
     }
 
-    public static void setPatent(String patent) {
+    static void setPatent(String patent) {
         ParkingClass.patent = patent;
     }
 
@@ -41,7 +39,7 @@ public class ParkingClass {
         ParkingClass.price = price;
     }
 
-    public static void setDireccion(String d) {
+    static void setDireccion(String d) {
         direccion = d;
     }
 
@@ -49,7 +47,7 @@ public class ParkingClass {
         return direccion;
     }
 
-    public static void setLatLng(Double la, Double lo){
+    static void setLatLng(Double la, Double lo){
         ParkingClass.lat = la;
         ParkingClass.lng = lo;
     }
@@ -70,11 +68,11 @@ public class ParkingClass {
         ParkingClass.alreadyPaid = alreadyPaid;
     }
 
-    public static Boolean getSetup(){return setup;}
+    static Boolean getSetup(){return setup;}
 
-    public static void setupTrue(){setup = true;}
+    static void setupTrue(){setup = true;}
 
-    public static void setupFalse(){setup = false;}
+    static void setupFalse(){setup = false;}
 
 
     public static String getTime() {
@@ -105,51 +103,49 @@ public class ParkingClass {
 
     }
 
-    public static long getMinutes (){
-        long longNumberTime = Long.valueOf(getOnlyNumberTime());
-        return longNumberTime;
+    private static long getMinutes(){
+        return Long.valueOf(getOnlyNumberTime());
     }
 
-    public static long getParkingTimeInMillis (){
+    private static long getParkingTimeInMillis(){
         long minutes = getMinutes();
-        long milliseconds = minutes * 60 * 1000;
-        return milliseconds;
+        return minutes * 60 * 1000;
     }
 
-    public static long getTotalTimeInMillis (){
-        long totalTimeInMillis = getTimeInMillis() + getParkingTimeInMillis();
-        return totalTimeInMillis;
+    private static long getTotalTimeInMillis(){
+        return getTimeInMillis() + getParkingTimeInMillis();
     }
 
-    public static String getEndTime(){
-        endTime = convertMillisToString(getTotalTimeInMillis());
-        return endTime;
+    static String getEndTime(){
+        // Tiempo de fin del estacionamiento
+        if (isPrepayment()) {
+            return convertMillisToString(getTotalTimeInMillis());
+        } else {
+            return "Cronometro";
+        }
     }
 
     public static Date getDate() {
-        Date date = new Date();
-        return date; // Tiempo actual del sistema en formato Day Month Date hh:mm:ss Zone Year
+        return new Date(); // Tiempo actual del sistema en formato Day Month Date hh:mm:ss Zone Year
     }
 
-    public static Timestamp getTimeStamp(){
+    private static Timestamp getTimeStamp(){
         Date date = new Date();
-        Timestamp timeStamp = (new Timestamp(date.getTime()));
-        return timeStamp; // Tiempo actual del sistema en formato aaaa-mm-dd hh:mm:ss.mmm
+        return (new Timestamp(date.getTime())); // Tiempo actual del sistema en formato aaaa-mm-dd hh:mm:ss.mmm
     }
 
-    public static long getTimeInMillis() {
+    private static long getTimeInMillis() {
         Timestamp myTimeStamp = getTimeStamp();
-        long timeInMillis = myTimeStamp.getTime();
-        return timeInMillis;
+        return myTimeStamp.getTime();
     }
 
-    public static String getStartTime(){
-        startTime = convertMillisToString(getTimeInMillis());
-        return startTime;
+    static String getStartTime(){
+        // Tiempo de inicio del estacionamiento
+        return convertMillisToString(getTimeInMillis());
     }
 
 
-    public static String convertMillisToString (long milliSeconds) {
+    private static String convertMillisToString(long milliSeconds) {
 
         /**
          * Return date in specified format.
@@ -158,14 +154,13 @@ public class ParkingClass {
          */
 
         // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
         // Nota: la cadena de String como pattern la podemos reemplazar por una variable con el pattern que nosotros querramos
 
         // Create a calendar object that will convert the date and time value in milliseconds to date.
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
-        String formattedDate = formatter.format(calendar.getTime());
-        return formattedDate;
+        return formatter.format(calendar.getTime());
     }
 
 

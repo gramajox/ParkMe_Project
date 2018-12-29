@@ -22,7 +22,7 @@
             android:title="Salir del sistema" />
     </group>
 
-    <item android:title="Opciones Admin.">
+    <item android:id="@+id/admin_option" android:title="Opciones Admin.">
         <menu>
             <item
                 android:id="@+id/nav_monitor"

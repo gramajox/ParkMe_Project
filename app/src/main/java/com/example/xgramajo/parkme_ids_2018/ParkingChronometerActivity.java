@@ -1,6 +1,8 @@
-package com.example.xgramajo.parkme_ids_2018.parking;
+package com.example.xgramajo.parkme_ids_2018;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -13,21 +15,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
-import com.example.xgramajo.parkme_ids_2018.PaymentActivity;
-import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
+import com.example.xgramajo.parkme_ids_2018.PaymentChronometerActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -37,11 +38,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -54,163 +50,117 @@ import java.util.Objects;
 import static android.support.constraint.Constraints.TAG;
 import static java.lang.Thread.sleep;
 
-public class LocationFragment extends Fragment implements OnMapReadyCallback,
-        GoogleMap.OnMyLocationClickListener,
-        GoogleMap.OnMyLocationButtonClickListener {
+public class ParkingChronometerActivity extends AppCompatActivity {
+
+    @SuppressLint("StaticFieldLeak")
+    public static Activity parkAct;
+
+    String numeroPatente;
+    Button contBtn;
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private static final float DEFAULT_ZOOM = 15;
     boolean mLocationPermissionGranted;
-    private GoogleMap mMap;
     private Location currentLocation;
     private String direc;
-    //Hasta acá necesario para Maps.
-
 
     ProgressBar load;
-    Button startBtn, payBtn, backBtn;
-    ViewPager viewPager;
-    TextView dir, txtPasos;
-
+    TextView dir;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab_location, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_parking_chronometer);
 
-        payBtn = view.findViewById(R.id.pay_btn);
-        //backBtn = view.findViewById(R.id.back_btn);
-        startBtn = view.findViewById(R.id.btn_start);
-        txtPasos = (TextView) view.findViewById(R.id.id_pasos);
-        if (ParkingClass.isPrepayment()) {
-            txtPasos.setText("Paso 2 de 3");
-        } else {
-            txtPasos.setText("Paso 2 de 2");
-        }
+        parkAct = this;
 
-        dir = view.findViewById(R.id.dir);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setSubtitle("Pago Diferido");
+
+        ParkingClass.setupFalse();
+
+        Spinner spinnerPatente = findViewById(R.id.spinner_patente);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_patente);
+        //ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_duracion);
+
+        contBtn = findViewById(R.id.btn_continue);
+
+        dir = findViewById(R.id.dir);
         dir.setText("");
 
-        load = view.findViewById(R.id.load);
+        load = findViewById(R.id.load);
         load.setVisibility(View.INVISIBLE);
-
-        viewPager = Objects.requireNonNull(getActivity()).findViewById(R.id.container);
 
         obtenerPermisos();
 
-        SupportMapFragment mapFragment = (SupportMapFragment)
-                getChildFragmentManager()
-                        .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);   //Crear el Mapa
-
-        setInfo(ParkingClass.isPrepayment());
-
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //cargar a ParkClass la ubicación
-                //ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
-
-                HomeActivity.setCounterFragment();
-                startActivity(new Intent(getContext(), HomeActivity.class));
-                getActivity().finish();
-            }
-        });
-
-        payBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*cargar a ParkClass la ubicación*/
-                //ParkingClass.setLocation(Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
-
-                /*Seteo PRE_PAYMENT true para que al terminar mercadopago vaya al timeLeft y no al home*/
-                PaymentActivity.setPRE_PAYMENT(true);
-                startActivity(new Intent(getContext(), PaymentActivity.class));
-            }
-        });
-
         new consultarSetup().execute();
 
-        /*
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
+
+        spinnerPatente.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> spn2,
+                                               View v2,
+                                               int posicion2,
+                                               long id2) {
+
+                        ((TextView) v2).setTextSize(15);
+
+                        numeroPatente = spn2.getSelectedItem().toString();
+
+                    }
+                    public void onNothingSelected(AdapterView<?> spn2) {
+                    }
+                });
+
+        contBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(0);
+
+                ParkingClass.setPatent(numeroPatente);
+                ParkingClass.setDireccion(direc);
+                ParkingClass.setupTrue();
+
+                startActivity(new Intent(getApplicationContext(), PaymentChronometerActivity.class));
             }
         });
-        */
 
-        return view;
     }
 
-    /*
-      Preguntar al usuario por Permisos
-     */
     public void obtenerPermisos() {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
          */
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(this.getContext()),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getApplication()),
+                Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            if(ContextCompat.checkSelfPermission(this.getContext(),
+            if(ContextCompat.checkSelfPermission(getApplication(),
                     Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED){
                 mLocationPermissionGranted = true;
             } else {
-                ActivityCompat.requestPermissions(Objects.requireNonNull(this.getActivity()),
+                ActivityCompat.requestPermissions(Objects.requireNonNull(this),
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             }
         } else {
-            ActivityCompat.requestPermissions(Objects.requireNonNull(this.getActivity()),
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+            ActivityCompat.requestPermissions(Objects.requireNonNull(this),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
 
-    private void ubicarCamara(LatLng latLng, float zoom){
-        Log.d("tag:","Ubicar cámara");
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
-    }
-
-    //Método que se ejecuta al estar el mapa Ready.
-    @Override
-    public void onMapReady(GoogleMap mapa) {
-        mMap = mapa;
-
-        ubicarCamara(new LatLng(-37.0000000,-64.0000000),3); //Ubica el primer inicio de maps en Argentina.
-
-        mMap.setOnMyLocationButtonClickListener(this); //Función cuando se presiona
-        mMap.setOnMyLocationClickListener(this); //Aún no lo c.
-
-        if (mLocationPermissionGranted) {
-            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(this.getContext()), Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-            }
-            mMap.setMyLocationEnabled(true); //Este metodo muestra el boton GPS dentro del Mapa
-            return;
-        }
-    }
-
-    @Override
-    public void onMyLocationClick(@NonNull Location location) {} //Por ahora no la usamos
-
-    //Función del boton de localizar que está sobre el mapa
-    @Override
-    public boolean onMyLocationButtonClick() {
-        Log.d("Boton Localizar GPS: ", "clickeado");
-        gpsact(getView());
-        return false;
-    }
 
     //Método para activar la ubicación 8 segundos después de seleccionar
     // el modo de estacionamiento O
     // cuando el usuario toca el botón continuar.
-    private class consultarSetup extends AsyncTask<Void, Void, Boolean>{
+    @SuppressLint("StaticFieldLeak")
+    private class consultarSetup extends AsyncTask<Void, Void, Boolean> {
         int[] cont = {0};
 
         @Override
@@ -227,7 +177,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                     break;
                 } else {
                     try {
-                        sleep(500);
+                        sleep(0);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -239,18 +189,19 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            gpsact(getView());
+            gpsact(findViewById(android.R.id.content));
         }
     }
 
     /*AsyncTask para obtener ubicación.
         info: duración máxima 13 segundos
      */
+    @SuppressLint("StaticFieldLeak")
     private class posicionMaps extends AsyncTask<Void, Void, Boolean>{
 
         protected void onPreExecute(){
             load.setVisibility(View.VISIBLE);
-            Toast.makeText(getContext(),"Buscando Posición",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Buscando Posición",Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -262,7 +213,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                 Log.d("deviceLocation", "Obteniendo Posición.");
 
                 FusedLocationProviderClient mFusedLocationProviderClient = LocationServices
-                        .getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
+                        .getFusedLocationProviderClient(Objects.requireNonNull(getApplicationContext()));
 
                 try {
                     if (mLocationPermissionGranted) {
@@ -276,11 +227,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                                         resultado[0] = true;
                                         currentLocation = (Location) task.getResult();
                                         Log.d("deviceLocation Task", String.valueOf(currentLocation.getLatitude()));
-
+/***
                                         ubicarCamara(new LatLng(
                                                         currentLocation.getLatitude(),
                                                         currentLocation.getLongitude()),
-                                                DEFAULT_ZOOM);
+                                                DEFAULT_ZOOM);*/
                                     } else {
                                         Log.d("deviceLocation Task: ", "Aún no obtuvo ubicación");
                                         cont[0]++;
@@ -313,7 +264,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
             load.setVisibility(View.INVISIBLE);
             if(!aBoolean){
                 Log.d("deviceLocation Task: ", "NO se obtuvo ubicación");
-                Toast.makeText(getContext(),"Ubicación no encontrada :(",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Ubicación no encontrada :(",Toast.LENGTH_LONG).show();
             } else {
                 Log.d("deviceLocation Task: ", "Ubicación encontrada!");
                 ParkingClass.setLatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
@@ -334,7 +285,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                         Estoy intentando entender ese método aún.
      */
     public void gpsact(View view){
-        Context context = this.getContext();
+        Context context = getApplicationContext();
         assert context != null;
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -350,7 +301,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                     .addLocationRequest(locationRequest);
 
             Task<LocationSettingsResponse> result =
-                    LocationServices.getSettingsClient(this.getActivity()).checkLocationSettings(builder.build());
+                    LocationServices.getSettingsClient(this).checkLocationSettings(builder.build());
 
             result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
                 @Override
@@ -371,7 +322,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
                                     // Show the dialog by calling startResolutionForResult(),
                                     // and check the result in onActivityResult().
                                     resolvable.startResolutionForResult(
-                                            getActivity(),
+                                            getParent(), /***ACA VA LA ACTIVITY-------------------------------------------------*/
                                             555);
                                     new posicionMaps().execute();
                                 } catch (IntentSender.SendIntentException e) {
@@ -399,14 +350,14 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(getContext(),"Buscando Dirección",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Buscando Dirección",Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected Boolean doInBackground(Void... voids) {
             final boolean[] resultado = {false};
             final int[] cont = {0};
-            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             List<Address> addresses = null;
             String errorMessage = "";
 
@@ -494,15 +445,14 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback,
         }
     }
 
-    private void setInfo(boolean prePayment) {
-        if (prePayment) {
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
-            startBtn.setVisibility(View.GONE);
-
-        } else {
-
-            payBtn.setVisibility(View.GONE);
-
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
