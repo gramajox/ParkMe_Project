@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -43,9 +44,17 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -77,10 +86,17 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
     ProgressBar load;
     TextView dir;
 
+    Spinner spinnerPatente, spinnerDur;
+    FirebaseUser currentUser;
+    DatabaseReference mRootReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking_advanced);
+
+        mRootReference = FirebaseDatabase.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         parkAct = this;
 
@@ -95,15 +111,36 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
         }
 
         ParkingClass.setupFalse();
-
-
-        Spinner spinnerPatente = findViewById(R.id.spinner_patente);
-        Spinner spinnerDur = findViewById(R.id.spinner_duracion);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_patente);
-        //ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_duracion);
-
         montoCalculado = findViewById(R.id.txt_monto);
         contBtn = findViewById(R.id.btn_continue);
+        spinnerDur = findViewById(R.id.spinner_duracion);
+        spinnerPatente = findViewById(R.id.spinner_patente);
+
+
+        //https://android--code.blogspot.com/2015/08/android-spinner-add-item-dynamically.html
+        String[] userPatent = new String[] {};
+        String[] userDuration = new String[] {
+                "--Selecciona el tiempo--",
+                "30 minutos",
+                "1 hora",
+                "1 hora 30 minutos",
+                "2 horas",
+                "2 horas 30 minutos",
+                "3 horas",
+        };
+
+        final List<String> userPatentList = new ArrayList<>(Arrays.asList(userPatent));
+        final List<String> userDurationList = new ArrayList<>(Arrays.asList(userDuration));
+
+        final ArrayAdapter<String> spinnerArrayAdapterPatente = new ArrayAdapter<String>(this, R.layout.spinner_item, userPatentList);
+        final ArrayAdapter<String> spinnerArrayAdapterDuration = new ArrayAdapter<String>(this, R.layout.spinner_item, userDurationList);
+
+        spinnerArrayAdapterPatente.setDropDownViewResource(R.layout.spinner_item);
+        spinnerArrayAdapterDuration.setDropDownViewResource(R.layout.spinner_item);
+
+        spinnerPatente.setAdapter(spinnerArrayAdapterPatente);
+        spinnerDur.setAdapter(spinnerArrayAdapterDuration);
+
 
         //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
 
@@ -114,8 +151,6 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
                                                View v,
                                                int posicion,
                                                long id) {
-
-                        ((TextView) v).setTextSize(15);
 
                         tiempoSeleccionado = spn.getSelectedItem().toString();
                         posicion = spn.getSelectedItemPosition();
@@ -154,24 +189,13 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
                                                int posicion2,
                                                long id2) {
 
-                        ((TextView) v2).setTextSize(15);
-
                         numeroPatente = spn2.getSelectedItem().toString();
 
                     }
                     public void onNothingSelected(AdapterView<?> spn2) {
                     }
                 });
-/*
-        Spinner spinner = findViewById(R.id.spinner_patente);
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item,
-                        PatentActivity.getPatentes()); //selected item will look like a spinner set from XML
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout
-                .simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerArrayAdapter);
-*/
         contBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,6 +223,37 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
         obtenerPermisos();
 
         new consultarSetup().execute();
+
+
+        mRootReference.child("Usuarios").child(currentUser.getUid()).child("Matriculas").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String string = dataSnapshot.getValue(String.class);
+                spinnerArrayAdapterPatente.add(string);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                String string = dataSnapshot.getValue(String.class);
+                spinnerArrayAdapterPatente.remove(string);
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 

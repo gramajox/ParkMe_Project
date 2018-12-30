@@ -30,6 +30,8 @@ import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +79,21 @@ public class EnableActivity extends AppCompatActivity
         patentInput = findViewById(R.id.input_patente);
         Spinner spinnerDur = findViewById(R.id.spinner_duracion);
 
+        String[] userDuration = new String[] {
+                "--Selecciona el tiempo--",
+                "30 minutos",
+                "1 hora",
+                "1 hora 30 minutos",
+                "2 horas",
+                "2 horas 30 minutos",
+                "3 horas",
+        };
+
+        final List<String> userDurationList = new ArrayList<>(Arrays.asList(userDuration));
+        final ArrayAdapter<String> spinnerArrayAdapterDuration = new ArrayAdapter<String>(this, R.layout.spinner_item, userDurationList);
+        spinnerArrayAdapterDuration.setDropDownViewResource(R.layout.spinner_item);
+        spinnerDur.setAdapter(spinnerArrayAdapterDuration);
+
         montoCalculado = findViewById(R.id.txt_monto);
         contBtn = findViewById(R.id.btn_continue);
 
@@ -89,8 +106,6 @@ public class EnableActivity extends AppCompatActivity
                                                View v,
                                                int posicion,
                                                long id) {
-
-                        ((TextView) v).setTextSize(15);
 
                         tiempoSeleccionado = spn.getSelectedItem().toString();
                         posicion = spn.getSelectedItemPosition();

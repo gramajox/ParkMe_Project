@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -40,9 +42,17 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -66,10 +76,17 @@ public class ParkingChronometerActivity extends AppCompatActivity {
     ProgressBar load;
     TextView dir;
 
+    Spinner spinnerPatente;
+    FirebaseUser currentUser;
+    DatabaseReference mRootReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking_chronometer);
+
+        mRootReference = FirebaseDatabase.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         parkAct = this;
 
@@ -82,9 +99,17 @@ public class ParkingChronometerActivity extends AppCompatActivity {
 
         ParkingClass.setupFalse();
 
-        Spinner spinnerPatente = findViewById(R.id.spinner_patente);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_patente);
-        //ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item,R.id.spinner_duracion);
+        spinnerPatente = findViewById(R.id.spinner_patente);
+
+        //https://android--code.blogspot.com/2015/08/android-spinner-add-item-dynamically.html
+        String[] userPatent = new String[] {};
+
+        final List<String> userPatentList = new ArrayList<>(Arrays.asList(userPatent));
+
+        final ArrayAdapter<String> spinnerArrayAdapterPatente = new ArrayAdapter<String>(this, R.layout.spinner_item, userPatentList);
+
+        spinnerArrayAdapterPatente.setDropDownViewResource(R.layout.spinner_item);
+        spinnerPatente.setAdapter(spinnerArrayAdapterPatente);
 
         contBtn = findViewById(R.id.btn_continue);
 
@@ -107,8 +132,6 @@ public class ParkingChronometerActivity extends AppCompatActivity {
                                                int posicion2,
                                                long id2) {
 
-                        ((TextView) v2).setTextSize(15);
-
                         numeroPatente = spn2.getSelectedItem().toString();
 
                     }
@@ -125,6 +148,35 @@ public class ParkingChronometerActivity extends AppCompatActivity {
                 ParkingClass.setupTrue();
 
                 startActivity(new Intent(getApplicationContext(), PaymentChronometerActivity.class));
+            }
+        });
+
+        mRootReference.child("Usuarios").child(currentUser.getUid()).child("Matriculas").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String string = dataSnapshot.getValue(String.class);
+                spinnerArrayAdapterPatente.add(string);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                String string = dataSnapshot.getValue(String.class);
+                spinnerArrayAdapterPatente.remove(string);
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
