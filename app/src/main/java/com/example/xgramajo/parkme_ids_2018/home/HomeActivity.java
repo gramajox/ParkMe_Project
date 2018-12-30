@@ -1,6 +1,7 @@
 package com.example.xgramajo.parkme_ids_2018.home;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,6 +36,7 @@ import java.util.Objects;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    @SuppressLint("StaticFieldLeak")
     public static Activity homeAct;
 
     FirebaseAuth mAuth;
@@ -50,6 +52,8 @@ public class HomeActivity extends AppCompatActivity
     TimeLeftFragment    timeLeftFragment    = new TimeLeftFragment();
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+
+    static boolean isAdmin;
 
     @Override
     protected void onStart() {
@@ -70,8 +74,9 @@ public class HomeActivity extends AppCompatActivity
                     sendToLogin();
                 } else {
                     if (Objects.requireNonNull(firebaseAuth.getCurrentUser().getEmail()).equals("xaviergramajo@gmail.com")) {
-                        Log.d("HOMEACTI", firebaseAuth.getCurrentUser().getEmail());
-                        ParkingClass.setAlreadyPaid(true);
+                        setIsAdmin(true);
+                    } else {
+                        setIsAdmin(false);
                     }
                 }
             }
@@ -90,11 +95,11 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-/*
-        if (ParkingClass.isAlreadyPaid()) {
+
+        if (!isAdmin) {
             navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
         }
-*/
+
         navigationView.setNavigationItemSelectedListener(this);
 
         switch (activatedFragment) {
@@ -186,6 +191,14 @@ public class HomeActivity extends AppCompatActivity
         }
 
         return true;
+    }
+
+    public static void setIsAdmin(boolean b) {
+        isAdmin = b;
+    }
+
+    public static boolean getIsAdmin() {
+        return isAdmin;
     }
 
     private void logOut() {

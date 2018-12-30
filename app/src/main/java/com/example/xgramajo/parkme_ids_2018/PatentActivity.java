@@ -65,6 +65,11 @@ public class PatentActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        if (!HomeActivity.getIsAdmin()) {
+            navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
         registerPatent = (Button) findViewById(R.id.patent_btn);

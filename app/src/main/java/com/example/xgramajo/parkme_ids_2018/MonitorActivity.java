@@ -60,6 +60,11 @@ public class MonitorActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        if (!HomeActivity.getIsAdmin()) {
+            navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
         listPatents = findViewById(R.id.list_patent);

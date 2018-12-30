@@ -65,7 +65,13 @@ public class EnableActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        if (!HomeActivity.getIsAdmin()) {
+            navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
         patentInput = findViewById(R.id.input_patente);
