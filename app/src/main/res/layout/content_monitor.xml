@@ -25,7 +25,7 @@
 
         <ListView
             android:id="@+id/list_patent"
-            android:layout_width="100dp"
+            android:layout_width="105dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
@@ -34,11 +34,9 @@
 
         <ListView
             android:id="@+id/list_direction"
-            android:layout_width="170dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/list_time"
             app:layout_constraintHorizontal_bias="0.714"
             app:layout_constraintStart_toEndOf="@+id/list_patent"
@@ -46,12 +44,12 @@
 
         <ListView
             android:id="@+id/list_time"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

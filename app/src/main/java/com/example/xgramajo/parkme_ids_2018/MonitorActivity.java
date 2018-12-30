@@ -39,7 +39,6 @@ public class MonitorActivity extends AppCompatActivity
 
     ArrayAdapter<String> adapterPatente, adapterDirection, adapterTime;
 
-    FirebaseUser currentUser;
     DatabaseReference mRootReference;
 
     @Override
@@ -48,7 +47,6 @@ public class MonitorActivity extends AppCompatActivity
         setContentView(R.layout.activity_monitor);
 
         mRootReference = FirebaseDatabase.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,23 +66,30 @@ public class MonitorActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         listPatents = findViewById(R.id.list_patent);
-        listPatents.setAdapter(adapterPatente);
         listDirections = findViewById(R.id.list_direction);
-        listDirections.setAdapter(adapterDirection);
         listTimes = findViewById(R.id.list_time);
-        listTimes.setAdapter(adapterTime);
+
 
         adapterPatente = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, patentesArray);
         adapterDirection = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, directionsArray);
         adapterTime = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, timesArray);
 
+        listPatents.setAdapter(adapterPatente);
+        listDirections.setAdapter(adapterDirection);
+        listTimes.setAdapter(adapterTime);
 
         mRootReference.child("Habilitados").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                adapterPatente.add(dataSnapshot.child("Matrícula").getValue(String.class));
-                adapterDirection.add(dataSnapshot.child("Localización").getValue(String.class));
-                adapterTime.add(dataSnapshot.child("HoraFin").getValue(String.class));
+
+                String patenteString = dataSnapshot.child("Matrícula").getValue(String.class);
+                adapterPatente.add(patenteString);
+
+                String directionString = dataSnapshot.child("Localización").getValue(String.class);
+                adapterDirection.add(directionString);
+
+                String timeString = dataSnapshot.child("HoraFin").getValue(String.class);
+                adapterTime.add(timeString);
 
                 Log.d("MONITOR DE MATRICULASS", dataSnapshot.child("Matrícula").getValue(String.class));
             }
@@ -96,9 +101,11 @@ public class MonitorActivity extends AppCompatActivity
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
                 adapterPatente.remove(dataSnapshot.child("Matrícula").getValue(String.class));
                 adapterDirection.remove(dataSnapshot.child("Localización").getValue(String.class));
                 adapterTime.remove(dataSnapshot.child("HoraFin").getValue(String.class));
+
             }
 
             @Override

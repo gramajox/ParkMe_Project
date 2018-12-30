@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
-    static boolean isAdmin;
+    static boolean isAdmin = true;
 
     @Override
     protected void onStart() {
