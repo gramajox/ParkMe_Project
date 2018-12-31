@@ -28,16 +28,12 @@ import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MonitorActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    ListView listPatents, listDirections, listTimes;
-    ArrayList<String> patentesArray = new ArrayList<>();
-    ArrayList<String> directionsArray = new ArrayList<>();
-    ArrayList<String> timesArray = new ArrayList<>();
-
-    ArrayAdapter<String> adapterPatente, adapterDirection, adapterTime;
+    ListView listMonitor;
 
     DatabaseReference mRootReference;
 
@@ -65,33 +61,26 @@ public class MonitorActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        listPatents = findViewById(R.id.list_patent);
-        listDirections = findViewById(R.id.list_direction);
-        listTimes = findViewById(R.id.list_time);
-
-
-        adapterPatente = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, patentesArray);
-        adapterDirection = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, directionsArray);
-        adapterTime = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, timesArray);
-
-        listPatents.setAdapter(adapterPatente);
-        listDirections.setAdapter(adapterDirection);
-        listTimes.setAdapter(adapterTime);
+        //https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView#attaching-the-adapter-to-a-listview
+        // Construct the data source
+        ArrayList<ParkingItem> arrayOfParking = new ArrayList<ParkingItem>();
+        // Create the adapter to convert the array to views
+        final MonitorAdapter monitorAdapter = new MonitorAdapter(this, arrayOfParking);
+        // Attach the adapter to a ListView
+        listMonitor = findViewById(R.id.list_monitor);
+        listMonitor.setAdapter(monitorAdapter);
 
         mRootReference.child("Habilitados").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                String patenteString = dataSnapshot.child("Matrícula").getValue(String.class);
-                adapterPatente.add(patenteString);
+                ParkingItem item = new ParkingItem(
+                        dataSnapshot.child("Matrícula").getValue(String.class),
+                        dataSnapshot.child("Localización").getValue(String.class),
+                        dataSnapshot.child("HoraFin").getValue(String.class));
 
-                String directionString = dataSnapshot.child("Localización").getValue(String.class);
-                adapterDirection.add(directionString);
+                monitorAdapter.add(item);
 
-                String timeString = dataSnapshot.child("HoraFin").getValue(String.class);
-                adapterTime.add(timeString);
-
-                Log.d("MONITOR DE MATRICULASS", dataSnapshot.child("Matrícula").getValue(String.class));
             }
 
             @Override
@@ -102,10 +91,18 @@ public class MonitorActivity extends AppCompatActivity
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-                adapterPatente.remove(dataSnapshot.child("Matrícula").getValue(String.class));
-                adapterDirection.remove(dataSnapshot.child("Localización").getValue(String.class));
-                adapterTime.remove(dataSnapshot.child("HoraFin").getValue(String.class));
+                String patentLeave = dataSnapshot.child("Matrícula").getValue(String.class);
 
+                for (int i=0; i < monitorAdapter.getCount(); i++) {
+
+                    ParkingItem item = monitorAdapter.getItem(i);
+
+                    assert item != null;
+                    if (item.patent.equals(patentLeave)) {
+                        monitorAdapter.remove(item);
+                        break;
+                    }
+                }
             }
 
             @Override
