@@ -9,30 +9,48 @@
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:id="@+id/product_price"
+            android:layout_width="105dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="MONITOR DE MATRÍCULAS"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:text="Patente "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Dirección "
+            app:layout_constraintStart_toEndOf="@+id/product_price"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/product_description"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Duración"
+            app:layout_constraintStart_toEndOf="@+id/product_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <ListView
-            android:id="@+id/list_patent"
+            android:id="@+id/list_monitor"
             android:layout_width="match_parent"
-            android:layout_height="349dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/product_price" />
+
+
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

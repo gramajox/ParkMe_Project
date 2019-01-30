@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
@@ -27,15 +28,13 @@ import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MonitorActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    ListView userPatents;
-    ArrayList<String> lista = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    ListView listMonitor;
 
-    FirebaseUser currentUser;
     DatabaseReference mRootReference;
 
     @Override
@@ -44,7 +43,6 @@ public class MonitorActivity extends AppCompatActivity
         setContentView(R.layout.activity_monitor);
 
         mRootReference = FirebaseDatabase.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,20 +54,33 @@ public class MonitorActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        if (!HomeActivity.getIsAdmin()) {
+            navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
-        //PARA LEER LISTA DE PATENTES
+        //https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView#attaching-the-adapter-to-a-listview
+        // Construct the data source
+        ArrayList<ParkingItem> arrayOfParking = new ArrayList<ParkingItem>();
+        // Create the adapter to convert the array to views
+        final MonitorAdapter monitorAdapter = new MonitorAdapter(this, arrayOfParking);
+        // Attach the adapter to a ListView
+        listMonitor = findViewById(R.id.list_monitor);
+        listMonitor.setAdapter(monitorAdapter);
 
-        userPatents = findViewById(R.id.list_patent);
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
-        userPatents.setAdapter(adapter);
-
-        mRootReference.child("Usuarios").child(currentUser.getUid()).child("Matriculas").addChildEventListener(new ChildEventListener() {
+        mRootReference.child("Habilitados").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String string = dataSnapshot.getValue(String.class);
-                adapter.add(string);
+
+                ParkingItem item = new ParkingItem(
+                        dataSnapshot.child("Matrícula").getValue(String.class),
+                        dataSnapshot.child("Localización").getValue(String.class),
+                        dataSnapshot.child("HoraFin").getValue(String.class));
+
+                monitorAdapter.add(item);
+
             }
 
             @Override
@@ -79,8 +90,19 @@ public class MonitorActivity extends AppCompatActivity
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                String string = dataSnapshot.getValue(String.class);
-                adapter.remove(string);
+
+                String patentLeave = dataSnapshot.child("Matrícula").getValue(String.class);
+
+                for (int i=0; i < monitorAdapter.getCount(); i++) {
+
+                    ParkingItem item = monitorAdapter.getItem(i);
+
+                    assert item != null;
+                    if (item.patent.equals(patentLeave)) {
+                        monitorAdapter.remove(item);
+                        break;
+                    }
+                }
             }
 
             @Override

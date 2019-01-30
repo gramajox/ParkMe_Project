@@ -2,6 +2,7 @@ package com.example.xgramajo.parkme_ids_2018;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,20 +10,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -32,6 +39,10 @@ public class PatentActivity extends AppCompatActivity
     Button registerPatent;
     EditText patentInput;
     String patentString;
+
+    ListView userPatents;
+    static ArrayList<String> lista = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     FirebaseUser currentUser;
     DatabaseReference mRootReference;
@@ -54,6 +65,11 @@ public class PatentActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        if (!HomeActivity.getIsAdmin()) {
+            navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
         registerPatent = (Button) findViewById(R.id.patent_btn);
@@ -67,14 +83,54 @@ public class PatentActivity extends AppCompatActivity
 
                 if (verifyPatent(patentString)) {
 
-                    mRootReference.child("Usuarios").child(currentUser.getUid()).child("Matriculas").push().setValue(patentString);
+                    FirebaseController.writePatent(patentString);
 
                     HomeActivity.setHomeFragment();
                     Intent myIntent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(myIntent);
+
+                    Toast.makeText(getApplicationContext(), "Listo! Matrícula registrada.", Toast.LENGTH_LONG).show();
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Formato no valido, verifique lo ingresado.", Toast.LENGTH_LONG).show();
                 }
+
+            }
+        });
+
+        userPatents = findViewById(R.id.list_patent);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
+
+        userPatents.setAdapter(adapter);
+
+        adapter.clear();
+
+        mRootReference.child("Usuarios").child(currentUser.getUid()).child("Matriculas").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String string = dataSnapshot.getValue(String.class);
+                adapter.add(string);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                String string = dataSnapshot.getValue(String.class);
+                adapter.remove(string);
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -175,6 +231,10 @@ public class PatentActivity extends AppCompatActivity
         startActivity(loginIntent);
         finish();
 
+    }
+
+    public static ArrayList<String> getPatentes() {
+        return lista;
     }
 
 }

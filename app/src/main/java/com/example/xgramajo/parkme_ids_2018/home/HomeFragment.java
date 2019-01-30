@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
-import com.example.xgramajo.parkme_ids_2018.parking.ParkingActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
+import com.example.xgramajo.parkme_ids_2018.ParkingAdvancedActivity;
+import com.example.xgramajo.parkme_ids_2018.ParkingChronometerActivity;
 
 
 public class HomeFragment extends Fragment {
@@ -31,7 +32,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 ParkingClass.setPrepayment(true);
                 ParkingClass.setAlreadyPaid(false);
-                Intent myIntent = new Intent(getActivity(), ParkingActivity.class);
+                Intent myIntent = new Intent(getActivity(), ParkingAdvancedActivity.class);
                 startActivity(myIntent);
             }
         });
@@ -41,7 +42,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 ParkingClass.setPrepayment(false);
                 ParkingClass.setAlreadyPaid(false);
-                Intent myIntent = new Intent(getActivity(), ParkingActivity.class);
+                Intent myIntent = new Intent(getActivity(), ParkingChronometerActivity.class);
                 startActivity(myIntent);
             }
         });

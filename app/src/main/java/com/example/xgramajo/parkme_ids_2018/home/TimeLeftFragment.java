@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
+import com.example.xgramajo.parkme_ids_2018.FirebaseController;
 import com.example.xgramajo.parkme_ids_2018.R;
 
 import java.util.Locale;
@@ -19,7 +20,7 @@ import java.util.Objects;
 
 public class TimeLeftFragment extends Fragment {
 
-    private TextView mTextViewCountDown;
+    private TextView mTextViewCountDown, txtDir;
 
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
@@ -38,6 +39,10 @@ public class TimeLeftFragment extends Fragment {
 
         mPatentCounter.setText(ParkingClass.getPatent());
 
+        txtDir = view.findViewById(R.id.txt_direction);
+
+        txtDir.setText(ParkingClass.getDireccion());
+
         // Obtenemos el tiempo y lo almacenamos como entrada
         String input = (ParkingClass.getOnlyNumberTime());
 
@@ -53,7 +58,9 @@ public class TimeLeftFragment extends Fragment {
         view.findViewById(R.id.finish_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "DB Firebase", Toast.LENGTH_LONG).show();
+
+                FirebaseController.removeAvaliablePatent(ParkingClass.getPatent());
+
                 HomeActivity.setHomeFragment();
                 startActivity(new Intent(getContext(), HomeActivity.class));
                 Objects.requireNonNull(getActivity()).finish();
@@ -77,6 +84,7 @@ public class TimeLeftFragment extends Fragment {
 
         // inicia el temporizador
         // metodo disparado a intervalos regulares marcados en el intervalo del contador cada 1000 milisegundos (1 segundo)
+
         CountDownTimer mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
