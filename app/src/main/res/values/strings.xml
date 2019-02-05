@@ -11,16 +11,8 @@
     <string name="nav_header_subtitle">parkme@ingsoft.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configuracion</string>
-    <string name="login_btn_text">Iniciar Sesion</string>
-    <string name="login_reg_btn_text">Registrarse</string>
-    <string name="pass_hint">Contraseña</string>
-    <string name="email_hint">Correo electronico</string>
-    <string name="login_title">Ingresar al sistema</string>
-    <string name="reg_login_text">Ya tengo una cuenta</string>
-    <string name="reg_btn_text">Registrarse</string>
-    <string name="reg_confirm_pass_text">Repetir Contraseña</string>
-    <string name="reg_pass_text">Contraseña</string>
-    <string name="reg_title">Registrarse en el sistema</string>
+
+
     <string name="log_out">Salir</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
@@ -29,18 +21,73 @@
     <string name="advanced_payment">Pago Adelantado</string>
     <string name="park_counter">Iniciar Contador</string>
 
+    <string name="enable_patent">Habilitar Matricula</string>
+    <string name="money_with_sign">$25</string>
+    <string name="number_patent">N° Matricula</string>
+    <string name="register_patent">Ingresar Matricula</string>
+
+    <!--  strings for parking data -->
+    <string name="txt_initial_countdown">00:00</string>
+    <string name="txt_empty_string"> </string>
+    <string name="txt_underscore_string">___</string>
+    <string name="txt_patent">Matricula:</string>
+    <string name="txt_time">Tiempo:</string>
+    <string name="txt_total_to_pay">Total a pagar:</string>
+    <string name="txt_location">Ubicacion:</string>
+    <string name="txt_localization">Localizacion</string>
+    <string name="txt_total_to_pay_with_sign">$ total a pagar</string>
+    <string name="txt_prices">Precios</string>
+    <string name="txt_generic_patent">ABC123</string>
+    <string name="txt_zero_price">$ 0</string>
+
+    <string name="txt_patent_wo_dots">Matricula</string>
+    <string name="txt_address_wo_dots">Direccion</string>
+    <string name="txt_time_wo_dots">Tiempo</string>
+
+
+    <!--  strings for buttons -->
+    <string name="btn_finish_parking">Finalizar Estacionamiento</string>
+    <string name="btn_continue">Continuar</string>
+    <string name="btn_continue_payment">Continuar con el pago</string>
+    <string name="btn_cancel_operation">Cancelar Operacion</string>
+    <string name="finish_parking">Finalizar Estacionamiento</string>
+
+
+    <!--  strings for titles -->
+    <string name="title_select">Seleccione</string>
+    <string name="title_counter"> Iniciar Contador</string>
+    <string name="title_advanced_payment">Pago adelantado</string>
+
+    <!--  strings for login -->
+    <string name="login_title">Ingresar al sistema</string>
+    <string name="email_hint">Correo electronico</string>
+    <string name="login_btn_text">Iniciar Sesion</string>
+    <string name="login_reg_btn_text">Registrarse</string>
+    <string name="pass_hint">Contraseña</string>
+
+    <string name="reg_login_text">Ya tengo una cuenta</string>
+    <string name="reg_btn_text">Registrarse</string>
+    <string name="reg_confirm_pass_text">Repetir Contraseña</string>
+    <string name="reg_pass_text">Contraseña</string>
+    <string name="reg_title">Registrarse en el sistema</string>
+
+
+
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pwd_mail">Ingrese su correo</string>
     <string name="back_btn">Volver al login</string>
     <string name="pwd_btn">Restablecer contraseña</string>
-    <string name="txt_duracion">Tiempo</string>
+    <string name="txt_duracion">Tiempo:</string>
     <string name="txt_monto_calc">Monto</string>
     <string name="btn_cont">Continuar</string>
     <string name="title_activity_maps_api">Map</string>
     <string name="stop_txt">Detener contador</string>
     <string name="pay_txt">Continuar con el pago</string>
-    <string name="patent_register">Registrar Matricula</string>
+    <string name="patent_register">Guardar Matricula</string>
     <string name="reg_patent">Registrar Matrícula</string>
     <string name="action_home">Inicio</string>
     <string name="initialTimeCountdown">120</string>
@@ -73,21 +120,21 @@
     <string name="checkout_description">Just 5 minutes! In that time, you will be testing our checkout in your app.</string>
     <string name="select_checkout">Select a configuration</string>
 
-    <string name="start_for_wrong">Required response not specified</string>
+    <string name="start_for_wrong">Required Response Not Specified</string>
 
     <!-- Second factor messages -->
-    <string name="auth_error_password">Incorrect password.</string>
-    <string name="auth_error_password_required">Password is required.</string>
+    <string name="auth_error_password">Incorrect Password.</string>
+    <string name="auth_error_password_required">Password Is Required.</string>
     <string name="title_activity_payment">Resumen</string>
 
     <!-- Fetch Address Intent Service -->
-    <string name="service_not_available">service not available</string>
-    <string name="invalid_lat_long_used">invalid lat long used</string>
-    <string name="no_address_found">no address found</string>
-    <string name="address_found">address found</string>
-    <string name="txt_direction">UBICACIÓN</string>
-    <string name="txt_counter">INICIAR CONTADOR</string>
-    <string name="txt_enable_patent">HABILITAR MATRÍCULA</string>
+    <string name="service_not_available">Service Not Available</string>
+    <string name="invalid_lat_long_used">Invalid Lat Long Used</string>
+    <string name="no_address_found">No Address Found</string>
+    <string name="address_found">Address Found</string>
+    <string name="txt_direction">Ubicacion</string>
+    <string name="txt_counter">Iniciar Contador</string>
+    <string name="txt_enable_patent">Habilitar Matricula</string>
 
 
 </resources>
