@@ -1,17 +1,21 @@
 package com.example.xgramajo.parkme_ids_2018.home;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.xgramajo.parkme_ids_2018.FirebaseController;
+import com.example.xgramajo.parkme_ids_2018.NotificationHelper;
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.PaymentAdvancedActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
@@ -28,6 +32,9 @@ public class ChronometerFragment extends Fragment {
     String price, elapsedTimeFormatted;
     long   chargedPrice, priceHour, mountToPay;
     int mount, toPay;
+
+    // Para enviar notificaciones
+    private NotificationHelper mNotificationHelper;
 
 
     @Override
@@ -61,7 +68,7 @@ public class ChronometerFragment extends Fragment {
 
 
 
-            final CountDownTimer myCountDownTimer = new CountDownTimer(activityTime + 1000, 1000) {
+        final CountDownTimer myCountDownTimer = new CountDownTimer(activityTime + 1000, 1000) {
             @Override
             public void onTick(long l) {
 
@@ -72,6 +79,8 @@ public class ChronometerFragment extends Fragment {
                 if (elapsedTime > freeTime) {
                     updatePriceCounter();
                 }
+
+                sendChronometerNotification();
             }
 
             @Override
@@ -79,6 +88,9 @@ public class ChronometerFragment extends Fragment {
             // nothing to do
             }
         }.start();
+
+        //Inicializa el notification helper
+        mNotificationHelper = new NotificationHelper(getActivity());
 
         view.findViewById(R.id.pay_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +116,11 @@ public class ChronometerFragment extends Fragment {
                     Objects.requireNonNull(getActivity()).finish();
                 }
 
+                //Eliminar la notificación del cronómetro
+                removeChronometerNotification();
+
+                //Detener el cronometro
+                myCountDownTimer.cancel();
             }
         });
 
@@ -123,19 +140,7 @@ public class ChronometerFragment extends Fragment {
     private void updateChronometerCounter(){
 
         // actualiza el texto de la vista del contador
-        int hours = (int) (elapsedTime / 1000) / 3600;
-        int minutes = (int) ((elapsedTime / 1000) % 3600) / 60;
-        int seconds = (int) (elapsedTime / 1000) % 60;
-
-        // Pasa a un string el tiempo transcurrido formateado en horas minutos y segundos en la forma 00:00:00 o 00:00 si corresponde.
-
-        if (hours > 0) {
-            elapsedTimeFormatted = String.format(Locale.getDefault(),
-                    "%d:%02d:%02d", hours, minutes, seconds);
-        } else {
-            elapsedTimeFormatted = String.format(Locale.getDefault(),
-                    "%02d:%02d", minutes, seconds);
-        }
+        elapsedTimeFormatted = getElapsedTimeFormatted();
 
         chronometerCounter.setText(elapsedTimeFormatted);
         //Pasa a la vista del contador el tiempo restante
@@ -145,6 +150,25 @@ public class ChronometerFragment extends Fragment {
         elapsedTime = System.currentTimeMillis() - baseTime;
     }
 
+    public String getElapsedTimeFormatted(){
+
+        String formatted;
+        int hours = (int) (elapsedTime / 1000) / 3600;
+        int minutes = (int) ((elapsedTime / 1000) % 3600) / 60;
+        int seconds = (int) (elapsedTime / 1000) % 60;
+
+        // Pasa a un string el tiempo transcurrido formateado en horas minutos y segundos en la forma 00:00:00 o 00:00 si corresponde.
+
+        if (hours > 0) {
+            formatted = String.format(Locale.getDefault(),
+                    "%d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            formatted = String.format(Locale.getDefault(),
+                    "%02d:%02d", minutes, seconds);
+        }
+
+        return formatted;
+    }
 
     private void updatePriceCounter(){
        //Pasa a la vista del monto a Abonar el precio cargado
@@ -199,5 +223,28 @@ public class ChronometerFragment extends Fragment {
     return 0;
     }
 
+    public void sendChronometerNotification() {
+
+        final Intent notificationIntent = new Intent(getActivity(), HomeActivity.class);
+
+        notificationIntent.setAction(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), 0, notificationIntent, 0);
+
+        NotificationCompat.Builder nb = mNotificationHelper.getChannel2Notification("Tiempo de estacionamiento", getElapsedTimeFormatted());
+
+        nb.setContentIntent(contentIntent)
+                .setOnlyAlertOnce(true)
+                .setOngoing(true);
+
+        mNotificationHelper.getManager().notify(2, nb.build());
+    }
+
+    public void removeChronometerNotification() {
+
+        mNotificationHelper.getManager().cancelAll();
+    }
 }
 
