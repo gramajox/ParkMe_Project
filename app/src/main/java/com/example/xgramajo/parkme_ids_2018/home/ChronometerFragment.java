@@ -1,6 +1,5 @@
 package com.example.xgramajo.parkme_ids_2018.home;
 
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +68,7 @@ public class ChronometerFragment extends Fragment {
 
 
 
-        final CountDownTimer myCountDownTimer = new CountDownTimer(activityTime + 1000, 1000) {
+            final CountDownTimer myCountDownTimer = new CountDownTimer(activityTime + 1000, 1000) {
             @Override
             public void onTick(long l) {
 
@@ -96,6 +96,7 @@ public class ChronometerFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                Log.d("jcp",ParkingClass.getPatent());
                 FirebaseController.removeAvaliablePatent(ParkingClass.getPatent());
 
                 getElapsedTime();
@@ -192,10 +193,12 @@ public class ChronometerFragment extends Fragment {
             if (addMount(secs) == 0) {
                 // actualiza el monto con valor cero
                 mount = mount + addMount(secs);
+
             }
             else {
                 // actualiza el monto con el valor del caso
                 mount = addMount(secs);
+
             }
         }
 
@@ -206,7 +209,7 @@ public class ChronometerFragment extends Fragment {
     public int addMount(int secs){
         switch (secs) {
             case 3: //tiempo libre 2 minutos x 60 segundos = 120 segundos
-                return 5; // como utilizamos un case, pra que no muestre 0 despues del tiempo libre y antes del primer caso que se cumple
+                return 5; // como utilizamos un case, para que no muestre 0 despues del tiempo libre y antes del primer caso que se cumple
             case 10: //30 minutos x 60 segundos = 1800 segundos
                 return 5;
             case 15: //60 minutos x 60 segundos = 3600 segundos

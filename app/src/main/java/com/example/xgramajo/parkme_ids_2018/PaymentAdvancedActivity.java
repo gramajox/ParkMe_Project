@@ -42,7 +42,7 @@ public class PaymentAdvancedActivity extends AppCompatActivity {
         cancelBtn = findViewById(R.id.cancel_btn);
         sumitBtn = findViewById(R.id.sumit_btn);
 
-        txtMonto.setText(Integer.toString(ParkingClass.getPrice()));
+        txtMonto.setText("$ " + (Integer.toString(ParkingClass.getPrice()))); // CHANGED 20190201
         txtPatente.setText(ParkingClass.getPatent());
         txtTiempo.setText(ParkingClass.getTime());
         txtDir.setText(ParkingClass.getDireccion());

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -90,6 +92,12 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     DatabaseReference mRootReference;
 
+    Typeface roboto;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +128,7 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
         //https://android--code.blogspot.com/2015/08/android-spinner-add-item-dynamically.html
         String[] userPatent = new String[] {};
         String[] userDuration = new String[] {
-                "--Selecciona el tiempo--",
+                "Selecciona el tiempo",
                 "30 minutos",
                 "1 hora",
                 "1 hora 30 minutos",
@@ -141,6 +149,8 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
         spinnerPatente.setAdapter(spinnerArrayAdapterPatente);
         spinnerDur.setAdapter(spinnerArrayAdapterDuration);
 
+        roboto = Typeface.createFromAsset(getApplicationContext().getAssets(),"font/Roboto-Regular.ttf");
+
 
         //Fuente: https://es.stackoverflow.com/questions/69656/evento-onclick-en-un-spinner
 
@@ -152,19 +162,29 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
                                                int posicion,
                                                long id) {
 
+
+                        //Typeface roboto = getResources().getFont(R.font.roboto);
                         tiempoSeleccionado = spn.getSelectedItem().toString();
                         posicion = spn.getSelectedItemPosition();
 
+                        //Typeface roboto = Typeface.createFromAsset(getAssets(),  "font/Roboto-Regular.ttf");
+
                         if (posicion == 0){
 
-                            ((TextView) v).setTextColor(getResources().getColor(R.color.colorAccent));
+                            ((TextView) v).setTextColor(getResources().getColor(R.color.pacific_blue));
+                            ((TextView) v).setTypeface(roboto);
+                            ((TextView) v).setTextSize(16);
+                            //((TextView) v).setTextColor(getResources().getColor(R.color.colorAccent));
+
 
                             contBtn.setBackgroundColor(Color.GRAY);
 
                             timeIsSelected = false;
                         }
                         else {
-                            ((TextView) v).setTextColor(Color.BLACK);
+                            ((TextView) v).setTextColor(getResources().getColor(R.color.gray20));
+                            ((TextView) v).setTypeface(roboto);
+                            ((TextView) v).setTextSize(16);
                             contBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
                             timeIsSelected = true;

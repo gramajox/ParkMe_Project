@@ -18,26 +18,37 @@
 
         <TextView
             android:id="@+id/product_price"
-            android:layout_width="105dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Patente "
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/txt_patent_wo_dots"
+            android:textAlignment="center"
+            android:textAppearance="@style/MLFont"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/product_name"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Dirección "
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/txt_address_wo_dots"
+            android:textAlignment="center"
+            android:textAppearance="@style/MLFont"
             app:layout_constraintStart_toEndOf="@+id/product_price"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/product_description"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Duración"
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/txt_time_wo_dots"
+            android:textAlignment="center"
+            android:textAppearance="@style/MLFont"
             app:layout_constraintStart_toEndOf="@+id/product_name"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +56,7 @@
         <ListView
             android:id="@+id/list_monitor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="554dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

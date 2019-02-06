@@ -17,11 +17,14 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="HABILITAR MATRÍCULA"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="64dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/enable_patent"
+            android:textAppearance="@style/MLFont"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,14 +32,13 @@
             android:id="@+id/txt_duracion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="48dp"
-            android:text="@string/txt_duracion"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            android:layout_marginStart="64dp"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/txt_time"
+            android:textAppearance="@style/MLFont"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <!--android:entries="@array/array_tiempo"
@@ -45,108 +47,101 @@
             android:id="@+id/spinner_duracion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/input_patente"
+            app:layout_constraintStart_toEndOf="@+id/txt_duracion" />
 
         <TextView
             android:id="@+id/title_monto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/txt_monto_calc"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_duracion" />
+            android:layout_marginStart="64dp"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/txt_total_to_pay"
+            android:textAppearance="@style/MLFont"
+            app:layout_constraintBottom_toTopOf="@+id/patent_btn"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/txt_monto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="120dp"
-            android:text="$25"
-            android:textAlignment="center"
-            android:textColor="#2a2b2b"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_duracion" />
+            android:layout_marginStart="1dp"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/money_with_sign"
+            android:textAppearance="@style/MLFont"
+            app:layout_constraintBottom_toTopOf="@+id/patent_btn"
+            app:layout_constraintStart_toEndOf="@+id/title_monto" />
 
         <TextView
             android:id="@+id/title_direction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="56dp"
-            android:text="@string/txt_direction"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_monto" />
+            android:layout_marginStart="64dp"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/txt_location"
+            android:textAppearance="@style/MLFont"
+            app:layout_constraintBottom_toTopOf="@+id/title_monto"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/dir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="24dp"
-            android:hint="Localización"
-            android:textAlignment="center"
+            android:layout_marginStart="1dp"
+            android:layout_marginBottom="21dp"
+            android:fontFamily="@font/roboto"
+            android:hint="@string/txt_localization"
+            android:textAppearance="@style/MLFont"
             android:textColorHint="@android:color/darker_gray"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toEndOf="@+id/title_direction"
-            app:layout_constraintTop_toBottomOf="@+id/txt_monto" />
+            android:textColorLink="@color/gray_dark"
+            app:layout_constraintBottom_toTopOf="@+id/txt_monto"
+            app:layout_constraintStart_toEndOf="@+id/title_direction" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="68dp"
-            android:text="MATRÍCULA"
-            android:textAlignment="center"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_direction" />
+            android:layout_marginStart="64dp"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/txt_patent"
+            android:textAppearance="@style/MLFont"
+            app:layout_constraintBottom_toTopOf="@+id/title_direction"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/input_patente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="24dp"
-            android:hint="N° MATRÍCULA"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/roboto"
+            android:hint="@string/number_patent"
             android:inputType="textCapCharacters"
-            android:textAlignment="center"
+            android:textAppearance="@style/MLFont"
             android:textColorHint="@android:color/darker_gray"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/dir" />
+            app:layout_constraintBottom_toTopOf="@+id/dir"
+            app:layout_constraintStart_toEndOf="@+id/textView5" />
 
         <Button
             android:id="@+id/patent_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="160dp"
+            android:background="@color/pacific_blue"
+            android:fontFamily="@font/roboto"
             android:text="@string/txt_enable_patent"
+            android:textAppearance="@style/MLFont"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/input_patente" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
