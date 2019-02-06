@@ -32,12 +32,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/txt_patent"
         android:textAppearance="@style/MLFont"
         android:textColorLink="@color/pacific_blue"
-        app:layout_constraintBottom_toTopOf="@+id/txt_duracion"
+        app:layout_constraintBottom_toTopOf="@+id/title_direction"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!--android:entries="@array/array_patentes"
@@ -48,8 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="38dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_duracion"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintBottom_toTopOf="@+id/dir"
         app:layout_constraintStart_toEndOf="@+id/textView5" />
 
     <Button
@@ -61,9 +61,9 @@
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
 
-        android:layout_marginBottom="64dp"
-        android:background="@color/pacific_blue"
+        android:layout_marginBottom="160dp"
 
+        android:background="@color/pacific_blue"
         android:backgroundTint="@color/pacific_blue"
         android:backgroundTintMode="src_in"
         android:fontFamily="@font/roboto"
@@ -71,7 +71,7 @@
         android:textAlignment="center"
         android:textAppearance="@style/MLFont"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/load"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -81,11 +81,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/txt_time"
         android:textAppearance="@style/MLFont"
-        app:layout_constraintBottom_toTopOf="@+id/title_monto"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!--android:entries="@array/array_tiempo"
@@ -96,8 +96,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="41dp"
-        app:layout_constraintBottom_toTopOf="@+id/txt_monto"
+        android:layout_marginBottom="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_patente"
         app:layout_constraintStart_toEndOf="@+id/txt_duracion" />
 
     <TextView
@@ -105,11 +105,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/txt_total_to_pay"
         android:textAppearance="@style/MLFont"
-        app:layout_constraintBottom_toTopOf="@+id/title_direction"
+        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -117,12 +117,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_total_to_pay_with_sign"
         android:textAppearance="@style/MLFont"
         android:textColor="@color/gray20"
-        app:layout_constraintBottom_toTopOf="@+id/dir"
+        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
         app:layout_constraintStart_toEndOf="@+id/title_monto" />
 
     <TextView
@@ -130,11 +130,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/txt_location"
         android:textAppearance="@style/MLFont"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
+        app:layout_constraintBottom_toTopOf="@+id/title_monto"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
@@ -156,24 +156,29 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_localization"
         android:textAppearance="@style/MLFont"
         android:textColor="@color/gray20"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
+        app:layout_constraintBottom_toTopOf="@+id/txt_monto"
         app:layout_constraintStart_toEndOf="@+id/title_direction" />
 
     <TextView
         android:id="@+id/id_pasos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
-        android:text="@string/txt_empty_string"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:background="@color/px_white"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_step1of3countdown"
+        android:textAlignment="center"
+        android:textAppearance="@style/MLFont"
+        android:textColor="@color/pacific_blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintHorizontal_bias="0.582"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar" />
 

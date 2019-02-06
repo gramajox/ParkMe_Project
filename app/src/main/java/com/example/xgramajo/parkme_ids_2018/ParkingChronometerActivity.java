@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -80,6 +81,8 @@ public class ParkingChronometerActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     DatabaseReference mRootReference;
 
+    Typeface roboto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +134,10 @@ public class ParkingChronometerActivity extends AppCompatActivity {
                                                View v2,
                                                int posicion2,
                                                long id2) {
+
+                        ((TextView) v2).setTextColor(getResources().getColor(R.color.pacific_blue));
+                        ((TextView) v2).setTypeface(roboto);
+                        ((TextView) v2).setTextSize(16);
 
                         numeroPatente = spn2.getSelectedItem().toString();
 

@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/lock"/>
+            android:src="@drawable/lock" />
 
         <TextView
             android:id="@+id/label"
@@ -28,7 +28,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="Ingresar clave"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
 
         <EditText
@@ -39,7 +39,7 @@
             android:ellipsize="start"
             android:gravity="center"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/error_label"
@@ -49,7 +49,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textSize="14sp"
-            tools:text="La clave ingresada es inválida"/>
+            tools:text="La clave ingresada es inválida" />
 
     </LinearLayout>
 

@@ -33,6 +33,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
+import me.anwarshahriar.calligrapher.Calligrapher;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -97,7 +99,8 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         if (!isAdmin) {
-            navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+            //navigationView.getMenu().findItem(R.id.admin_option).setVisible(false);
+
         }
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -250,4 +253,6 @@ public class HomeActivity extends AppCompatActivity
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
+
+
 }

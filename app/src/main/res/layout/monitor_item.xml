@@ -7,22 +7,33 @@
 
     <TextView
         android:id="@+id/item_patent"
-        android:layout_width="105dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:text="Patente " />
+        android:layout_marginStart="2dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_patent_wo_dots"
+        android:textAlignment="center"
+        android:textAppearance="@style/MLFont" />
 
     <TextView
         android:id="@+id/item_direction"
-        android:layout_width="190dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Dirección " />
+        android:layout_marginStart="2dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_address_wo_dots"
+        android:textAlignment="center"
+        android:textAppearance="@style/MLFont" />
 
     <TextView
         android:id="@+id/item_time"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Duración"/>
+        android:layout_marginStart="2dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_time_wo_dots"
+        android:textAlignment="center"
+        android:textAppearance="@style/MLFont" />
 
 
 </LinearLayout>

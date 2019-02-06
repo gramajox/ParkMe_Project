@@ -1,6 +1,7 @@
 package com.example.xgramajo.parkme_ids_2018;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +43,7 @@ public class FirebaseController {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     String prodName = data.child("Matrícula").getValue(String.class);
+                    Log.d("jcp",prodName + patent);
                     if (prodName.equals(patent)) {
                         mRootReference.child("Habilitados").child(data.getKey()).removeValue();
                         break;
