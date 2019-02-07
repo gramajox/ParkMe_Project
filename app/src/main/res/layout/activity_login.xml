@@ -49,7 +49,7 @@
         android:ems="10"
         android:fontFamily="@font/roboto"
         android:hint="@string/email_hint"
-        android:inputType="none"
+        android:inputType="textEmailAddress"
         android:padding="16dp"
         android:textAppearance="@style/MLFont"
         android:textColor="@color/gray20"
