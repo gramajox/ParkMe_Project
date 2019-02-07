@@ -1,16 +1,18 @@
 package com.example.xgramajo.parkme_ids_2018.home;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.NotificationHelper;
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.FirebaseController;
 import com.example.xgramajo.parkme_ids_2018.R;
@@ -24,6 +26,19 @@ public class TimeLeftFragment extends Fragment {
 
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
+
+    // 15 minutos en milisegundos
+    final long FIFTEEN_MINUTES = 1000*60*15;
+    // Bool para saber si ya se envió esta notificación
+    private boolean isFirstNotificationSent = false;
+
+    // 5 minutos en milisegundos
+    final long FIVE_MINUTES = 1000*60*5;
+    // Bool para saber si ya se envió esta notificación
+    private boolean isSecondNotificationSent = false;
+
+    // Para enviar notificaciones sobre el tiempo restante
+    private NotificationHelper mNotificationHelper;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -64,8 +79,14 @@ public class TimeLeftFragment extends Fragment {
                 HomeActivity.setHomeFragment();
                 startActivity(new Intent(getContext(), HomeActivity.class));
                 Objects.requireNonNull(getActivity()).finish();
+
+                //Eliminar la notificación del cronómetro
+                removeTimeLeftNotification();
             }
         });
+
+        //Inicializa el notification helper
+        mNotificationHelper = new NotificationHelper(getActivity());
 
         return view;
     }
@@ -92,6 +113,17 @@ public class TimeLeftFragment extends Fragment {
                 // actualiza el texto de la vista del contador
                 updateCountDownText();
 
+                //enviar notificacion cuando queden 15 minutos
+                if (mStartTimeInMillis > FIFTEEN_MINUTES && mTimeLeftInMillis < FIFTEEN_MINUTES && !isFirstNotificationSent) {
+                    sendTimeLeftNotification("15");
+                    isFirstNotificationSent = true;
+                }
+
+                //enviar notificacion cuando queden 5 minutos
+                if (mStartTimeInMillis > FIVE_MINUTES && mTimeLeftInMillis < FIVE_MINUTES && !isSecondNotificationSent) {
+                    sendTimeLeftNotification("5");
+                    isSecondNotificationSent = true;
+                }
             }
 
             @Override
@@ -145,6 +177,27 @@ public class TimeLeftFragment extends Fragment {
 
         mTextViewCountDown.setText(timeLeftFormatted);
         //Pasa a la vista del contador el tiempo restante
+    }
+
+    public void sendTimeLeftNotification(String minutes) {
+
+        final Intent notificationIntent = new Intent(getActivity(), HomeActivity.class);
+        notificationIntent.setAction(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), 0, notificationIntent, 0);
+
+        NotificationCompat.Builder nb = mNotificationHelper.getChannel1Notification("Atención", "Te quedan " + minutes + " minutos de estacionamiento en la patente " + ParkingClass.getPatent() + ".");
+        nb.setContentIntent(contentIntent)
+            .setAutoCancel(true);
+
+        mNotificationHelper.getManager().notify(1, nb.build());
+    }
+
+    public void removeTimeLeftNotification() {
+
+        mNotificationHelper.getManager().cancelAll();
     }
 
 }
