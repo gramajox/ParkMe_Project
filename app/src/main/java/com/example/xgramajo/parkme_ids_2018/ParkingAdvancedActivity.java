@@ -469,7 +469,7 @@ public class ParkingAdvancedActivity extends AppCompatActivity {
                                     // Show the dialog by calling startResolutionForResult(),
                                     // and check the result in onActivityResult().
                                     resolvable.startResolutionForResult(
-                                            getParent(), /***ACA VA LA ACTIVITY-------------------------------------------------*/
+                                            ParkingAdvancedActivity.this,
                                             555);
                                     new posicionMaps().execute();
                                 } catch (IntentSender.SendIntentException e) {
