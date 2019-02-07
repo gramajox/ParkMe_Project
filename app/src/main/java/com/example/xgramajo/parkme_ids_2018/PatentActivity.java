@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.xgramajo.parkme_ids_2018.Ubication.UbicationActivity;
 import com.example.xgramajo.parkme_ids_2018.home.HomeActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -196,6 +197,8 @@ public class PatentActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_location) {
             drawer.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(this, UbicationActivity.class));
+            finish();
             return true;
 
         } else if (id == R.id.nav_exit) {

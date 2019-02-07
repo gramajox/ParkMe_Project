@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!-- Permisos para la localización -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,70 +16,70 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".Ubication.UbicationActivity"
+            android:label="@string/title_activity_ubication"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" /> <!-- Key de Maps -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <!-- "@integer/google_play_services_version" -->
+            android:value="@integer/google_play_services_version" /> <!-- "@integer/google_play_services_version" -->
         <activity
             android:name=".home.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity"
+        <activity
+            android:name=".login.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".login.RegisterActivity"
+        <activity
+            android:name=".login.RegisterActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ParkingAdvancedActivity"
             android:label="@string/title_activity_parking"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ParkingChronometerActivity"
             android:label="@string/title_activity_parking"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".login.PasswordActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".login.PasswordActivity"
-            android:screenOrientation="portrait" />
-
         <activity
             android:name=".PaymentAdvancedActivity"
             android:label="@string/title_activity_payment"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".PaymentChronometerActivity"
             android:label="@string/title_activity_payment"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".PatentActivity"
             android:label="@string/title_activity_patent"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MonitorActivity"
             android:label="@string/title_activity_monitor"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EnableActivity"
             android:label="@string/title_activity_enable"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

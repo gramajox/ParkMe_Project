@@ -26,6 +26,7 @@ import com.example.xgramajo.parkme_ids_2018.EnableActivity;
 import com.example.xgramajo.parkme_ids_2018.MonitorActivity;
 import com.example.xgramajo.parkme_ids_2018.ParkingClass;
 import com.example.xgramajo.parkme_ids_2018.PatentActivity;
+import com.example.xgramajo.parkme_ids_2018.Ubication.UbicationActivity;
 import com.example.xgramajo.parkme_ids_2018.login.LoginActivity;
 import com.example.xgramajo.parkme_ids_2018.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -170,6 +171,9 @@ public class HomeActivity extends AppCompatActivity
             return true;
 
         } else if (id == R.id.nav_location) {
+            drawer.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(this, UbicationActivity.class));
+            return true;
 
         } else if (id == R.id.nav_exit) {
             if (activatedFragment.equals("homeFragment")) {

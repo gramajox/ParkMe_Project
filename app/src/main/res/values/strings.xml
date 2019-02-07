@@ -60,7 +60,6 @@
     <string name="finish_parking">Finalizar</string>
 
 
-
     <!--  strings for login -->
     <string name="title_login">Ingreso al sistema</string>
     <string name="email_hint">Correo electronico</string>
@@ -93,9 +92,6 @@
 
     <!--  strings for content_patent -->
     <string name="hint_number_patent">Número de matricula</string>
-
-
-
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -158,6 +154,9 @@
     <string name="txt_direction">Ubicacion</string>
     <string name="txt_counter">Inicio de Contador</string>
     <string name="txt_enable_patent">Habilitacion de Matricula</string>
+    <string name="title_activity_ubication">UbicationActivity</string>
+    <string name="tuVehiculo">Tu Vehículo</string>
+    <string name="tuPosicion">Tu Posición</string>
 
 
 </resources>

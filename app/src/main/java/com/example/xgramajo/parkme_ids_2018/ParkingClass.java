@@ -39,7 +39,7 @@ public class ParkingClass {
         ParkingClass.price = price;
     }
 
-    static void setDireccion(String d) {
+    public static void setDireccion(String d) {
         direccion = d;
     }
 
@@ -47,7 +47,7 @@ public class ParkingClass {
         return direccion;
     }
 
-    static void setLatLng(Double la, Double lo){
+    public static void setLatLng(Double la, Double lo){
         ParkingClass.lat = la;
         ParkingClass.lng = lo;
     }
@@ -162,6 +162,4 @@ public class ParkingClass {
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
     }
-
-
 }
