@@ -20,9 +20,9 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!--  strings for fragment home -->
-    <string name="title_select">Seleccion Estadia</string>
-    <string name="title_counter">Cronometro Tiempo Libre</string>
-    <string name="title_advanced_payment">Prepago Tiempo Limitado</string>
+    <string name="title_select">Seleccion Estacionamiento</string>
+    <string name="title_counter">Iniciar Cronometro</string>
+    <string name="title_advanced_payment">Iniciar Prepago</string>
 
 
     <string name="advanced_payment">Pago Adelantado</string>
@@ -58,10 +58,6 @@
     <string name="btn_continue_payment">Pagar</string>
     <string name="btn_cancel_operation">Cancelar</string>
     <string name="finish_parking">Finalizar</string>
-
-
-    <!--  strings for titles -->
-
 
 
 
