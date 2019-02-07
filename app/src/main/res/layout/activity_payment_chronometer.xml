@@ -42,48 +42,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/txt_patent"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toTopOf="@+id/title_direction"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_pasos" />
 
         <TextView
             android:id="@+id/txt_patente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/txt_underscore_string"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toTopOf="@+id/txt_direction"
-            app:layout_constraintStart_toEndOf="@+id/textView7" />
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/id_pasos" />
 
         <TextView
             android:id="@+id/title_direction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/txt_location"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toTopOf="@+id/prices_list1"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/txt_direction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/txt_underscore_string"
             android:textAppearance="@style/MLFont"
             app:layout_constraintBottom_toTopOf="@+id/prices_list1"
-            app:layout_constraintStart_toEndOf="@+id/title_direction" />
+            app:layout_constraintStart_toEndOf="@+id/title_direction"
+            app:layout_constraintTop_toBottomOf="@+id/txt_patente"
+            app:layout_constraintVertical_bias="1.0" />
 
 
         <TextView
@@ -92,40 +95,40 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="170dp"
 
-            android:layout_marginBottom="1dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/txt_prices"
             android:textAlignment="center"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toTopOf="@+id/prices_list2"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_direction" />
 
         <TextView
             android:id="@+id/prices_list2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="67dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="1dp"
             android:fontFamily="@font/roboto"
             android:gravity="start"
             android:text="@string/times_list_txt"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toTopOf="@+id/chronometer_btn"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/prices_list1" />
 
 
         <TextView
             android:id="@+id/prices_list3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="64dp"
-            android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto"
             android:gravity="start"
             android:text="@string/prices_list_txt"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toTopOf="@+id/chronometer_btn"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/prices_list1" />
 
         <Button
             android:id="@+id/chronometer_btn"

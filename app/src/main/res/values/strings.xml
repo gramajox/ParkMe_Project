@@ -3,7 +3,7 @@
     <string name="title_activity_home">ParkMe</string>
     <string name="title_activity_parking">Inicio de Estacionamiento</string>
     <string name="title_activity_enable">Habilitacion de Matrícula</string>
-    <string name="title_activity_patent">Visualizacion de mis Matrículas</string>
+    <string name="title_activity_patent">Lista de Matrículas</string>
     <string name="title_activity_monitor">Monitor de Matrículas</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -21,13 +21,31 @@
 
     <!--  strings for fragment home -->
     <string name="title_select">Seleccion Estacionamiento</string>
-    <string name="title_counter">Iniciar Cronometro</string>
-    <string name="title_advanced_payment">Iniciar Prepago</string>
+    <string name="title_counter">Iniciar \n Cronometro</string>
+    <string name="title_advanced_payment">Iniciar \n Prepago</string>
+
+    <!--  strings for activity parking chronometer -->
+    <string name="txt_step1of4chronometer">Paso 1: Seleccion de Matricula</string>
+    <string name="txt_localization">Localizacion</string>
+
+    <!--  strings for activity paayment chronometer -->
+    <string name="txt_step2of4chronometer">Paso 2: Activacion de Cronometro</string>
+
+    <!--  strings for activity fragment counter -->
+    <string name="btn_finish_parking">Finalizar</string>
+    <string name="txt_step3of4chronometer">Paso 3: Control de Cronometro</string>
+
+    <!--  strings for activity payment advanced -->
+    <string name="txt_step2of3countdown">Ultimo paso: Pagar Estacionamiento</string>
+
+    <!--  strings for activity parking advanced -->
+    <string name="txt_step1of3countdown">Paso 1: Seleccion de Tiempo y Matricula</string>
+
+    <!--  strings for fragment time left -->
+    <string name="txt_step3of3countdown">Control de tiempo restante</string>
 
 
     <string name="advanced_payment">Pago Adelantado</string>
-    <string name="park_counter">Inicio de Contador</string>
-
     <string name="enable_patent">Habilitacion de Matricula</string>
     <string name="money_with_sign">$25</string>
     <string name="number_patent">Numero de Matricula</string>
@@ -41,7 +59,7 @@
     <string name="txt_time">Tiempo:</string>
     <string name="txt_total_to_pay">Total a pagar:</string>
     <string name="txt_location">Ubicacion:</string>
-    <string name="txt_localization">Localizacion</string>
+
     <string name="txt_total_to_pay_with_sign">$ total a pagar</string>
     <string name="txt_prices">Precios</string>
     <string name="txt_generic_patent">ABC123</string>
@@ -53,7 +71,7 @@
 
 
     <!--  strings for buttons -->
-    <string name="btn_finish_parking">Finzalizar</string>
+
     <string name="btn_continue">Continuar</string>
     <string name="btn_continue_payment">Pagar</string>
     <string name="btn_cancel_operation">Cancelar</string>
@@ -82,13 +100,13 @@
     <string name="reg_title">Registración en el sistema</string>
 
     <!--  strings for steps -->
-    <string name="txt_step1of4chronometer">Paso 1 de 4</string>
-    <string name="txt_step2of4chronometer">Paso 2 de 4</string>
-    <string name="txt_step3of4chronometer">Paso 3 de 4</string>
+
+
+
     <string name="txt_step4of4chronometer">Paso 4 de 4</string>
-    <string name="txt_step1of3countdown">Paso 1 de 3</string>
-    <string name="txt_step2of3countdown">Paso 2 de 3</string>
-    <string name="txt_step3of3countdown">Paso 3 de 3</string>
+
+
+
 
     <!--  strings for content_patent -->
     <string name="hint_number_patent">Número de matricula</string>
@@ -152,7 +170,7 @@
     <string name="no_address_found">No Address Found</string>
     <string name="address_found">Address Found</string>
     <string name="txt_direction">Ubicacion</string>
-    <string name="txt_counter">Inicio de Contador</string>
+    <string name="txt_counter">Iniciar Cronometro</string>
     <string name="txt_enable_patent">Habilitacion de Matricula</string>
     <string name="title_activity_ubication">UbicationActivity</string>
     <string name="tuVehiculo">Tu Vehículo</string>

@@ -33,23 +33,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/txt_patent"
         android:textAppearance="@style/MLFont"
-        app:layout_constraintBottom_toTopOf="@+id/title_direction"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_pasos" />
 
     <Spinner
         android:id="@+id/spinner_patente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="77dp"
+        android:layout_marginTop="59dp"
         android:entries="@array/array_patentes"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/dir"
-        app:layout_constraintStart_toEndOf="@+id/textView5" />
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/id_pasos" />
 
     <Button
         android:id="@+id/btn_continue"
@@ -77,24 +77,24 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="64dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/txt_location"
         android:textAppearance="@style/MLFont"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/dir"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="78dp"
+        android:layout_marginTop="59dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_localization"
         android:textAppearance="@style/MLFont"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
-        app:layout_constraintStart_toEndOf="@+id/title_direction" />
+        app:layout_constraintStart_toEndOf="@+id/title_direction"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_patente" />
 
     <ProgressBar
         android:id="@+id/load"
@@ -114,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="64dp"
         android:background="@color/px_white"
         android:fontFamily="@font/roboto"
@@ -123,7 +123,6 @@
         android:textAppearance="@style/MLFont"
         android:textColor="@color/pacific_blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.582"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar" />
 

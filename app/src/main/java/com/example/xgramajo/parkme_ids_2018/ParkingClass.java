@@ -87,7 +87,7 @@ public class ParkingClass {
 
             switch (time) {
                 case "30 minutos":
-                    return "30";
+                    return "16";
                 case "1 hora":
                     return "60";
                 case "1 hora 30 minutos":
