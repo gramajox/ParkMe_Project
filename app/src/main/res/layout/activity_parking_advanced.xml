@@ -174,6 +174,7 @@
         android:background="@color/px_white"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_step1of3countdown"
+        android:backgroundTint="@color/transparent"
         android:textAlignment="center"
         android:textAppearance="@style/MLFont"
         android:textColor="@color/pacific_blue"
