@@ -24,10 +24,10 @@
 
         <TextView
             android:id="@+id/tuVehiculoTxt"
-            android:layout_width="117dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
             android:ems="10"
             android:fontFamily="@font/roboto"
             android:text="@string/tuVehiculo"
@@ -38,49 +38,47 @@
 
         <TextView
             android:id="@+id/tuPosicion"
-            android:layout_width="117dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:ems="10"
             android:fontFamily="@font/roboto"
             android:inputType="textPersonName"
             android:text="@string/tuPosicion"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tuVehiculoTxt" />
 
         <TextView
             android:id="@+id/tuVehiculo"
-            android:layout_width="148dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="30dp"
+            android:textAlignment="textStart"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/vehiculoBoton"
             app:layout_constraintStart_toEndOf="@+id/tuVehiculoTxt"
             app:layout_constraintTop_toBottomOf="@+id/map" />
 
         <TextView
             android:id="@+id/tuDirec"
-            android:layout_width="147dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/roboto"
+            android:textAlignment="textStart"
             android:textAppearance="@style/MLFont"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tuPosicionBoton"
-            app:layout_constraintStart_toEndOf="@+id/tuPosicion" />
+            app:layout_constraintStart_toEndOf="@+id/tuPosicion"
+            app:layout_constraintTop_toBottomOf="@+id/tuVehiculo" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/vehiculoBoton"
-            android:layout_width="74dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
             android:background="@color/pacific_blue"
             android:fontFamily="@font/roboto"
             android:text="@string/txt_search"
@@ -92,18 +90,18 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/tuPosicionBoton"
-            android:layout_width="72dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:background="@color/pacific_blue"
             android:fontFamily="@font/roboto"
             android:text="@string/txt_search"
             android:textAppearance="@style/MLFont"
             android:textColor="@color/px_white"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vehiculoBoton" />
 
     </android.support.constraint.ConstraintLayout>
 

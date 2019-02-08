@@ -175,9 +175,9 @@
     <string name="txt_direction">Ubicacion</string>
     <string name="txt_counter">Iniciar Cronometro</string>
     <string name="txt_enable_patent">Habilitacion de Matricula</string>
-    <string name="title_activity_ubication">UbicationActivity</string>
-    <string name="tuVehiculo">Tu Vehículo</string>
-    <string name="tuPosicion">Tu Posición</string>
+    <string name="title_activity_ubication">Ubicacion </string>
+    <string name="tuVehiculo">Mi Vehículo:</string>
+    <string name="tuPosicion">Mi Posición:</string>
 
 
 </resources>
