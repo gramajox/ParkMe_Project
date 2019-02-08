@@ -26,6 +26,7 @@
             android:layout_marginEnd="60dp"
             android:fontFamily="@font/roboto"
             android:text="@string/txt_step2of3countdown"
+            android:background="@color/transparent"
             android:textAlignment="center"
             android:textAppearance="@style/MLFont"
             android:textColor="@color/pacific_blue"

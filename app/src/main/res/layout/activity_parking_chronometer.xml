@@ -116,7 +116,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="64dp"
-        android:background="@color/px_white"
+        android:background="@color/transparent"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_step1of4chronometer"
         android:textAlignment="center"

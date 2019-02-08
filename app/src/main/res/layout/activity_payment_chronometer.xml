@@ -30,6 +30,7 @@
             android:layout_marginEnd="64dp"
             android:fontFamily="@font/roboto"
             android:text="@string/txt_step2of4chronometer"
+            android:background="@color/transparent"
             android:textAlignment="center"
             android:textAppearance="@style/MLFont"
             android:textColor="@color/pacific_blue"
