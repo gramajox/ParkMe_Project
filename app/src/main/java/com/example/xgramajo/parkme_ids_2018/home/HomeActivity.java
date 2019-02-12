@@ -257,6 +257,4 @@ public class HomeActivity extends AppCompatActivity
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
-
-
 }

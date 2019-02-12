@@ -117,11 +117,11 @@ public class ChronometerFragment extends Fragment {
                     Objects.requireNonNull(getActivity()).finish();
                 }
 
-                //Eliminar la notificación del cronómetro
-                removeChronometerNotification();
-
                 //Detener el cronometro
                 myCountDownTimer.cancel();
+
+                //Eliminar la notificación del cronómetro
+                removeChronometerNotification();
             }
         });
 
@@ -247,7 +247,7 @@ public class ChronometerFragment extends Fragment {
 
     public void removeChronometerNotification() {
 
-        mNotificationHelper.getManager().cancelAll();
+        mNotificationHelper.getManager().cancel(2);
     }
 }
 

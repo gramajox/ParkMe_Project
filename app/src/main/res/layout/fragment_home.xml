@@ -56,9 +56,9 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="43dp"
         android:background="@drawable/boton_tati"
-        android:drawableTop="@drawable/moneymp"
+        android:drawableTop="@drawable/ic_card"
         android:gravity="center"
-        android:paddingTop="30dp"
+        android:paddingTop="10dp"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/gray"
@@ -72,9 +72,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
         android:background="@drawable/boton_tati"
-        android:drawableTop="@drawable/clockmp"
+        android:drawableTop="@drawable/ic_clock"
         android:gravity="center"
-        android:paddingTop="20dp"
+        android:paddingTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 

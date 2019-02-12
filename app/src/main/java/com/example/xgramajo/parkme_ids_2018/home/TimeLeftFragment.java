@@ -188,7 +188,7 @@ public class TimeLeftFragment extends Fragment {
 
         PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), 0, notificationIntent, 0);
 
-        NotificationCompat.Builder nb = mNotificationHelper.getChannel1Notification("Atención", "Te quedan " + minutes + " minutos de estacionamiento en la patente " + ParkingClass.getPatent() + ".");
+        NotificationCompat.Builder nb = mNotificationHelper.getChannel1Notification("Atención", "Te quedan " + minutes + " minutos de estacionamiento.");
         nb.setContentIntent(contentIntent)
             .setAutoCancel(true);
 
@@ -197,7 +197,7 @@ public class TimeLeftFragment extends Fragment {
 
     public void removeTimeLeftNotification() {
 
-        mNotificationHelper.getManager().cancelAll();
+        mNotificationHelper.getManager().cancel(1);
     }
 
 }

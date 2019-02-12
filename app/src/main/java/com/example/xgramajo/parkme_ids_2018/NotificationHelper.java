@@ -12,10 +12,10 @@ import android.support.v4.app.NotificationCompat;
 public class NotificationHelper extends ContextWrapper {
 
     public static final String timeLeftChannelID = "timeLeftChannelID";
-    public static final String timeLeftChannelName = "Time left notification channel";
+    public static final String timeLeftChannelName = "Alerta de tiempo restante";
 
     public static final String chronometerChannelID = "chronometerChannelID";
-    public static final String chronometerChannelName = "Chronometer notification channel";
+    public static final String chronometerChannelName = "Cronómetro";
 
     private NotificationManager mManager;
 
