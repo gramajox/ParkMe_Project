@@ -2,7 +2,7 @@
     <string name="app_name">ParkMe</string>
     <string name="title_activity_home">ParkMe</string>
     <string name="title_activity_parking">Inicio de Estacionamiento</string>
-    <string name="title_activity_enable">Habilitacion de Matrícula</string>
+    <string name="title_activity_enable">Habilitación de Matrícula</string>
     <string name="title_activity_patent">Lista de Matrículas</string>
     <string name="title_activity_monitor">Monitor de Matrículas</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -10,7 +10,7 @@
     <string name="nav_header_title">ParkMe</string>
     <string name="nav_header_subtitle">parkme@ingsoft.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Configuracion</string>
+    <string name="action_settings">Configuración</string>
 
 
     <string name="log_out">Salir</string>
@@ -20,53 +20,53 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!--  strings for fragment home -->
-    <string name="title_select">Seleccion Estacionamiento</string>
-    <string name="title_counter">Iniciar \n Cronometro</string>
-    <string name="title_advanced_payment">Iniciar \n Prepago</string>
+    <string name="title_select">Seleccionar Estacionamiento</string>
+    <string name="title_counter">Iniciar \n Cronómetro</string>
+    <string name="title_advanced_payment">Iniciar\n Prepago</string>
 
     <!--  strings for activity parking chronometer -->
-    <string name="txt_step1of4chronometer">Paso 1: Seleccion de Matricula</string>
-    <string name="txt_localization">Localizacion</string>
+    <string name="txt_step1of4chronometer">Paso 1 de 3: Selección de Matrícula</string>
+    <string name="txt_localization">Localización</string>
 
     <!--  strings for activity paayment chronometer -->
-    <string name="txt_step2of4chronometer">Paso 2: Activacion de Cronometro</string>
+    <string name="txt_step2of4chronometer">Paso 2 de 3: Activación de Cronómetro</string>
 
     <!--  strings for activity fragment counter -->
     <string name="btn_finish_parking">Finalizar</string>
-    <string name="txt_step3of4chronometer">Paso 3: Control de Cronometro</string>
+    <string name="txt_step3of4chronometer">Paso 3 de 3: Control de Cronómetro</string>
 
     <!--  strings for activity payment advanced -->
-    <string name="txt_step2of3countdown">Ultimo paso: Pagar Estacionamiento</string>
+    <string name="txt_step2of3countdown">Pagar Estacionamiento</string>
 
     <!--  strings for activity parking advanced -->
-    <string name="txt_step1of3countdown">Paso 1: Seleccion de Tiempo y Matricula</string>
+    <string name="txt_step1of3countdown">Paso 1 de 1: Selección de Tiempo y Matrícula</string>
 
     <!--  strings for fragment time left -->
     <string name="txt_step3of3countdown">Control de tiempo restante</string>
 
 
     <string name="advanced_payment">Pago Adelantado</string>
-    <string name="enable_patent">Habilitacion de Matricula</string>
+    <string name="enable_patent">Habilitación de Matrícula</string>
     <string name="money_with_sign">$25</string>
-    <string name="number_patent">Numero de Matricula</string>
-    <string name="register_patent">Ingreso de Matricula</string>
+    <string name="number_patent">Número de Matrícula</string>
+    <string name="register_patent">Ingreso de Matrícula</string>
 
     <!--  strings for parking data -->
     <string name="txt_initial_countdown">00:00</string>
     <string name="txt_empty_string"> </string>
     <string name="txt_underscore_string">___</string>
-    <string name="txt_patent">Matricula:</string>
+    <string name="txt_patent">Matrícula:</string>
     <string name="txt_time">Tiempo:</string>
     <string name="txt_total_to_pay">Total a pagar:</string>
-    <string name="txt_location">Ubicacion:</string>
+    <string name="txt_location">Ubicación:</string>
 
     <string name="txt_total_to_pay_with_sign">$ total a pagar</string>
     <string name="txt_prices">Precios</string>
     <string name="txt_generic_patent">ABC123</string>
     <string name="txt_zero_price">$ 0</string>
 
-    <string name="txt_patent_wo_dots">Matricula</string>
-    <string name="txt_address_wo_dots">Direccion</string>
+    <string name="txt_patent_wo_dots">Matrícula</string>
+    <string name="txt_address_wo_dots">Dirección</string>
     <string name="txt_time_wo_dots">Tiempo</string>
 
     <!--  strings for fragment ubication -->
@@ -83,13 +83,13 @@
 
     <!--  strings for login -->
     <string name="title_login">Ingreso al sistema</string>
-    <string name="email_hint">Correo electronico</string>
+    <string name="email_hint">Correo electrónico</string>
     <string name="password_hint">Contraseña</string>
-    <string name="hint_email">Correo electronico</string>
+    <string name="hint_email">Correo electrónico</string>
     <string name="hint_password">Contraseña</string>
-    <string name="btn_login">Inicio de Sesion</string>
+    <string name="btn_login">Inicio de Sesión</string>
     <string name="btn_signup">Registración</string>
-    <string name="txt_forgot_password"><u>Olvide mi contraseña</u></string>
+    <string name="txt_forgot_password"><u>Olvidé mi contraseña</u></string>
 
     <!--  strings for register -->
     <string name="title_register">Registración en el sistema</string>
@@ -112,25 +112,25 @@
 
 
     <!--  strings for content_patent -->
-    <string name="hint_number_patent">Número de matricula</string>
+    <string name="hint_number_patent">Número de matrícula</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pwd_mail">Ingreso de correo</string>
     <string name="back_btn">Regreso al login</string>
-    <string name="pwd_btn">Restablecimiento de contraseña</string>
+    <string name="pwd_btn">Reestablecimiento de contraseña</string>
     <string name="txt_duracion">Tiempo:</string>
     <string name="txt_monto_calc">Monto</string>
     <string name="btn_cont">Continuar</string>
     <string name="title_activity_maps_api">Map</string>
     <string name="stop_txt">Detener contador</string>
     <string name="pay_txt">Continuar con el pago</string>
-    <string name="patent_register">Guardar Matricula</string>
+    <string name="patent_register">Guardar Matrícula</string>
     <string name="reg_patent">Registrar Matrícula</string>
     <string name="action_home">Inicio</string>
     <string name="initialTimeCountdown">120</string>
-    <string name="back_txt">Atras</string>
+    <string name="back_txt">Atrás</string>
     <string name="prices_list_txt"><![CDATA[
          \n
         $ 5\n
@@ -172,10 +172,10 @@
     <string name="invalid_lat_long_used">Invalid Lat Long Used</string>
     <string name="no_address_found">No Address Found</string>
     <string name="address_found">Address Found</string>
-    <string name="txt_direction">Ubicacion</string>
-    <string name="txt_counter">Iniciar Cronometro</string>
-    <string name="txt_enable_patent">Habilitacion de Matricula</string>
-    <string name="title_activity_ubication">Ubicacion </string>
+    <string name="txt_direction">Ubicación</string>
+    <string name="txt_counter">Iniciar Cronómetro</string>
+    <string name="txt_enable_patent">Habilitación de Matrícula</string>
+    <string name="title_activity_ubication">Ubicación </string>
     <string name="tuVehiculo">Mi Vehículo:</string>
     <string name="tuPosicion">Mi Posición:</string>
 
